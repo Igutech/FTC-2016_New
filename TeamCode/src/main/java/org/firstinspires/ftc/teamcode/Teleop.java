@@ -35,7 +35,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.modules.*;
+
+import java.util.ArrayList;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -51,35 +57,27 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Template: Iterative OpMode", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
-@Disabled
-public class Teleop extends OpMode
-{
-    /* Declare OpMode members. */
+@TeleOp(name="TeleOp", group="Igutech")  // @Autonomous(...) is the other common choice
+public class Teleop extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-    // private DcMotor leftMotor = null;
-    // private DcMotor rightMotor = null;
-
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
+    private ArrayList<Module> modules;
     @Override
     public void init() {
+
+        modules = new ArrayList<Module>();
+
+        Hardware.left = hardwareMap.dcMotor.get("left");
+        Hardware.right = hardwareMap.dcMotor.get("right");
+        Hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        modules.add(new DriveTrain(this));
+
+        for (Module m : modules) {
+            m.init();
+        }
+
         telemetry.addData("Status", "Initialized");
-
-        /* eg: Initialize the hardware variables. Note that the strings used here as parameters
-         * to 'get' must correspond to the names assigned during the robot configuration
-         * step (using the FTC Robot Controller app on the phone).
-         */
-        // leftMotor  = hardwareMap.dcMotor.get("left_drive");
-        // rightMotor = hardwareMap.dcMotor.get("right_drive");
-
-        // eg: Set the drive motor directions:
-        // Reverse the motor that runs backwards when connected directly to the battery
-        // leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        //  rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        // telemetry.addData("Status", "Initialized");
     }
 
     /*
@@ -87,6 +85,9 @@ public class Teleop extends OpMode
      */
     @Override
     public void init_loop() {
+        for (Module m : modules) {
+            m.initLoop();
+        }
     }
 
     /*
@@ -95,6 +96,9 @@ public class Teleop extends OpMode
     @Override
     public void start() {
         runtime.reset();
+        for (Module m : modules) {
+            m.start();
+        }
     }
 
     /*
@@ -104,9 +108,10 @@ public class Teleop extends OpMode
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
 
-        // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-        // leftMotor.setPower(-gamepad1.left_stick_y);
-        // rightMotor.setPower(-gamepad1.right_stick_y);
+        for (Module m : modules) {
+            m.loop();
+        }
+
     }
 
     /*
@@ -114,6 +119,17 @@ public class Teleop extends OpMode
      */
     @Override
     public void stop() {
+        for (Module m : modules) {
+            m.stop();
+        }
+    }
+
+    public Gamepad[] getGamepad() {
+        Gamepad[] pads = new Gamepad[3];
+        pads[1] = this.gamepad1;
+        pads[2] = this.gamepad2;
+
+        return pads;
     }
 
 }
