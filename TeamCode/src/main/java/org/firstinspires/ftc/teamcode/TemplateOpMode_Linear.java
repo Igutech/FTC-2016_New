@@ -41,6 +41,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
+
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
@@ -81,38 +83,8 @@ public class TemplateOpMode_Linear extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (!done) {
-                try {
-                    telemetry.addData("Status", "Run Time: " + runtime.toString());
-                    telemetry.update();
-
-                    Hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    Hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                    Hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    Hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    while (Hardware.left.getMode() != DcMotor.RunMode.RUN_TO_POSITION && Hardware.right.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
-                        sleep(10);
-                    }
-                    Hardware.right.setTargetPosition(460 * 3);
-                    Hardware.left.setTargetPosition(460 * 3);
-
-                    Hardware.right.setPower(1);
-                    Hardware.left.setPower(1);
-
-                    while (Hardware.left.getCurrentPosition() < Hardware.left.getTargetPosition() || Hardware.right.getCurrentPosition() < Hardware.right.getTargetPosition()) {
-                        sleep(10);
-                    }
-
-                    Hardware.right.setPower(0);
-                    Hardware.left.setPower(0);
-
-                    Hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    Hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                    requestOpModeStop();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                AutonomousUtils.resetEncoders();
+                AutonomousUtils.driveEncoderTicks(460*3, 1);
 
                 done = true;
 
