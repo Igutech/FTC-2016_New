@@ -32,7 +32,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -56,8 +55,8 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto (3ft)", group="Igutech")  // @Autonomous(...) is the other common choice
-public class TemplateOpMode_Linear extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto (3ft)", group="Igutech")  // @Autonomous(...) is the other common choice
+public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
