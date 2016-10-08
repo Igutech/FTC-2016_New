@@ -44,4 +44,17 @@ public class AutonomousUtils {
     public static ColorSensorData getColorSensorData() {
         return new ColorSensorData(Hardware.colorSensor.red(), Hardware.colorSensor.green(), Hardware.colorSensor.blue(), Hardware.colorSensor.alpha());
     }
+
+    public static float standardDeviation(ColorSensorData data) {
+        float red = data.getRed();
+        float green = data.getGreen();
+        float blue = data.getBlue();
+
+        float mean = (red+green+blue)/3;
+
+        float sum = Math.abs(red-mean)+Math.abs(green-mean)+Math.abs(blue-mean);
+        float sumOverTotal = sum/3;
+        float stdev = (float) Math.sqrt((double)sumOverTotal);
+        return stdev;
+    }
 }
