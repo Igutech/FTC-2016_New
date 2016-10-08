@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.modules;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 
@@ -56,5 +59,17 @@ public class AutonomousUtils {
         float sumOverTotal = sum/3;
         float stdev = (float) Math.sqrt((double)sumOverTotal);
         return stdev;
+    }
+
+    public static BeaconState getBeaconState(ColorSensorData data) {
+        if (data.getRed() > data.getBlue()) {
+            return BeaconState.RED;
+        } else {
+            return BeaconState.BLUE;
+        }
+    }
+
+    public static float getBeaconConfidence(ColorSensorData data) {
+        return standardDeviation(data);
     }
 }
