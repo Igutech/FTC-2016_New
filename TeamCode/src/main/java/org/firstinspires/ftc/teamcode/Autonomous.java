@@ -43,6 +43,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
 
+import java.util.HashMap;
+
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
@@ -61,6 +63,8 @@ public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
+
+    private HashMap<String, Boolean> decisions;
     // DcMotor leftMotor = null;
     // DcMotor rightMotor = null;
 
@@ -78,6 +82,36 @@ public class Autonomous extends LinearOpMode {
         Hardware.colorSensor = hardwareMap.colorSensor.get("sensor_color");
         Hardware.dim.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
         // Wait for the game to start (driver presses PLAY)
+
+        decisions = new HashMap<String, Boolean>();
+
+        boolean confirmed = false;
+        decisions.put("Color", true);
+        while (!confirmed) {
+            if (gamepad1.b) {
+                decisions.put("Color", true); //true if red
+            }
+            if (gamepad1.x) {
+                decisions.put("Color", false); //false if blue
+            }
+
+            if (gamepad1.start) {
+                confirmed = true;
+            }
+
+            if (decisions.get("Color")) {
+                telemetry.addData("Color", "RED");
+            } else {
+                telemetry.addData("Color", "BLUE");
+            }
+
+            if (confirmed) {
+                telemetry.addData("LOCKED IN", "TO BEGIN, PRESS START ON PHONE");
+            }
+            telemetry.update();
+        }
+
+
         waitForStart();
         runtime.reset();
 
