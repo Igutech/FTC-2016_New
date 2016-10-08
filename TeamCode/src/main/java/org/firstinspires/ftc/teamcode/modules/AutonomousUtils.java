@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.modules;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 
 /**
@@ -38,7 +39,9 @@ public class AutonomousUtils {
     public static void resetEncoders() {
         Hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
-
+    public static ColorSensorData getColorSensorData() {
+        return new ColorSensorData(Hardware.colorSensor.red(), Hardware.colorSensor.green(), Hardware.colorSensor.blue(), Hardware.colorSensor.alpha());
     }
 }

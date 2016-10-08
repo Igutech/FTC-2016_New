@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -72,6 +73,10 @@ public class Autonomous extends LinearOpMode {
         Hardware.right = hardwareMap.dcMotor.get("right");
         Hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        Hardware.dim = hardwareMap.deviceInterfaceModule.get("dim");
+        Hardware.dim.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
+        Hardware.colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        Hardware.dim.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
