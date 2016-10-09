@@ -6,5 +6,7 @@ package org.firstinspires.ftc.teamcode;
 public enum BeaconState {
     RED,
     BLUE,
-    UNSURE;
+    UNSURE,
+    BOTHRED,
+    BOTHBLUE;
 }
