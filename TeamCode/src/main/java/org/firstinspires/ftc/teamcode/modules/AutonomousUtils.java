@@ -48,7 +48,7 @@ public class AutonomousUtils {
         return new ColorSensorData(Hardware.colorSensor.red(), Hardware.colorSensor.green(), Hardware.colorSensor.blue(), Hardware.colorSensor.alpha());
     }
 
-    public static float standardDeviation(ColorSensorData data) {
+    private static float standardDeviation(ColorSensorData data) {
         float red = data.getRed();
         float green = data.getGreen();
         float blue = data.getBlue();
