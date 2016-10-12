@@ -7,6 +7,8 @@ public enum BeaconState {
     RED,
     BLUE,
     UNSURE,
+    REDBLUE,
+    BLUERED,
     BOTHRED,
     BOTHBLUE;
 }

@@ -44,8 +44,17 @@ public class AutonomousUtils {
         Hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public static ColorSensorData getColorSensorData() {
-        return new ColorSensorData(Hardware.colorSensor.red(), Hardware.colorSensor.green(), Hardware.colorSensor.blue(), Hardware.colorSensor.alpha());
+    public static ColorSensorData getColorSensorData(int id) {
+        if (id == 0) {
+            return new ColorSensorData(Hardware.colorSensor0.red(), Hardware.colorSensor0.green(), Hardware.colorSensor0.blue(), Hardware.colorSensor0.alpha());
+        }
+        if (id == 1) {
+            return new ColorSensorData(Hardware.colorSensor1.red(), Hardware.colorSensor1.green(), Hardware.colorSensor1.blue(), Hardware.colorSensor1.alpha());
+        }
+        if (id == 2) {
+            return new ColorSensorData(Hardware.colorSensor2.red(), Hardware.colorSensor2.green(), Hardware.colorSensor2.blue(), Hardware.colorSensor2.alpha());
+        }
+        return null;
     }
 
     private static float standardDeviation(ColorSensorData data) {

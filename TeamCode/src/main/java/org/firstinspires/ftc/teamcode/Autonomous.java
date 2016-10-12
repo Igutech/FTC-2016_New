@@ -79,7 +79,9 @@ public class Autonomous extends LinearOpMode {
 
         Hardware.dim = hardwareMap.deviceInterfaceModule.get("dim");
         Hardware.dim.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
-        Hardware.colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        Hardware.colorSensor0 = hardwareMap.colorSensor.get("sensor_floor");
+        Hardware.colorSensor1 = hardwareMap.colorSensor.get("sensor_color1");
+        Hardware.colorSensor2 = hardwareMap.colorSensor.get("sensor_color2");
         Hardware.dim.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
         // Wait for the game to start (driver presses PLAY)
 

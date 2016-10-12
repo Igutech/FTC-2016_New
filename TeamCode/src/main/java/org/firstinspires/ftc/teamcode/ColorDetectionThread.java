@@ -11,42 +11,51 @@ public class ColorDetectionThread implements Runnable {
 
     private float confidenceThreshold;
 
-    public ColorDetectionThread(float confidenceThreshold) {
+    private float redThresh;
+    private float blueThresh;
+    private float greenThresh;
+
+    public ColorDetectionThread(float confidenceThreshold, float redThresh, float blueThresh, float greenThresh) {
         this.setConfidenceThreshold(confidenceThreshold);
+        this.redThresh = redThresh;
+        this.blueThresh = blueThresh;
+        this.greenThresh = greenThresh;
     }
 
     @Override
     public void run() {
         beaconState = BeaconState.UNSURE;
 
-        BeaconState firstpass = BeaconState.UNSURE;
-        BeaconState secondpass = BeaconState.UNSURE;
-
         boolean done = false;
         while (!done) {
-            ColorSensorData data = AutonomousUtils.getColorSensorData();
-            if (AutonomousUtils.getBeaconConfidence(data) > confidenceThreshold) { //this logic doesn't quite work yet, needs some more refining.
-                if (firstpass.equals(BeaconState.UNSURE)) {
-                    firstpass = AutonomousUtils.getBeaconState(data);
-                } else {
-                    secondpass = AutonomousUtils.getBeaconState(data);
-                    done=true;
+            ColorSensorData data = AutonomousUtils.getColorSensorData(0);
+
+            boolean white = false;
+            if (AutonomousUtils.getBeaconConfidence(data) < confidenceThreshold) {
+                if (data.getRed() > redThresh && data.getBlue() > blueThresh && data.getGreen() > greenThresh) {
+                    white = true;
                 }
             }
 
-            if (firstpass != BeaconState.UNSURE && secondpass != BeaconState.UNSURE) {
-                if (firstpass == BeaconState.RED && secondpass == BeaconState.BLUE) {
-                    beaconState = BeaconState.RED;
-                }
-                if (firstpass == BeaconState.BLUE && secondpass == BeaconState.RED) {
-                    beaconState = BeaconState.BLUE;
-                }
+            if (white) {
+                ColorSensorData data1 = AutonomousUtils.getColorSensorData(1);
+                ColorSensorData data2 = AutonomousUtils.getColorSensorData(2);
 
-                if (firstpass == BeaconState.RED && secondpass == BeaconState.RED) {
+                BeaconState state1 = AutonomousUtils.getBeaconState(data1);
+                BeaconState state2 = AutonomousUtils.getBeaconState(data2);
+
+                if (state1.equals(BeaconState.RED) && state2.equals(BeaconState.BLUE)) {
+                    beaconState = BeaconState.REDBLUE;
+                    done = true;
+                } else if (state1.equals(BeaconState.BLUE) && state2.equals(BeaconState.RED)) {
+                    beaconState = BeaconState.BLUERED;
+                    done = true;
+                } else if (state1.equals(BeaconState.RED) && state2.equals(BeaconState.RED)) {
                     beaconState = BeaconState.BOTHRED;
-                }
-                if (firstpass == BeaconState.BLUE && secondpass == BeaconState.BLUE) {
+                    done = true;
+                } else if (state1.equals(BeaconState.BLUE) && state2.equals(BeaconState.BLUE)) {
                     beaconState = BeaconState.BOTHBLUE;
+                    done = true;
                 }
             }
         }

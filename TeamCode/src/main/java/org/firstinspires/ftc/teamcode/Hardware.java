@@ -14,6 +14,8 @@ public class Hardware {
     public static DcMotor right;
     public static DcMotor left;
 
-    public static ColorSensor colorSensor;
+    public static ColorSensor colorSensor0;
+    public static ColorSensor colorSensor1;
+    public static ColorSensor colorSensor2;
     public static DeviceInterfaceModule dim;
 }
