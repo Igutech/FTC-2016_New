@@ -8,11 +8,17 @@ import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 
+import java.util.Timer;
+
 /**
  * Created by Kevin on 10/6/2016.
  */
 public class AutonomousUtils {
     public static void driveEncoderTicks(int ticks, float power) { //460 ticks per foot
+        driveEncoderTicks(ticks, power, true);
+    }
+
+    public static void driveEncoderTicks(int ticks, float power, boolean rampUp) { //460 ticks per foot
         try {
             Hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             Hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -22,11 +28,28 @@ public class AutonomousUtils {
             Hardware.right.setTargetPosition(ticks);
             Hardware.left.setTargetPosition(ticks);
 
-            Hardware.right.setPower(power);
-            Hardware.left.setPower(power);
+            if (rampUp) {
+                Hardware.right.setPower(0);
+                Hardware.left.setPower(0);
+            } else {
+                Hardware.right.setPower(power);
+                Hardware.left.setPower(power);
+            }
 
+            long startTime = System.currentTimeMillis()/1000;
             while (Hardware.left.getCurrentPosition() < Hardware.left.getTargetPosition() || Hardware.right.getCurrentPosition() < Hardware.right.getTargetPosition()) {
-                Thread.sleep(10);
+                if (rampUp) {
+                    long currentTime = System.currentTimeMillis() / 1000;
+                    long elapsed = Math.abs(currentTime - startTime);
+                    double speed = (double) elapsed;
+                    if (speed > 1) {
+                        speed = 1;
+                    }
+                    Hardware.right.setPower(speed);
+                    Hardware.left.setPower(speed);
+                } else {
+                    Thread.sleep(10);
+                }
             }
 
             Hardware.right.setPower(0);

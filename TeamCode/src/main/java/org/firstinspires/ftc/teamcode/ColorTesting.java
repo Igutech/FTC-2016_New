@@ -72,7 +72,7 @@ public class ColorTesting extends LinearOpMode {
 
         Hardware.dim = hardwareMap.deviceInterfaceModule.get("dim");
         Hardware.dim.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
-        Hardware.colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        Hardware.colorSensor0 = hardwareMap.colorSensor.get("sensor_color");
         Hardware.dim.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -85,7 +85,7 @@ public class ColorTesting extends LinearOpMode {
         while (opModeIsActive()) {
             if (!done) {
 
-                ColorSensorData data = AutonomousUtils.getColorSensorData();
+                ColorSensorData data = AutonomousUtils.getColorSensorData(0);
                 telemetry.addData("Color", AutonomousUtils.getBeaconState(data));
                 telemetry.addData("Confidence", AutonomousUtils.getBeaconConfidence(data));
 
