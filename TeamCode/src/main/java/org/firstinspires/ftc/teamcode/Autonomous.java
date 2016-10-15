@@ -89,7 +89,7 @@ public class Autonomous extends LinearOpMode {
 
         boolean confirmed = false;
         decisions.put("Color", true);
-        while (!confirmed) {
+        while (!confirmed && opModeIsActive()) {
             if (gamepad1.b) {
                 decisions.put("Color", true); //true if red
             }
@@ -123,10 +123,48 @@ public class Autonomous extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (!done) {
-                AutonomousUtils.resetEncoders();
-                AutonomousUtils.driveEncoderTicks(460*3, 1);
 
                 done = true;
+
+                BeaconState target = null;
+                if (decisions.get("Color") == true) {
+                    target = BeaconState.RED;
+                } else {
+                    target = BeaconState.BLUE;
+                }
+
+                ColorDetectionThread colorDetection = new ColorDetectionThread(1.5f, 0f, 0f, 0f);
+                Thread t = new Thread(colorDetection);
+                t.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                BeaconState state = colorDetection.getState();
+
+                telemetry.addData("State", state);
+                telemetry.update();
+
+                /*
+                while (opModeIsActive()) {
+                    //ColorSensorData data0 = AutonomousUtils.getColorSensorData(0);
+                    ColorSensorData data1 = AutonomousUtils.getColorSensorData(1);
+                    ColorSensorData data2 = AutonomousUtils.getColorSensorData(2);
+
+                    //telemetry.addData("red0", data0.getRed());
+                    //telemetry.addData("blue0", data0.getBlue());
+                    //telemetry.addData("green0", data0.getGreen());
+                    telemetry.addData("red1", data1.getRed());
+                    telemetry.addData("blue1", data1.getBlue());
+                    telemetry.addData("green1", data1.getGreen());
+                    telemetry.addData("red2", data2.getBlue());
+                    telemetry.addData("blue2", data2.getBlue());
+                    telemetry.addData("green2", data2.getGreen());
+                    telemetry.update();
+                }
+                */
 
                 // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
                 // leftMotor.setPower(-gamepad1.left_stick_y);
