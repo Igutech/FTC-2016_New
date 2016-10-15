@@ -30,12 +30,14 @@ public class ColorDetectionThread implements Runnable {
         while (!done) {
             ColorSensorData data = AutonomousUtils.getColorSensorData(0);
 
-            boolean white = false;
+            boolean white = true;
+            /*
             if (AutonomousUtils.getBeaconConfidence(data) < confidenceThreshold) {
                 if (data.getRed() > redThresh && data.getBlue() > blueThresh && data.getGreen() > greenThresh) {
                     white = true;
                 }
             }
+            */
 
             if (white) {
                 ColorSensorData data1 = AutonomousUtils.getColorSensorData(1);
