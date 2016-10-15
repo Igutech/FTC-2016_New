@@ -46,6 +46,14 @@ public class ColorDetectionThread implements Runnable {
                 BeaconState state1 = AutonomousUtils.getBeaconState(data1);
                 BeaconState state2 = AutonomousUtils.getBeaconState(data2);
 
+                if (AutonomousUtils.getBeaconConfidence(data1) < confidenceThreshold) {
+                    state1 = BeaconState.UNSURE;
+                }
+
+                if (AutonomousUtils.getBeaconConfidence(data2) < confidenceThreshold) {
+                    state2 = BeaconState.UNSURE;
+                }
+
                 if (state1.equals(BeaconState.RED) && state2.equals(BeaconState.BLUE)) {
                     beaconState = BeaconState.REDBLUE;
                     done = true;
@@ -57,6 +65,11 @@ public class ColorDetectionThread implements Runnable {
                     done = true;
                 } else if (state1.equals(BeaconState.BLUE) && state2.equals(BeaconState.BLUE)) {
                     beaconState = BeaconState.BOTHBLUE;
+                    done = true;
+                }
+
+                if (state1.equals(BeaconState.UNSURE) || state2.equals(BeaconState.UNSURE)) {
+                    beaconState = BeaconState.UNSURE;
                     done = true;
                 }
             }
