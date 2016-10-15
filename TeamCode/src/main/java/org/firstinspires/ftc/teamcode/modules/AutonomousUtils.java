@@ -69,7 +69,8 @@ public class AutonomousUtils {
 
     public static ColorSensorData getColorSensorData(int id) {
         if (id == 0) {
-            return new ColorSensorData(Hardware.colorSensor0.red(), Hardware.colorSensor0.green(), Hardware.colorSensor0.blue(), Hardware.colorSensor0.alpha());
+            //return new ColorSensorData(Hardware.colorSensor0.red(), Hardware.colorSensor0.green(), Hardware.colorSensor0.blue(), Hardware.colorSensor0.alpha());
+            return null;
         }
         if (id == 1) {
             return new ColorSensorData(Hardware.colorSensor1.red(), Hardware.colorSensor1.green(), Hardware.colorSensor1.blue(), Hardware.colorSensor1.alpha());

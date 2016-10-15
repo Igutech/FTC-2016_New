@@ -17,5 +17,6 @@ public class Hardware {
     public static ColorSensor colorSensor0;
     public static ColorSensor colorSensor1;
     public static ColorSensor colorSensor2;
-    public static DeviceInterfaceModule dim;
+    public static DeviceInterfaceModule dim1;
+    public static DeviceInterfaceModule dim2;
 }

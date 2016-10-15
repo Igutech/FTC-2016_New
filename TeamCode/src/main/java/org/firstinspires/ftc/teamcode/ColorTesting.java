@@ -70,10 +70,10 @@ public class ColorTesting extends LinearOpMode {
         Hardware.right = hardwareMap.dcMotor.get("right");
         Hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        Hardware.dim = hardwareMap.deviceInterfaceModule.get("dim");
-        Hardware.dim.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
+        Hardware.dim1 = hardwareMap.deviceInterfaceModule.get("dim");
+        Hardware.dim1.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
         Hardware.colorSensor0 = hardwareMap.colorSensor.get("sensor_color");
-        Hardware.dim.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
+        Hardware.dim1.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
