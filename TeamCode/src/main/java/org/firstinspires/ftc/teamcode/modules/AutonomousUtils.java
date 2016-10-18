@@ -14,6 +14,15 @@ import java.util.Timer;
  * Created by Kevin on 10/6/2016.
  */
 public class AutonomousUtils {
+
+    public static void driveEncoderFeet(float feet, float power) {
+        driveEncoderTicks((int)(feet*460f), power);
+    }
+
+    public static void driveEncoderFeet(float feet, float power, boolean rampUp) {
+        driveEncoderTicks((int)(feet*460f), power, rampUp);
+    }
+
     public static void driveEncoderTicks(int ticks, float power) { //460 ticks per foot
         driveEncoderTicks(ticks, power, true);
     }
