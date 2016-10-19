@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.modules;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
@@ -14,6 +15,13 @@ import java.util.Timer;
  * Created by Kevin on 10/6/2016.
  */
 public class AutonomousUtils {
+
+    private static Hardware hardware;
+
+    public AutonomousUtils(HardwareMap hardwareMap) {
+        hardware = new Hardware(hardwareMap);
+        hardware.init();
+    }
 
     public static void driveEncoderFeet(float feet, float power) {
         driveEncoderTicks((int)(feet*460f), power);
@@ -29,24 +37,24 @@ public class AutonomousUtils {
 
     public static void driveEncoderTicks(int ticks, float power, boolean rampUp) { //460 ticks per foot
         try {
-            Hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (Hardware.left.getMode() != DcMotor.RunMode.RUN_TO_POSITION && Hardware.right.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (hardware.left.getMode() != DcMotor.RunMode.RUN_TO_POSITION && hardware.right.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
                 Thread.sleep(10);
             }
-            Hardware.right.setTargetPosition(ticks);
-            Hardware.left.setTargetPosition(ticks);
+            hardware.right.setTargetPosition(ticks);
+            hardware.left.setTargetPosition(ticks);
 
             if (rampUp) {
-                Hardware.right.setPower(0);
-                Hardware.left.setPower(0);
+                hardware.right.setPower(0);
+                hardware.left.setPower(0);
             } else {
-                Hardware.right.setPower(power);
-                Hardware.left.setPower(power);
+                hardware.right.setPower(power);
+                hardware.left.setPower(power);
             }
 
             long startTime = System.currentTimeMillis()/1000;
-            while (Hardware.left.getCurrentPosition() < Hardware.left.getTargetPosition() || Hardware.right.getCurrentPosition() < Hardware.right.getTargetPosition()) {
+            while (hardware.left.getCurrentPosition() < hardware.left.getTargetPosition() || hardware.right.getCurrentPosition() < hardware.right.getTargetPosition()) {
                 if (rampUp) {
                     long currentTime = System.currentTimeMillis() / 1000;
                     long elapsed = Math.abs(currentTime - startTime);
@@ -54,26 +62,26 @@ public class AutonomousUtils {
                     if (speed > 1) {
                         speed = 1;
                     }
-                    Hardware.right.setPower(speed);
-                    Hardware.left.setPower(speed);
+                    hardware.right.setPower(speed);
+                    hardware.left.setPower(speed);
                 } else {
                     Thread.sleep(10);
                 }
             }
 
-            Hardware.right.setPower(0);
-            Hardware.left.setPower(0);
+            hardware.right.setPower(0);
+            hardware.left.setPower(0);
 
-            Hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            Hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void resetEncoders() {
-        Hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public static ColorSensorData getColorSensorData(int id) {
@@ -82,10 +90,10 @@ public class AutonomousUtils {
             return null;
         }
         if (id == 1) {
-            return new ColorSensorData(Hardware.colorSensor1.red(), Hardware.colorSensor1.green(), Hardware.colorSensor1.blue(), Hardware.colorSensor1.alpha());
+            return new ColorSensorData(hardware.colorSensor1.red(), hardware.colorSensor1.green(), hardware.colorSensor1.blue(), hardware.colorSensor1.alpha());
         }
         if (id == 2) {
-            return new ColorSensorData(Hardware.colorSensor2.red(), Hardware.colorSensor2.green(), Hardware.colorSensor2.blue(), Hardware.colorSensor2.alpha());
+            return new ColorSensorData(hardware.colorSensor2.red(), hardware.colorSensor2.green(), hardware.colorSensor2.blue(), hardware.colorSensor2.alpha());
         }
         return null;
     }

@@ -18,8 +18,8 @@ public class Hardware {
     public DcMotor  brushes= null;
     public DeviceInterfaceModule dim1 = null;
     public DeviceInterfaceModule dim2 = null;
-    public ColorSensor color1 = null;
-    public ColorSensor color2 = null;
+    public ColorSensor colorSensor1 = null;
+    public ColorSensor colorSensor2 = null;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -40,8 +40,8 @@ public class Hardware {
         //Define and initialize Sensors and DIM modules
         dim1 = this.hwMap.deviceInterfaceModule.get("dim1");
         dim2 = this.hwMap.deviceInterfaceModule.get("dim2");
-        color1 = this.hwMap.colorSensor.get("sensor_color1"); //Currently the back color sensor
-        color2 = this.hwMap.colorSensor.get("sensor_color2");
+        colorSensor1 = this.hwMap.colorSensor.get("sensor_color1"); //Currently the back color sensor
+        colorSensor2 = this.hwMap.colorSensor.get("sensor_color2");
 
         // Set all motors to zero power
         left.setPower(0);

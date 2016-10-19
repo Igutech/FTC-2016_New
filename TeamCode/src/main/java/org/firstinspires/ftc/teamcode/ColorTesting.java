@@ -66,14 +66,8 @@ public class ColorTesting extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Hardware.left = hardwareMap.dcMotor.get("left");
-        Hardware.right = hardwareMap.dcMotor.get("right");
-        Hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        Hardware.dim1 = hardwareMap.deviceInterfaceModule.get("dim");
-        Hardware.dim1.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
-        Hardware.colorSensor0 = hardwareMap.colorSensor.get("sensor_color");
-        Hardware.dim1.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
+        Hardware hardware = new Hardware(hardwareMap);
+        hardware.init();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();

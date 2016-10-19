@@ -73,16 +73,8 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Hardware.left = hardwareMap.dcMotor.get("left");
-        Hardware.right = hardwareMap.dcMotor.get("right");
-        Hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        Hardware.dim1 = hardwareMap.deviceInterfaceModule.get("dim1");
-        Hardware.dim1.setDigitalChannelMode(Hardware.LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
-        Hardware.dim2 = hardwareMap.deviceInterfaceModule.get("dim2");
-        Hardware.colorSensor1 = hardwareMap.colorSensor.get("sensor_color1");
-        Hardware.colorSensor2 = hardwareMap.colorSensor.get("sensor_color2");
-        Hardware.dim1.setDigitalChannelState(Hardware.LED_CHANNEL, false); //turn off LED
+        Hardware hardware = new Hardware(hardwareMap);
+        hardware.init();
         // Wait for the game to start (driver presses PLAY)
 
         decisions = new HashMap<String, Boolean>();
