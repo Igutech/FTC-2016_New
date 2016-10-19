@@ -61,17 +61,23 @@ import java.util.ArrayList;
 public class Teleop extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
+    private Hardware hardware;
+
     private ArrayList<Module> modules;
     @Override
     public void init() {
 
         modules = new ArrayList<Module>();
 
-        Hardware.left = hardwareMap.dcMotor.get("left");
-        Hardware.right = hardwareMap.dcMotor.get("right");
-        Hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
+        hardware = new Hardware(hardwareMap);
+        hardware.init();
+
+        hardware.left = hardwareMap.dcMotor.get("left");
+        hardware.right = hardwareMap.dcMotor.get("right");
+        hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
 
         modules.add(new DriveTrain(this));
+        modules.add(new Brushes(this));
 
         for (Module m : modules) {
             m.init();
@@ -132,4 +138,7 @@ public class Teleop extends OpMode {
         return pads;
     }
 
+    public Hardware getHardware() {
+        return this.hardware;
+    }
 }

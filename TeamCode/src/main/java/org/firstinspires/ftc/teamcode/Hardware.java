@@ -15,6 +15,7 @@ public class Hardware {
 
     public DcMotor  left   = null;
     public DcMotor  right  = null;
+    public DcMotor  brushes= null;
     public DeviceInterfaceModule dim1 = null;
     public DeviceInterfaceModule dim2 = null;
     public ColorSensor color1 = null;
@@ -32,6 +33,7 @@ public class Hardware {
         // Define and Initialize Motors
         left   = this.hwMap.dcMotor.get("left");
         right  = this.hwMap.dcMotor.get("right");
+        brushes= this.hwMap.dcMotor.get("brushes");
         left.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         right.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
