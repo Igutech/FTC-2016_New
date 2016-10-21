@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -19,6 +20,8 @@ public class Hardware {
     public DeviceInterfaceModule dim2 = null;
     public ColorSensor color1 = null;
     public ColorSensor color2 = null;
+    public LightSensor light1 = null;
+    public LightSensor light2 = null;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -40,6 +43,8 @@ public class Hardware {
         dim2 = this.hwMap.deviceInterfaceModule.get("dim2");
         color1 = this.hwMap.colorSensor.get("sensor_color1"); //Currently the back color sensor
         color2 = this.hwMap.colorSensor.get("sensor_color2");
+        light1 = this.hwMap.lightSensor.get("light_sensor1");
+        light2 = this.hwMap.lightSensor.get("light_sensor2");
 
         // Set all motors to zero power
         left.setPower(0);

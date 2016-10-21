@@ -63,7 +63,7 @@ public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-
+    Hardware robot = new Hardware(hardwareMap);
     private HashMap<String, Boolean> decisions;
     // DcMotor leftMotor = null;
     // DcMotor rightMotor = null;
@@ -73,7 +73,7 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Hardware robot = new Hardware(hardwareMap);
+        robot.init();
         // Wait for the game to start (driver presses PLAY)
 
         decisions = new HashMap<String, Boolean>();
