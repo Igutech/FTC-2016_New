@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -20,6 +21,8 @@ public class Hardware {
     public DeviceInterfaceModule dim2 = null;
     public ColorSensor colorSensor1 = null;
     public ColorSensor colorSensor2 = null;
+    public Servo leftbeacon;
+    public Servo rightbeacon;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -43,6 +46,9 @@ public class Hardware {
         colorSensor1 = this.hwMap.colorSensor.get("sensor_color1"); //Currently the back color sensor
         colorSensor2 = this.hwMap.colorSensor.get("sensor_color2");
 
+        leftbeacon = this.hwMap.servo.get("leftbeacon");
+        rightbeacon = this.hwMap.servo.get("rightbeacon");
+
         // Set all motors to zero power
         left.setPower(0);
         right.setPower(0);
@@ -50,6 +56,10 @@ public class Hardware {
         // Set all motors to run with encoders.
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Set all servos to start positions
+        leftbeacon.setPosition(0.1);
+        rightbeacon.setPosition(0.9);
 
     }
 
