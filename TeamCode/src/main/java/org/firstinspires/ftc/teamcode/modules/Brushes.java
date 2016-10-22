@@ -11,9 +11,9 @@ public class Brushes extends Module {
     }
 
     public void loop() {
-        if (teleop.getGamepad()[2].left_bumper) {
+        if (teleop.getGamepad()[2].right_bumper) {
             hardware.brushes.setPower(1);
-        } else if (teleop.getGamepad()[2].right_bumper) {
+        } else if (teleop.getGamepad()[2].left_bumper) {
             hardware.brushes.setPower(-1);
         } else {
             hardware.brushes.setPower(0);
