@@ -13,8 +13,8 @@ public class DriveTrain extends Module {
     }
     @Override
     public void loop() {
-        float joyThr = -teleop.getGamepad()[1].left_stick_y;
-        float joyYaw = -teleop.getGamepad()[1].right_stick_x;
+        float joyThr = teleop.getGamepad()[1].left_stick_y;
+        float joyYaw = teleop.getGamepad()[1].right_stick_x;
 
         if (joyThr > .90f) {
             joyThr = .90f;

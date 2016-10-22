@@ -72,10 +72,6 @@ public class Teleop extends OpMode {
         hardware = new Hardware(hardwareMap);
         hardware.init();
 
-        hardware.left = hardwareMap.dcMotor.get("left");
-        hardware.right = hardwareMap.dcMotor.get("right");
-        hardware.right.setDirection(DcMotorSimple.Direction.REVERSE);
-
         modules.add(new DriveTrain(this));
         modules.add(new Brushes(this));
 
