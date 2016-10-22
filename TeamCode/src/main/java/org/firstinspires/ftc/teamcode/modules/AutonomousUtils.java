@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
+import org.firstinspires.ftc.teamcode.LightSensorData;
 
 import java.util.Timer;
 
@@ -121,5 +122,18 @@ public class AutonomousUtils {
 
     public static float getBeaconConfidence(ColorSensorData data) {
         return standardDeviation(data);
+    }
+
+    public static LightSensorData getLightSensorData(int id) {
+        LightSensorData data = null;
+        if (id == 0) {
+            data = new LightSensorData(hardware.lightleft.getLightDetected());
+        }
+
+        if (id == 1) {
+            data = new LightSensorData(hardware.lightright.getLightDetected());
+        }
+
+        return data;
     }
 }

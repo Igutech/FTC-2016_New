@@ -139,7 +139,7 @@ public class Autonomous extends LinearOpMode {
                 telemetry.addData("State", state);
                 telemetry.update();
 
-                /*
+
                 while (opModeIsActive()) {
                     //ColorSensorData data0 = AutonomousUtils.getColorSensorData(0);
                     ColorSensorData data1 = AutonomousUtils.getColorSensorData(1);
@@ -154,13 +154,18 @@ public class Autonomous extends LinearOpMode {
                     telemetry.addData("red2", data2.getBlue());
                     telemetry.addData("blue2", data2.getBlue());
                     telemetry.addData("green2", data2.getGreen());
+                    telemetry.addData("lightleft", AutonomousUtils.getLightSensorData(0).getData());
+                    telemetry.addData("lightright", AutonomousUtils.getLightSensorData(1).getData());
                     telemetry.update();
                 }
-                */
+
+
+
 
                 // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
                 // leftMotor.setPower(-gamepad1.left_stick_y);
                 // rightMotor.setPower(-gamepad1.right_stick_y);
+                AutonomousUtils.driveEncoderFeet(4, .5f);
             }
         }
     }

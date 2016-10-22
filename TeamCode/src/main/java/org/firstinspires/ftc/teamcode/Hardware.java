@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -23,6 +24,9 @@ public class Hardware {
     public ColorSensor colorSensor2 = null;
     public Servo leftbeacon;
     public Servo rightbeacon;
+
+    public LightSensor lightright;
+    public LightSensor lightleft;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -48,6 +52,9 @@ public class Hardware {
 
         leftbeacon = this.hwMap.servo.get("leftbeacon");
         rightbeacon = this.hwMap.servo.get("rightbeacon");
+
+        lightright = this.hwMap.lightSensor.get("lightright");
+        lightleft = this.hwMap.lightSensor.get("lightleft");
 
         // Set all motors to zero power
         left.setPower(0);
