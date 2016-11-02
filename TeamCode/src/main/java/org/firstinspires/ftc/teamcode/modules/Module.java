@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.modules;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.Teleop;
 
 /**
@@ -10,9 +11,11 @@ import org.firstinspires.ftc.teamcode.Teleop;
 public class Module {
 
     Teleop teleop;
+    Hardware hardware;
 
     public Module(Teleop t) {
         this.teleop = t;
+        this.hardware = t.getHardware();
     }
 
     public void init() {  }

@@ -13,8 +13,9 @@ public class DriveTrain extends Module {
     }
     @Override
     public void loop() {
-        float joyThr = -teleop.getGamepad()[1].left_stick_y;
-        float joyYaw = -teleop.getGamepad()[1].right_stick_x;
+        float joyThr = teleop.getGamepad()[1].left_stick_y;
+        float joyYaw = teleop.getGamepad()[1].right_stick_x;
+        float slomo = 1-teleop.getGamepad()[1].right_trigger;
 
         if (joyThr > .90f) {
             joyThr = .90f;
@@ -42,8 +43,11 @@ public class DriveTrain extends Module {
             leftPow = -1.0f;
         }
 
+        if (slomo < .3f) {
+            slomo = .3f;
+        }
 
-        Hardware.right.setPower(rightPow);
-        Hardware.left.setPower(leftPow);
+        hardware.right.setPower(rightPow*slomo);
+        hardware.left.setPower(leftPow*slomo);
     }
 }

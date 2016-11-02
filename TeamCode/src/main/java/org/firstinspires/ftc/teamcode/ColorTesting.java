@@ -66,6 +66,8 @@ public class ColorTesting extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        Hardware hardware = new Hardware(hardwareMap);
+        hardware.init();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();

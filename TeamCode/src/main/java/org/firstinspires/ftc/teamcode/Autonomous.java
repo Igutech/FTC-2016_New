@@ -63,7 +63,7 @@ public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    Hardware robot = new Hardware(hardwareMap);
+
     private HashMap<String, Boolean> decisions;
     // DcMotor leftMotor = null;
     // DcMotor rightMotor = null;
@@ -73,7 +73,8 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        robot.init();
+        Hardware hardware = new Hardware(hardwareMap);
+        hardware.init();
         // Wait for the game to start (driver presses PLAY)
 
         decisions = new HashMap<String, Boolean>();
@@ -153,6 +154,8 @@ public class Autonomous extends LinearOpMode {
                     telemetry.addData("red2", data2.getBlue());
                     telemetry.addData("blue2", data2.getBlue());
                     telemetry.addData("green2", data2.getGreen());
+                    telemetry.addData("lightleft", AutonomousUtils.getLightSensorData(0).getData());
+                    telemetry.addData("lightright", AutonomousUtils.getLightSensorData(1).getData());
                     telemetry.update();
                 }
                 */
@@ -160,6 +163,7 @@ public class Autonomous extends LinearOpMode {
                 // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
                 // leftMotor.setPower(-gamepad1.left_stick_y);
                 // rightMotor.setPower(-gamepad1.right_stick_y);
+                AutonomousUtils.driveEncoderFeet(4, .5f);
             }
         }
     }
