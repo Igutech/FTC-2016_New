@@ -24,6 +24,7 @@ public class Hardware {
     public ColorSensor colorSensor2 = null;
     public Servo leftbeacon;
     public Servo rightbeacon;
+    public DcMotor flywheel;
 
     public LightSensor lightright;
     public LightSensor lightleft;
@@ -43,6 +44,8 @@ public class Hardware {
         brushes= this.hwMap.dcMotor.get("brushes");
         left.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         right.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+
+        flywheel = this.hwMap.dcMotor.get("flywheel");
 
         //Define and initialize Sensors and DIM modules
         dim1 = this.hwMap.deviceInterfaceModule.get("dim1");
