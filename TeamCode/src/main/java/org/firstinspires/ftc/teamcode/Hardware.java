@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.LightSensor;
@@ -46,6 +47,9 @@ public class Hardware {
         right.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
         flywheel = this.hwMap.dcMotor.get("flywheel");
+
+        flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
+        flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
 
         //Define and initialize Sensors and DIM modules
         dim1 = this.hwMap.deviceInterfaceModule.get("dim1");
