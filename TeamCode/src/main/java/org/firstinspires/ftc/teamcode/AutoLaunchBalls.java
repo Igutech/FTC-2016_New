@@ -30,20 +30,25 @@ public class AutoLaunchBalls extends LinearOpMode {
 
         waitForStart();
 
-        AutonomousUtils.driveEncoderFeet(firstDistance, .5f);
-        hardware.waitForTick(500);
-        hardware.flywheel.setPower(flywheelSpeed);
+        hardware.brushes.setPower(1f);
+        hardware.flywheel.setPower(0.53f);
+        hardware.waitForTick(10);
+        hardware.waitForTick(5000);
+        hardware.WEST.setPosition(engaged);
+        hardware.waitForTick(1500);
+        hardware.WEST.setPosition(disengaged);
+        hardware.waitForTick(1500);
+        hardware.flywheel.setPower(0.55f);
+        hardware.waitForTick(3000);
+        hardware.WEST.setPosition(engaged);
+        hardware.waitForTick(1500);
+        hardware.WEST.setPosition(disengaged);
+        hardware.waitForTick(8000);
+        hardware.WEST.setPosition(engaged);
+        hardware.waitForTick(1500);
+        hardware.WEST.setPosition(disengaged);
         hardware.waitForTick(2000);
-        hardware.WEST.setPosition(engaged);
-        hardware.waitForTick(3000);
-        hardware.WEST.setPosition(disengaged);
-        hardware.waitForTick(3000);
-        hardware.WEST.setPosition(engaged);
-        hardware.waitForTick(3000);
-        hardware.WEST.setPosition(disengaged);
         hardware.flywheel.setPower(0);
-        hardware.waitForTick(500);
-        AutonomousUtils.driveEncoderFeet(secondDistance, .5f);
 
 
     }
