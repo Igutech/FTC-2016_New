@@ -18,7 +18,7 @@ public class FlyWheel extends Module {
     private ElapsedTime period = new ElapsedTime();
 
     public void init() {
-        speed = 1f;
+        speed = .54f;
         toggled = false;
         triggered = false;
         period.reset();
@@ -57,6 +57,10 @@ public class FlyWheel extends Module {
                 }
                 period.reset();
             }
+        }
+
+        if (teleop.getGamepad()[2].y) {
+            speed = .54f;
         }
 
         if (toggled) {
