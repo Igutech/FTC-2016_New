@@ -33,7 +33,7 @@ public class AutoLaunchBalls extends LinearOpMode {
         AutonomousUtils.driveEncoderFeet(firstDistance, .5f);
         hardware.waitForTick(500);
         hardware.flywheel.setPower(flywheelSpeed);
-        hardware.waitForTick(500);
+        hardware.waitForTick(2000);
         hardware.WEST.setPosition(engaged);
         hardware.waitForTick(3000);
         hardware.WEST.setPosition(disengaged);
