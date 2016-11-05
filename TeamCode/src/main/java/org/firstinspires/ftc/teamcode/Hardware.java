@@ -77,8 +77,8 @@ public class Hardware {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set all servos to start positions
-        leftbeacon.setPosition(0.9);
-        rightbeacon.setPosition(0.1);
+        leftbeacon.setPosition(0.985);
+        rightbeacon.setPosition(0.05);
         WEST.setPosition(0);
 
     }
