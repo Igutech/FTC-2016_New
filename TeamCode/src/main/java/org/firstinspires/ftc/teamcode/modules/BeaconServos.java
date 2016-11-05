@@ -13,15 +13,15 @@ public class BeaconServos extends Module {
     @Override
     public void loop() {
         if (teleop.getGamepad()[2].x) {
-            hardware.leftbeacon.setPosition(.32);
+            hardware.leftbeacon.setPosition(.68);
         } else {
-            hardware.leftbeacon.setPosition(0.1);
+            hardware.leftbeacon.setPosition(.9);
         }
 
         if (teleop.getGamepad()[2].b) {
-            hardware.rightbeacon.setPosition(.68);
+            hardware.rightbeacon.setPosition(.32);
         } else {
-            hardware.rightbeacon.setPosition(.9);
+            hardware.rightbeacon.setPosition(.1);
         }
     }
 }

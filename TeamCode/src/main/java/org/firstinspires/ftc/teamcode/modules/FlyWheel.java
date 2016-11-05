@@ -14,17 +14,24 @@ public class FlyWheel extends Module {
 
     private float speed;
     private boolean toggled;
+    private boolean triggered;
     private ElapsedTime period = new ElapsedTime();
 
     public void init() {
         speed = 1f;
         toggled = false;
+        triggered = false;
         period.reset();
     }
 
     public void loop() {
 
-
+        if (teleop.getGamepad()[2].right_trigger > .2) {
+            triggered = true;
+        }
+        if (teleop.getGamepad()[2].right_trigger < .2) {
+            triggered = false;
+        }
         if (teleop.getGamepad()[2].dpad_left) {
             toggled = true;
         }
@@ -58,6 +65,13 @@ public class FlyWheel extends Module {
         } else {
             hardware.flywheel.setPower(0);
             teleop.telemetry.addData("FlyWheel", "Disabled");
+        }
+        if (triggered) {
+            hardware.WEST.setPosition(.6);
+            teleop.telemetry.addData("WEST", "Enabled");
+        } else {
+            hardware.WEST.setPosition(0);
+            teleop.telemetry.addData("WEST", "Disabled");
         }
         teleop.telemetry.addData("FlyWheel Speed", speed);
         teleop.telemetry.update();

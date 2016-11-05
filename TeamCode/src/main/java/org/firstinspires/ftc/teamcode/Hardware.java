@@ -25,6 +25,7 @@ public class Hardware {
     public ColorSensor colorSensor2 = null;
     public Servo leftbeacon;
     public Servo rightbeacon;
+    public Servo WEST;
     public DcMotor flywheel;
 
     public LightSensor lightright;
@@ -60,6 +61,8 @@ public class Hardware {
         leftbeacon = this.hwMap.servo.get("leftbeacon");
         rightbeacon = this.hwMap.servo.get("rightbeacon");
 
+        WEST = this.hwMap.servo.get("WEST");
+
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");
 
@@ -72,8 +75,9 @@ public class Hardware {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set all servos to start positions
-        leftbeacon.setPosition(0.1);
-        rightbeacon.setPosition(0.9);
+        leftbeacon.setPosition(0.9);
+        rightbeacon.setPosition(0.1);
+        WEST.setPosition(0);
 
     }
 
