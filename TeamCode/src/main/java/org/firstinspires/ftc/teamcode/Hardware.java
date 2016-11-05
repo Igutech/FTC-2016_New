@@ -52,6 +52,8 @@ public class Hardware {
         flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
 
+        flywheel.setPower(0);
+
         //Define and initialize Sensors and DIM modules
         dim1 = this.hwMap.deviceInterfaceModule.get("dim1");
         dim2 = this.hwMap.deviceInterfaceModule.get("dim2");
