@@ -28,6 +28,8 @@ public class AutoLaunchBalls extends LinearOpMode {
         Hardware hardware = new Hardware(hardwareMap);
         hardware.init();
 
+        waitForStart();
+
         AutonomousUtils.driveEncoderFeet(firstDistance, .5f);
         hardware.waitForTick(500);
         hardware.flywheel.setPower(flywheelSpeed);
