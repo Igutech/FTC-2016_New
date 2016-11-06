@@ -16,12 +16,18 @@ public class FlyWheel extends Module {
     private boolean toggled;
     private boolean triggered;
     private ElapsedTime period = new ElapsedTime();
+    private FlyWheelMonitor monitor;
 
     public void init() {
         speed = .54f;
         toggled = false;
         triggered = false;
         period.reset();
+
+        //start monitor thread
+        monitor = new FlyWheelMonitor(this);
+        Thread t = new Thread(monitor);
+        t.start();
     }
 
     public void loop() {
@@ -63,6 +69,12 @@ public class FlyWheel extends Module {
             speed = .54f;
         }
 
+        if (monitor.getStatus()) {
+            teleop.telemetry.addData(" ", "READY TO FIRE");
+        } else {
+            teleop.telemetry.addData(" ", "DO NOT FIRE");
+        }
+
         if (toggled) {
             hardware.flywheel.setPower(speed);
             teleop.telemetry.addData("FlyWheel", "Enabled");
@@ -79,5 +91,9 @@ public class FlyWheel extends Module {
         }
         teleop.telemetry.addData("FlyWheel Speed", speed);
         teleop.telemetry.update();
+    }
+
+    public float getTargetSpeed() {
+        return speed;
     }
 }
