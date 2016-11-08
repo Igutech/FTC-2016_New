@@ -58,7 +58,7 @@ import java.util.HashMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto (3ft)", group="Igutech")  // @Autonomous(...) is the other common choice
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="ColorTesting", group="Igutech")  // @Autonomous(...) is the other common choice
 public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
