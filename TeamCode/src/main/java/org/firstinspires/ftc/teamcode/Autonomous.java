@@ -75,10 +75,12 @@ public class Autonomous extends LinearOpMode {
 
         Hardware hardware = new Hardware(hardwareMap);
         hardware.init();
+        AutonomousUtils utils = new AutonomousUtils(hardware);
         // Wait for the game to start (driver presses PLAY)
 
-        decisions = new HashMap<String, Boolean>();
+        //decisions = new HashMap<String, Boolean>();
 
+        /*
         boolean confirmed = false;
         decisions.put("Color", true);
         while (!confirmed && opModeIsActive()) {
@@ -104,6 +106,7 @@ public class Autonomous extends LinearOpMode {
             }
             telemetry.update();
         }
+        */
 
 
         waitForStart();
@@ -112,38 +115,22 @@ public class Autonomous extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
 
         boolean done = false;
+        hardware.muxColor.startPolling();
 
         while (opModeIsActive()) {
             if (!done) {
 
-                done = true;
 
-                BeaconState target = null;
-                if (decisions.get("Color") == true) {
-                    target = BeaconState.RED;
-                } else {
-                    target = BeaconState.BLUE;
-                }
-
-                ColorDetectionThread colorDetection = new ColorDetectionThread(1.5f, 0f, 0f, 0f);
-                Thread t = new Thread(colorDetection);
-                t.start();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                BeaconState state = colorDetection.getState();
-
-                telemetry.addData("State", state);
-                telemetry.update();
-
-                /*
                 while (opModeIsActive()) {
                     //ColorSensorData data0 = AutonomousUtils.getColorSensorData(0);
-                    ColorSensorData data1 = AutonomousUtils.getColorSensorData(1);
-                    ColorSensorData data2 = AutonomousUtils.getColorSensorData(2);
+                    ColorSensorData data1 = null;
+                    ColorSensorData data2 = null;
+                    try {
+                        data1 = AutonomousUtils.getColorSensorData(1);
+                        data2 = AutonomousUtils.getColorSensorData(2);
+                    } catch (NullPointerException e) {
+                        telemetry.addData("NullPointer", e.getStackTrace().toString());
+                    }
 
                     //telemetry.addData("red0", data0.getRed());
                     //telemetry.addData("blue0", data0.getBlue());
@@ -154,16 +141,14 @@ public class Autonomous extends LinearOpMode {
                     telemetry.addData("red2", data2.getBlue());
                     telemetry.addData("blue2", data2.getBlue());
                     telemetry.addData("green2", data2.getGreen());
-                    telemetry.addData("lightleft", AutonomousUtils.getLightSensorData(0).getData());
-                    telemetry.addData("lightright", AutonomousUtils.getLightSensorData(1).getData());
                     telemetry.update();
                 }
-                */
+
 
                 // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
                 // leftMotor.setPower(-gamepad1.left_stick_y);
                 // rightMotor.setPower(-gamepad1.right_stick_y);
-                AutonomousUtils.driveEncoderFeet(4, .5f);
+                //AutonomousUtils.driveEncoderFeet(4, .5f);
             }
         }
     }

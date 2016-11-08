@@ -19,9 +19,8 @@ public class AutonomousUtils {
 
     private static Hardware hardware;
 
-    public AutonomousUtils(HardwareMap hardwareMap) {
-        hardware = new Hardware(hardwareMap);
-        hardware.init();
+    public AutonomousUtils(Hardware hardware) {
+        this.hardware = hardware;
     }
 
     public static void driveEncoderFeet(float feet, float power) {
@@ -91,10 +90,12 @@ public class AutonomousUtils {
             return null;
         }
         if (id == 1) {
-            return new ColorSensorData(hardware.colorSensor1.red(), hardware.colorSensor1.green(), hardware.colorSensor1.blue(), hardware.colorSensor1.alpha());
+            int[] crgb = hardware.muxColor.getCRGB(1);
+            return new ColorSensorData(crgb[1], crgb[2], crgb[3], crgb[0]);
         }
         if (id == 2) {
-            return new ColorSensorData(hardware.colorSensor2.red(), hardware.colorSensor2.green(), hardware.colorSensor2.blue(), hardware.colorSensor2.alpha());
+            int[] crgb = hardware.muxColor.getCRGB(2);
+            return new ColorSensorData(crgb[1], crgb[2], crgb[3], crgb[0]);
         }
         return null;
     }

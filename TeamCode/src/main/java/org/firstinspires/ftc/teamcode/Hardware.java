@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.modules.MultiplexColorSensor;
+
 /**
  * Created by Kevin on 10/5/2016.
  */
@@ -19,10 +21,7 @@ public class Hardware {
     public DcMotor  left   = null;
     public DcMotor  right  = null;
     public DcMotor  brushes= null;
-    public DeviceInterfaceModule dim1 = null;
-    public DeviceInterfaceModule dim2 = null;
-    public ColorSensor colorSensor1 = null;
-    public ColorSensor colorSensor2 = null;
+    public DeviceInterfaceModule dim1;
     public Servo leftbeacon;
     public Servo rightbeacon;
     public Servo WEST;
@@ -30,6 +29,8 @@ public class Hardware {
 
     public LightSensor lightright;
     public LightSensor lightleft;
+
+    public MultiplexColorSensor muxColor;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -56,9 +57,6 @@ public class Hardware {
 
         //Define and initialize Sensors and DIM modules
         dim1 = this.hwMap.deviceInterfaceModule.get("dim1");
-        dim2 = this.hwMap.deviceInterfaceModule.get("dim2");
-        colorSensor1 = this.hwMap.colorSensor.get("sensor_color1"); //Currently the back color sensor
-        colorSensor2 = this.hwMap.colorSensor.get("sensor_color2");
 
         leftbeacon = this.hwMap.servo.get("leftbeacon");
         rightbeacon = this.hwMap.servo.get("rightbeacon");
@@ -67,6 +65,10 @@ public class Hardware {
 
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");
+
+        int[] ports = {1, 2};
+
+        muxColor = new MultiplexColorSensor(hwMap, "mux", "ada", ports, 48, MultiplexColorSensor.GAIN_16X);
 
         // Set all motors to zero power
         left.setPower(0);
