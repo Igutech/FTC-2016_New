@@ -66,6 +66,9 @@ public class Hardware {
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");
 
+        lightright.enableLed(true);
+        lightleft.enableLed(true);
+
         int[] ports = {1, 2};
 
         muxColor = new MultiplexColorSensor(hwMap, "mux", "ada", ports, 48, MultiplexColorSensor.GAIN_16X);
