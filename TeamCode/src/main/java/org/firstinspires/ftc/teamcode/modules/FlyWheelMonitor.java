@@ -16,6 +16,9 @@ public class FlyWheelMonitor implements Runnable {
     private float stDevSP = 200;
     private int resetTime = 1000;
     private ElapsedTime period = new ElapsedTime();
+    private boolean status = false;
+    public int deltaPos;
+    public int lastencoderpos;
 
     public FlyWheelMonitor(FlyWheel flyWheel) {
         this.flyWheel = flyWheel;
@@ -24,21 +27,46 @@ public class FlyWheelMonitor implements Runnable {
 
     @Override
     public void run() {
+
+
+
         while (true) {
-            encoderValues.add((float)Math.abs(flyWheel.hardware.flywheel.getCurrentPosition()-lastPosition));
+
+            deltaPos = Math.abs(flyWheel.hardware.flywheel.getCurrentPosition()-lastPosition);
+
+            encoderValues.add((float) deltaPos);
             lastPosition = flyWheel.hardware.flywheel.getCurrentPosition();
+
+
+            if (standardDeviation(encoderValues) > stDevSP) {
+                status = false;
+            } else {
+                status = true;
+            }
+
+
             if (period.milliseconds() > resetTime) {
-                encoderValues = new ArrayList<Float>();
+                ArrayList toRemove = new ArrayList();
+                for (Float f: encoderValues) {
+                    toRemove.add(f);
+                }
+                encoderValues.removeAll(toRemove);
                 period.reset();
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
     public boolean getStatus() {
-        if (standardDeviation(encoderValues) < stDevSP) {
-            return true;
-        }
-        return false;
+        return status;
+    }
+
+    public int getLastPosition() {
+        return deltaPos;
     }
 
     public float sum (List<Float> a){

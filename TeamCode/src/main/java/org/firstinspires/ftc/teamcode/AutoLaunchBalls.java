@@ -23,7 +23,7 @@ public class AutoLaunchBalls extends LinearOpMode {
         secondDistance = 7.656f-firstDistance;
         float flywheelSpeed = 1f;
         double engaged = .6d;
-        double disengaged = 0d;
+        double disengaged = 0.05d;
 
         Hardware hardware = new Hardware(hardwareMap);
         hardware.init();

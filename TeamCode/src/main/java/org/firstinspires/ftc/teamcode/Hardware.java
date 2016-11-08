@@ -81,7 +81,16 @@ public class Hardware {
         // Set all servos to start positions
         leftbeacon.setPosition(0.985);
         rightbeacon.setPosition(0.05);
-        WEST.setPosition(0);
+        WEST.setPosition(0.05);
+
+        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        flywheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
     }
 
