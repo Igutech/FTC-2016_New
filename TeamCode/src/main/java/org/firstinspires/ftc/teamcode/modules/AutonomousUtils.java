@@ -5,6 +5,7 @@ import android.graphics.Color;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Autonomous;
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
@@ -82,6 +83,9 @@ public class AutonomousUtils {
     public static void resetEncoders() {
         hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.waitForTick(250);
+        hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public static ColorSensorData getColorSensorData(int id) {
