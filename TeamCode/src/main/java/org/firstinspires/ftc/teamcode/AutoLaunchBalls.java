@@ -27,6 +27,7 @@ public class AutoLaunchBalls extends LinearOpMode {
 
         Hardware hardware = new Hardware(hardwareMap);
         hardware.init();
+        new AutonomousUtils(hardware);
 
         waitForStart();
 
@@ -43,13 +44,40 @@ public class AutoLaunchBalls extends LinearOpMode {
         hardware.WEST.setPosition(engaged);
         hardware.waitForTick(1500);
         hardware.WEST.setPosition(disengaged);
-        hardware.waitForTick(8000);
-        hardware.WEST.setPosition(engaged);
-        hardware.waitForTick(1500);
-        hardware.WEST.setPosition(disengaged);
-        hardware.waitForTick(2000);
         hardware.flywheel.setPower(0);
 
+        AutonomousUtils.driveEncoderFeet(-.5f, .5f, false);
+        hardware.waitForTick(50);
+        hardware.right.setPower(-.5f);
+
+        while (hardware.right.getCurrentPosition() > -920) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        hardware.right.setPower(0f);
+        hardware.waitForTick(50);
+        hardware.brushes.setPower(0);
+
+        AutonomousUtils.resetEncoders();
+        hardware.right.setPower(-.5f);
+        hardware.left.setPower(-.5f);
+
+
+        while (hardware.right.getCurrentPosition() > -1301 && hardware.left.getCurrentPosition() > -1301) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        hardware.right.setPower(0f);
+        hardware.left.setPower(0f);
+        hardware.waitForTick(50);
 
     }
 
