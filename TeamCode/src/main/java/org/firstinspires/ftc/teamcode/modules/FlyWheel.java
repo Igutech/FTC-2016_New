@@ -15,8 +15,11 @@ public class FlyWheel extends Module {
     private float speed;
     private boolean toggled;
     private boolean triggered;
+    private int loopVar = 0;
     private ElapsedTime period = new ElapsedTime();
+    private ElapsedTime period1  = new ElapsedTime();
     private FlyWheelMonitor monitor;
+    WESTTimerThread westTimer;
 
     public void init() {
         speed = .54f;
@@ -28,7 +31,12 @@ public class FlyWheel extends Module {
         monitor = new FlyWheelMonitor(this);
         Thread t = new Thread(monitor);
         t.start();
+
+        westTimer = new WESTTimerThread(hardware);
+        Thread t2 = new Thread(westTimer);
+        t2.start();
     }
+
 
     public void loop() {
 
@@ -85,14 +93,8 @@ public class FlyWheel extends Module {
             teleop.telemetry.addData("FlyWheel", "Disabled");
         }
         if (triggered) {
-            hardware.WEST.setPosition(.6);
-            teleop.telemetry.addData("WEST", "Enabled");
-        } else {
-            hardware.WEST.setPosition(0.05);
-            teleop.telemetry.addData("WEST", "Disabled");
+            westTimer.trigger();
         }
-        teleop.telemetry.addData("FlyWheel Speed", speed);
-        teleop.telemetry.update();
     }
 
     public float getTargetSpeed() {
