@@ -83,10 +83,11 @@ public class FlyWheel extends Module {
             teleop.telemetry.addData(" ", "DO NOT FIRE");
         }
 
+        teleop.telemetry.addData("Flywheel Speed", speed);
         teleop.telemetry.addData("LastPosition", monitor.getLastPosition());
 
         if (toggled) {
-            hardware.flywheel.setPower(speed);
+            hardware.flywheel.setPower(-speed);
             teleop.telemetry.addData("FlyWheel", "Enabled");
         } else {
             hardware.flywheel.setPower(0);

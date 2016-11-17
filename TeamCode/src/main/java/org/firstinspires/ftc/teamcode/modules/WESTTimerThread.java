@@ -27,7 +27,7 @@ public class WESTTimerThread implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                hardware.WEST.setPosition(.05);
+                hardware.WEST.setPosition(.07);
                 triggered = false;
             }
         }
