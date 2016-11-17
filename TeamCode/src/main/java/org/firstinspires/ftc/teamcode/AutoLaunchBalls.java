@@ -83,11 +83,11 @@ public class AutoLaunchBalls extends LinearOpMode {
                         e.printStackTrace();
                     }
                 }
-                hardware.waitForTick(50);
+                telemetry.addData("Done with first move", "");
+                telemetry.update();
                 hardware.left.setPower(0);
                 hardware.right.setPower(0);
                 hardware.waitForTick(100);
-                AutonomousUtils.resetEncoders();
                 hardware.right.setPower(-.5f);
 
                 while (hardware.right.getCurrentPosition() > -920) {
@@ -101,12 +101,11 @@ public class AutoLaunchBalls extends LinearOpMode {
                 hardware.right.setPower(0f);
                 hardware.waitForTick(50);
 
-                AutonomousUtils.resetEncoders();
                 hardware.right.setPower(-.5f);
                 hardware.left.setPower(-.5f);
 
 
-                while (hardware.right.getCurrentPosition() > -1301 && hardware.left.getCurrentPosition() > -1301) {
+                while (hardware.right.getCurrentPosition() > -2221 && hardware.left.getCurrentPosition() > -1301) {
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -117,10 +116,9 @@ public class AutoLaunchBalls extends LinearOpMode {
                 hardware.right.setPower(0f);
                 hardware.left.setPower(0f);
                 hardware.waitForTick(50);
-                AutonomousUtils.resetEncoders();
                 hardware.left.setPower(-.5f);
 
-                while (hardware.left.getCurrentPosition() > -920) {
+                while (hardware.left.getCurrentPosition() > -2221) {
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -181,7 +179,7 @@ public class AutoLaunchBalls extends LinearOpMode {
                 hardware.WEST.setPosition(disengaged);
                 hardware.flywheel.setPower(0);
 
-                AutonomousUtils.driveEncoderFeet(-.5f, .5f, false);
+                //AutonomousUtils.driveEncoderFeet(-.5f, .5f, false);
                 hardware.waitForTick(50);
                 hardware.left.setPower(-.5f);
 
