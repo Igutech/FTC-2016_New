@@ -77,9 +77,9 @@ public class FlyWheel extends Module {
         }
 
         if (monitor.getStatus()) {
-            teleop.telemetry.addData(" ", "READY TO FIRE");
+            //teleop.telemetry.addData(" ", "READY TO FIRE");
         } else {
-            teleop.telemetry.addData(" ", "DO NOT FIRE");
+            //teleop.telemetry.addData(" ", "DO NOT FIRE");
         }
 
         if (targetSpeed > speed) {
@@ -102,9 +102,17 @@ public class FlyWheel extends Module {
             }
         }
 
+        if (Math.abs(speed-targetSpeed) < 3) {
+            teleop.telemetry.addData("-", "READY TO FIRE");
+        } else {
+            teleop.telemetry.addData("-", "DO NOT FIRE");
+        }
+
         teleop.telemetry.addData("Target targetSpeed", targetSpeed);
         teleop.telemetry.addData("Actual Speed", speed);
         teleop.telemetry.addData("LastPosition", monitor.getLastPosition());
+
+
 
         if (toggled) {
             hardware.flywheel.setPower(-speed);
