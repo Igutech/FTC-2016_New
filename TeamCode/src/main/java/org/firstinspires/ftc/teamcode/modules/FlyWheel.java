@@ -12,17 +12,16 @@ public class FlyWheel extends Module {
         super(t);
     }
 
+    private float targetSpeed;
     private float speed;
     private boolean toggled;
     private boolean triggered;
-    private int loopVar = 0;
     private ElapsedTime period = new ElapsedTime();
-    private ElapsedTime period1  = new ElapsedTime();
     private FlyWheelMonitor monitor;
     WESTTimerThread westTimer;
 
     public void init() {
-        speed = .54f;
+        targetSpeed = .54f;
         toggled = false;
         triggered = false;
         period.reset();
@@ -55,15 +54,35 @@ public class FlyWheel extends Module {
 
         if (teleop.getGamepad()[2].dpad_down) {
             if (period.milliseconds() >= 20) {
-                speed -= 0.01f;
-                if (speed < 0f) {
-                    speed = 0f;
+                targetSpeed -= 0.01f;
+                if (targetSpeed < 0f) {
+                    targetSpeed = 0f;
                 }
                 period.reset();
             }
         }
 
         if (teleop.getGamepad()[2].dpad_up) {
+            if (period.milliseconds() >= 20) {
+                targetSpeed += 0.01f;
+                if (targetSpeed > 1f) {
+                    targetSpeed = 1f;
+                }
+                period.reset();
+            }
+        }
+
+        if (teleop.getGamepad()[2].y) {
+            targetSpeed = .54f;
+        }
+
+        if (monitor.getStatus()) {
+            teleop.telemetry.addData(" ", "READY TO FIRE");
+        } else {
+            teleop.telemetry.addData(" ", "DO NOT FIRE");
+        }
+
+        if (targetSpeed > speed) {
             if (period.milliseconds() >= 20) {
                 speed += 0.01f;
                 if (speed > 1f) {
@@ -73,17 +92,18 @@ public class FlyWheel extends Module {
             }
         }
 
-        if (teleop.getGamepad()[2].y) {
-            speed = .54f;
+        if (targetSpeed < speed) {
+            if (period.milliseconds() >= 20) {
+                speed -= 0.01f;
+                if (speed < 0f) {
+                    speed = 0f;
+                }
+                period.reset();
+            }
         }
 
-        if (monitor.getStatus()) {
-            teleop.telemetry.addData(" ", "READY TO FIRE");
-        } else {
-            teleop.telemetry.addData(" ", "DO NOT FIRE");
-        }
-
-        teleop.telemetry.addData("Flywheel Speed", speed);
+        teleop.telemetry.addData("Target targetSpeed", targetSpeed);
+        teleop.telemetry.addData("Actual Speed", speed);
         teleop.telemetry.addData("LastPosition", monitor.getLastPosition());
 
         if (toggled) {
@@ -92,6 +112,7 @@ public class FlyWheel extends Module {
         } else {
             hardware.flywheel.setPower(0);
             teleop.telemetry.addData("FlyWheel", "Disabled");
+            speed = 0f;
         }
         if (triggered) {
             westTimer.trigger();
@@ -99,6 +120,10 @@ public class FlyWheel extends Module {
     }
 
     public float getTargetSpeed() {
+        return targetSpeed;
+    }
+
+    public float getSpeed() {
         return speed;
     }
 }
