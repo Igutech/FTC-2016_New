@@ -20,7 +20,7 @@ public class WESTTimerThread implements Runnable {
     public void run() {
         while(true) {
             if (triggered) {
-                hardware.WEST.setPosition(.50);
+                hardware.WEST.setPosition(.57);
 
                 try {
                     Thread.sleep(750);
