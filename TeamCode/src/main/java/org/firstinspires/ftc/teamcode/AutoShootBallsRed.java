@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
  * Created by Logan on 11/18/2016.
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoShootBalls", group="Igutech")
-public class AutoShootBalls extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoShootBallsRed", group="Igutech")
+public class AutoShootBallsRed extends LinearOpMode {
     public void runOpMode() {
         float flywheelSpeed = -.6f;
         double engaged = .6d;
