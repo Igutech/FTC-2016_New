@@ -15,8 +15,8 @@ import java.util.HashMap;
 /**
  * Created by Logan on 11/2/2016.
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto Launch Balls", group="Igutech")
-public class AutoLaunchBalls extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoPressButtonRed", group="Igutech")
+public class AutoPressButtonRed extends LinearOpMode {
     public void runOpMode() {
         float firstDistance, secondDistance;
         firstDistance = .5f;
