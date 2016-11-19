@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoShootBallsBlue", group="Igutech")
 public class AutoShootBallsBlue extends LinearOpMode {
     public void runOpMode() {
-        float flywheelSpeed = -.6f;
-        double engaged = .6d;
+        float flywheelSpeed = -.54f;
+        double engaged = .63d;
         double disengaged = 0.05d;
 
         Hardware hardware = new Hardware(hardwareMap);
