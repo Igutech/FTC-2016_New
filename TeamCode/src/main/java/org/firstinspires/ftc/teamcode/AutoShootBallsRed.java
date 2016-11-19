@@ -47,7 +47,7 @@ public class AutoShootBallsRed extends LinearOpMode {
         hardware.waitForTick(100);
         hardware.left.setPower(.3);
         hardware.right.setPower(.3);
-        hardware.waitForTick(500);
+        hardware.waitForTick(300);
         hardware.left.setPower(0);
         hardware.right.setPower(0);
         hardware.waitForTick(100);
