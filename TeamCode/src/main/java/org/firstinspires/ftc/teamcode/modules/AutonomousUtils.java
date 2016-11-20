@@ -4,12 +4,18 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.vuforia.HINT;
+import com.vuforia.Vuforia;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.Autonomous;
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.LightSensorData;
+import org.firstinspires.ftc.teamcode.R;
 
 import java.util.Timer;
 
@@ -20,8 +26,25 @@ public class AutonomousUtils {
 
     private static Hardware hardware;
 
+    private static VuforiaLocalizer vuforia;
+    private static VuforiaTrackables beacons;
+
     public AutonomousUtils(Hardware hardware) {
         this.hardware = hardware;
+
+        VuforiaLocalizer.Parameters params = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
+        params.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        params.vuforiaLicenseKey = "ATyrhjr/////AAAAGQkWk5HXZENcqYv4l/cLrAcfENcstUvFnl8vaOutgQtFQf79v0N2BSAGYay/C567At7DCYMrDQPIzfUxJPOBty7vdySul/iE+N2CkXHXUoiLTUkqq5kqPfIZ1dJzcpEfl5rws+7QKztYGtxZh96uK6/yD3Bl7PwZZ1SXSiO0HnlVLv5plx+l/CcZDqA6FGkON5o7BbR9KVFRV9zeJDGwi8zI7CpO3Co3c6GQ/eN9zqx6WmzliDb0Wk/j9z2i7+oAxwM3ZTne4zlTb0wlHUJOKRpKBHWFPltExDdQcnGJevdc+kwcJpm5yos7JHEOYyCe057DLozLYAmcJciRbUAU+H1PDujZ3l+rGydQAvXRX71l";
+        params.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
+
+        vuforia = ClassFactory.createVuforiaLocalizer(params);
+        Vuforia.setHint(HINT.HINT_MAX_SIMULTANEOUS_IMAGE_TARGETS, 4);
+
+        beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
+        beacons.get(0).setName("Wheels");
+        beacons.get(1).setName("Tools");
+        beacons.get(2).setName("Legos");
+        beacons.get(3).setName("Gears");
     }
 
     public static void driveEncoderFeet(float feet, float power) {
@@ -140,5 +163,13 @@ public class AutonomousUtils {
         }
 
         return data;
+    }
+
+    public static void activateVuforia() {
+        beacons.activate();
+    }
+
+    public static VuforiaTrackables getBeacons() {
+        return beacons;
     }
 }
