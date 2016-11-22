@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.LightSensorData;
+import org.firstinspires.ftc.teamcode.Motor;
 
 import java.util.Timer;
 
@@ -24,19 +25,19 @@ public class AutonomousUtils {
         this.hardware = hardware;
     }
 
-    public static void driveEncoderFeet(float feet, float power) {
-        driveEncoderTicks((int)(feet*460f), power);
+    public static void driveEncoderFeetBackwards(float feet, float power) {
+        driveEncoderTicksBackwards((int)(feet*460f), power);
     }
 
-    public static void driveEncoderFeet(float feet, float power, boolean rampUp) {
-        driveEncoderTicks((int)(feet*460f), power, rampUp);
+    public static void driveEncoderFeetBackwards(float feet, float power, boolean rampUp) {
+        driveEncoderTicksBackwards((int) (feet * 460f), power, rampUp);
     }
 
-    public static void driveEncoderTicks(int ticks, float power) { //460 ticks per foot
-        driveEncoderTicks(ticks, power, true);
+    public static void driveEncoderTicksBackwards(int ticks, float power) { //460 ticks per foot
+        driveEncoderTicksBackwards(ticks, power, false);
     }
 
-    public static void driveEncoderTicks(int ticks, float power, boolean rampUp) { //460 ticks per foot
+    public static void driveEncoderTicksBackwards(int ticks, float power, boolean rampUp) { //460 ticks per foot
         try {
             hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -78,6 +79,93 @@ public class AutonomousUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void driveEncoderFeet(float feet, float power) {
+        driveEncoderTicks((int)(feet*460f), power);
+    }
+
+    public static void driveEncoderFeet(float feet, float power, boolean rampUp) {
+        //driveEncoderTicks((int) (feet * 460f), power, rampUp);
+
+        if (rampUp) {
+            if (feet > 1) {
+                driveEncoderTicks(150, power/2, true);
+                driveEncoderTicks((int) (feet * 460f)-200, power, true);
+                driveEncoderTicks((int) (feet * 460f)-50, power/2, true);
+                driveEncoderTicks((int) (feet * 460f), power/5, false);
+            }
+        } else {
+            driveEncoderTicks((int) (feet * 460f), power, false);
+        }
+    }
+
+    public static void driveEncoderTicks(int ticks, float power) { //460 ticks per foot
+        driveEncoderTicks(ticks, power, false);
+    }
+
+    public static void driveEncoderTicks(int ticks, float power, boolean rampUp) { //460 ticks per foot
+        try {
+            if (!hardware.left.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
+                hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            }
+            hardware.right.setTargetPosition(-ticks);
+            hardware.left.setTargetPosition(-ticks);
+
+            hardware.right.setPower(-power);
+            hardware.left.setPower(-power);
+
+            while (hardware.left.getCurrentPosition() > hardware.left.getTargetPosition() || hardware.right.getCurrentPosition() > hardware.right.getTargetPosition()) {
+                Thread.sleep(10);
+            }
+            if (!rampUp) {
+
+                hardware.right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                hardware.left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                hardware.right.setPower(0);
+                hardware.left.setPower(0);
+
+                Thread.sleep(100);
+
+                hardware.right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                hardware.left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+                hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void driveMotorBackwards(float ticks, float speed, Motor motor) {
+        driveMotor(-ticks, -speed, motor);
+    }
+
+    public static void driveMotor(float ticks, float speed, Motor motor) {
+        DcMotor target = null;
+
+        if (motor.equals(Motor.LEFT)) {
+            target = hardware.left;
+        } else {
+            target = hardware.right;
+        }
+
+        target.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        target.setTargetPosition((int) -ticks);
+        target.setPower(-speed);
+
+        while (target.isBusy()) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        target.setPower(0);
+        target.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public static void resetEncoders() {
