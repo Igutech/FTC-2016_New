@@ -139,8 +139,16 @@ public class AutonomousUtils {
         }
     }
 
+    public static void driveMotorFeetBackwards(float feet, float speed, Motor motor) {
+        driveMotorBackwards(feet*460f, speed, motor);
+    }
+
     public static void driveMotorBackwards(float ticks, float speed, Motor motor) {
         driveMotor(-ticks, -speed, motor);
+    }
+
+    public static void driveMotorFeet(float feet, float speed, Motor motor) {
+        driveMotor(feet*460f, speed, motor);
     }
 
     public static void driveMotor(float ticks, float speed, Motor motor) {
