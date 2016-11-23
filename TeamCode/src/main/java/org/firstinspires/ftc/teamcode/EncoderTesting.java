@@ -20,6 +20,10 @@ public class EncoderTesting extends LinearOpMode {
 
         waitForStart();
 
-        AutonomousUtils.driveEncoderFeet(4f, .8f, true);
+        AutonomousUtils.driveEncoderFeet(2f, .5f, true);
+        AutonomousUtils.resetEncoders();
+        AutonomousUtils.driveMotorFeet(1.5f, .5f, Motor.LEFT);
+        AutonomousUtils.resetEncoders();
+        AutonomousUtils.driveEncoderFeet(2f, .5f, true);
     }
 }
