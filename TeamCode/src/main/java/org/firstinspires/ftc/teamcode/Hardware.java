@@ -44,7 +44,7 @@ public class Hardware {
         left   = this.hwMap.dcMotor.get("left");
         right  = this.hwMap.dcMotor.get("right");
         brushes= this.hwMap.dcMotor.get("brushes");
-        left.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        left.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         right.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
 
         flywheel = this.hwMap.dcMotor.get("flywheel");
