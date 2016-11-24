@@ -90,25 +90,27 @@ public class AutonomousUtils {
 
         if (rampUp) {
             if (feet > 1) {
-                driveEncoderTicks(150, power/2, true);
-                driveEncoderTicks((int) (feet * 460f)-200, power, true);
-                driveEncoderTicks((int) (feet * 460f)-50, power/2, true);
-                driveEncoderTicks((int) (feet * 460f), power/5, false);
+                driveEncoderTicks(150, power/2, true, true);
+                driveEncoderTicks((int) (feet * 460f)-200, power, true, false);
+                driveEncoderTicks((int) (feet * 460f)-50, power/2, true, false);
+                driveEncoderTicks((int) (feet * 460f), power/5, false, false);
             }
         } else {
-            driveEncoderTicks((int) (feet * 460f), power, false);
+            driveEncoderTicks((int) (feet * 460f), power, false, true);
         }
     }
 
     public static void driveEncoderTicks(int ticks, float power) { //460 ticks per foot
-        driveEncoderTicks(ticks, power, false);
+        driveEncoderTicks(ticks, power, false, true);
     }
 
-    public static void driveEncoderTicks(int ticks, float power, boolean rampUp) { //460 ticks per foot
+    public static void driveEncoderTicks(int ticks, float power, boolean rampUp, boolean firstTime) { //460 ticks per foot
         try {
-            if (!hardware.left.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
-                hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (firstTime) {
+                if (!hardware.left.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
+                    hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                }
             }
             hardware.right.setTargetPosition(-ticks);
             hardware.left.setTargetPosition(-ticks);
@@ -140,7 +142,7 @@ public class AutonomousUtils {
     }
 
     public static void driveMotorFeetBackwards(float feet, float speed, Motor motor) {
-        driveMotorBackwards(feet*460f, speed, motor);
+        driveMotorBackwards(feet * 460f, speed, motor);
     }
 
     public static void driveMotorBackwards(float ticks, float speed, Motor motor) {
@@ -148,7 +150,7 @@ public class AutonomousUtils {
     }
 
     public static void driveMotorFeet(float feet, float speed, Motor motor) {
-        driveMotor(feet*460f, speed, motor);
+        driveMotor(feet * 460f, speed, motor);
     }
 
     public static void driveMotor(float ticks, float speed, Motor motor) {
