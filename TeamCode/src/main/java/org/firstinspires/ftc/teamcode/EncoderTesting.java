@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.*;
 
 import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
 
@@ -20,10 +20,14 @@ public class EncoderTesting extends LinearOpMode {
 
         waitForStart();
 
-        AutonomousUtils.driveEncoderFeet(2f, .5f, true);
-        AutonomousUtils.resetEncoders();
-        AutonomousUtils.driveMotorFeet(1.5f, .5f, Motor.LEFT);
-        AutonomousUtils.resetEncoders();
-        AutonomousUtils.driveEncoderFeet(2f, .5f, true);
+        for (int i = 0; i < 20; i++) {
+            AutonomousUtils.driveEncoderFeet(2f, .5f, true);
+            AutonomousUtils.resetEncoders();
+            hardware.waitForTick(250);
+            AutonomousUtils.driveEncoderFeet(-2f, -.5f, true);
+            AutonomousUtils.resetEncoders();
+            hardware.waitForTick(250);
+        }
+
     }
 }
