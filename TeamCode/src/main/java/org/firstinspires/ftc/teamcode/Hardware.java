@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRGyro;
 import org.firstinspires.ftc.teamcode.modules.MultiplexColorSensor;
 
 /**
@@ -30,6 +32,8 @@ public class Hardware {
     public LightSensor lightleft;
 
     public MultiplexColorSensor muxColor;
+
+    public ModernRoboticsI2cGyro gyro;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -66,6 +70,14 @@ public class Hardware {
 
         lightright.enableLed(true);
         lightleft.enableLed(true);
+
+        gyro = (ModernRoboticsI2cGyro) this.hwMap.gyroSensor.get("gyro");
+
+        gyro.calibrate();
+        while (gyro.isCalibrating()) {
+            this.waitForTick(10);
+        }
+
 
         int[] ports = {1, 2};
 

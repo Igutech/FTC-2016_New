@@ -8,9 +8,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Autonomous;
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
+import org.firstinspires.ftc.teamcode.GyroSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.LightSensorData;
 import org.firstinspires.ftc.teamcode.Motor;
+import org.firstinspires.ftc.teamcode.TurnType;
 
 import java.util.Timer;
 
@@ -178,6 +180,67 @@ public class AutonomousUtils {
         target.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    public static void gyroTurn(Motor motor, TurnType turntype, float speed, int angle) {
+
+
+        if (turntype.equals(TurnType.SWING)) {
+
+            DcMotor target = null;
+            if (motor.equals(Motor.RIGHT)) {
+                target = hardware.right;
+            } else {
+                target = hardware.left;
+            }
+
+            boolean done = false;
+            Condition condition;
+            if (angle < AutonomousUtils.getGyroSensorData().getIntegratedZ()) {
+                condition = Condition.LT;
+            } else {
+                condition = Condition.GT;
+            }
+            while (!done) {
+                GyroSensorData data = AutonomousUtils.getGyroSensorData();
+                target.setPower(speed);
+                boolean result;
+                if (condition.equals(Condition.LT)) {
+                    result = data.getIntegratedZ() < angle;
+                } else {
+                    result = data.getIntegratedZ() > angle;
+                }
+                if (result) {
+                    done = true;
+                }
+            }
+            target.setPower(0f);
+        } else {
+            boolean done = false;
+            Condition condition;
+            if (angle < AutonomousUtils.getGyroSensorData().getIntegratedZ()) {
+                condition = Condition.LT;
+            } else {
+                condition = Condition.GT;
+            }
+            while (!done) {
+                GyroSensorData data = AutonomousUtils.getGyroSensorData();
+                hardware.left.setPower(speed/2);
+                hardware.right.setPower(-speed/2);
+
+                boolean result;
+                if (condition.equals(Condition.LT)) {
+                    result = data.getIntegratedZ() < angle;
+                } else {
+                    result = data.getIntegratedZ() > angle;
+                }
+                if (result) {
+                    done = true;
+                }
+            }
+            hardware.left.setPower(0f);
+            hardware.right.setPower(0f);
+        }
+    }
+
     public static void resetEncoders() {
         hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -238,5 +301,14 @@ public class AutonomousUtils {
         }
 
         return data;
+    }
+
+    public static GyroSensorData getGyroSensorData() {
+        return new GyroSensorData(hardware.gyro.getIntegratedZValue(), hardware.gyro.rawX(), hardware.gyro.rawY(), hardware.gyro.rawZ());
+    }
+
+    private enum Condition {
+        GT,
+        LT
     }
 }
