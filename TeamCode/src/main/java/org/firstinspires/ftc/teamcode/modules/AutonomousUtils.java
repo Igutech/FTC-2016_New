@@ -241,12 +241,67 @@ public class AutonomousUtils {
         }
     }
 
+    public static void pidGyro(float feet, float speed, int angle, boolean rampUp) {
+        if (rampUp && feet > 1f) {
+            pidGyro(150, speed/2, angle);
+            pidGyro(feet-.5f, speed, angle);
+            pidGyro(feet-.1f, speed/2, angle);
+            pidGyro(feet, speed/5, angle);
+        } else {
+            pidGyro(feet, speed, angle);
+        }
+    }
+
+
+    public static void pidGyro(float feet, float speed, int angle) {
+        speed = -speed;
+        int ticks = (int) -(feet * 460f);
+
+        final float GAIN = 0.0025f;
+        boolean done = false;
+
+        while (!done) {
+            float error = angle - AutonomousUtils.getGyroSensorData().getIntegratedZ();
+            float output = error*GAIN;
+            float leftOutput = speed + output;
+            float rightOutput = speed - output;
+
+            //limit values to +1/-1
+
+            leftOutput = leftOutput > 1f ? 1f : leftOutput; //if leftoutput > 1, set to 1, if not, keep normally.
+            leftOutput = leftOutput < -1f ? -1f : leftOutput; //almost same as previous.
+
+            rightOutput = rightOutput > 1f ? 1f : rightOutput;   //these are called ternaries.
+            rightOutput = rightOutput < -1f ? -1f : rightOutput;
+
+
+            hardware.left.setPower(leftOutput);
+            hardware.right.setPower(rightOutput);
+
+            float average = (hardware.right.getCurrentPosition() + hardware.left.getCurrentPosition())/2;
+            done = average < ticks;
+        }
+        hardware.left.setPower(0f);
+        hardware.right.setPower(0f);
+    }
+
     public static void resetEncoders() {
         hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hardware.waitForTick(250);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        while (hardware.left.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER) || hardware.right.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER)) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public static ColorSensorData getColorSensorData(int id) {
