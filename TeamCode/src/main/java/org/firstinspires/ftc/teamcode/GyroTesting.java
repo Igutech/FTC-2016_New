@@ -72,7 +72,9 @@ public class GyroTesting extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
 
-
-        AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.POINT, 0.25f, 90);
+        AutonomousUtils.pidGyro(8f, .25f, 0);
+        AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, 180);
+        AutonomousUtils.resetEncoders();
+        AutonomousUtils.pidGyro(8f, .25f, 180);
     }
 }

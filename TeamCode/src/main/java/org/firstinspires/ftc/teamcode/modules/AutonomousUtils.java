@@ -223,8 +223,13 @@ public class AutonomousUtils {
             }
             while (!done) {
                 GyroSensorData data = AutonomousUtils.getGyroSensorData();
-                hardware.left.setPower(speed/2);
-                hardware.right.setPower(-speed/2);
+                if (condition.equals(Condition.GT)) {
+                    hardware.left.setPower(speed/2);
+                    hardware.right.setPower(-speed/2);
+                } else {
+                    hardware.left.setPower(-speed/2);
+                    hardware.right.setPower(speed/2);
+                }
 
                 boolean result;
                 if (condition.equals(Condition.LT)) {
