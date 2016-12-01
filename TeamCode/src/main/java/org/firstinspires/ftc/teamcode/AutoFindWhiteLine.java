@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
  * Created by Logan on 11/2/2016.
  */
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Find White Line", group="Igutech")
+@Disabled
 public class AutoFindWhiteLine extends LinearOpMode {
     public void runOpMode() {
         Hardware hardware = new Hardware(hardwareMap);

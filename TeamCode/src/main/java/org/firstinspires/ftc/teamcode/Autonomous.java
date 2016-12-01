@@ -59,6 +59,7 @@ import java.util.HashMap;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="ColorTesting", group="Igutech")  // @Autonomous(...) is the other common choice
+@Disabled
 public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */

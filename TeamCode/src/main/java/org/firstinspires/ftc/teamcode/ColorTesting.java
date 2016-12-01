@@ -32,6 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannelController;
@@ -54,6 +55,7 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="ColorSensorTesting", group="Igutech")  // @Autonomous(...) is the other common choice
+@Disabled
 public class ColorTesting extends LinearOpMode {
 
     /* Declare OpMode members. */

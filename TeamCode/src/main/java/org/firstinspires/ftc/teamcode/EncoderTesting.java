@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
  * Created by Kevin on 11/21/2016.
  */
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="EncoderTesting", group="Igutech")
+@Disabled
 public class EncoderTesting extends LinearOpMode {
 
     @Override
