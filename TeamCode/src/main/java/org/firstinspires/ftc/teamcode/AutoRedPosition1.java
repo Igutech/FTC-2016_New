@@ -73,12 +73,75 @@ public class AutoRedPosition1 extends LinearOpMode {
                 AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, .125f, -3);
                 AutonomousUtils.resetEncoders();
 
-                //PUSH BEACON
+                hardware.left.setPower(-0.125);
+                hardware.right.setPower(-0.125);
+                while (AutonomousUtils.getLightSensorData(0).getData() < 0.2) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                hardware.left.setPower(0);
+                hardware.right.setPower(0);
+
+                ColorDetectionThread colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f);
+                Thread t = new Thread(colorDetectionThread);
+                t.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                BeaconState state = colorDetectionThread.getState();
+                telemetry.addData("State", state);
+                telemetry.update();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (state == BeaconState.REDBLUE) {
+                    //push second button
+                } else if (state == BeaconState.BLUERED) {
+                    //push first button
+                }
 
                 AutonomousUtils.resetEncoders();
                 AutonomousUtils.pidGyro(4f, 0.25f, 0);
 
-                //PUSH BEACON
+                hardware.left.setPower(-0.125);
+                hardware.right.setPower(-0.125);
+                while (AutonomousUtils.getLightSensorData(0).getData() < 0.2) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                hardware.left.setPower(0);
+                hardware.right.setPower(0);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                state = colorDetectionThread.getState();
+                telemetry.addData("State", state);
+                telemetry.update();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (state == BeaconState.REDBLUE) {
+                    //push second button
+                } else if (state == BeaconState.BLUERED) {
+                    //push first button
+                }
 
                 AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, -0.25f, -135);
                 AutonomousUtils.resetEncoders();
