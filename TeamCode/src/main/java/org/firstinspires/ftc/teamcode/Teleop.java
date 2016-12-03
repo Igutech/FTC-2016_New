@@ -70,7 +70,7 @@ public class Teleop extends OpMode {
         modules = new ArrayList<Module>();
 
         hardware = new Hardware(hardwareMap);
-        hardware.init();
+        hardware.init(false);
 
         modules.add(new DriveTrain(this));
         modules.add(new Brushes(this));

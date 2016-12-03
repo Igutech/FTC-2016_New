@@ -43,6 +43,10 @@ public class Hardware {
     }
 
     public void init() {
+        init(true);
+    }
+
+    public void init(boolean gyroflag) {
 
         // Define and Initialize Motors
         left   = this.hwMap.dcMotor.get("left");
@@ -70,12 +74,15 @@ public class Hardware {
 
         lightright.enableLed(true);
         lightleft.enableLed(true);
+        if (gyroflag) {
+            gyro = (ModernRoboticsI2cGyro) this.hwMap.gyroSensor.get("gyro");
 
-        gyro = (ModernRoboticsI2cGyro) this.hwMap.gyroSensor.get("gyro");
-
-        gyro.calibrate();
-        while (gyro.isCalibrating()) {
-            this.waitForTick(10);
+            gyro.calibrate();
+            while (gyro.isCalibrating()) {
+                this.waitForTick(10);
+            }
+        } else {
+            gyro=null;
         }
 
 
