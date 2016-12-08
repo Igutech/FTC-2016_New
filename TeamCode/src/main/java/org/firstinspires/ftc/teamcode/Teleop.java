@@ -76,6 +76,7 @@ public class Teleop extends OpMode {
         modules.add(new Brushes(this));
         modules.add(new BeaconServos(this));
         modules.add(new FlyWheel(this));
+        modules.add(new BallCap(this));
 
         for (Module m : modules) {
             m.init();
