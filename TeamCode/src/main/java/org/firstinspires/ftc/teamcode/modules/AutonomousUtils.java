@@ -14,6 +14,12 @@ import org.firstinspires.ftc.teamcode.LightSensorData;
 import org.firstinspires.ftc.teamcode.Motor;
 import org.firstinspires.ftc.teamcode.TurnType;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Timer;
 
 /**
@@ -251,7 +257,7 @@ public class AutonomousUtils {
             pidGyro(150, speed/2, angle);
             pidGyro(feet-.5f, speed, angle);
             pidGyro(feet-.1f, speed/2, angle);
-            pidGyro(feet, speed/5, angle);
+            pidGyro(feet, speed / 5, angle);
         } else {
             pidGyro(feet, speed, angle);
         }
@@ -365,6 +371,27 @@ public class AutonomousUtils {
 
     public static GyroSensorData getGyroSensorData() {
         return new GyroSensorData(hardware.gyro.getIntegratedZValue(), hardware.gyro.rawX(), hardware.gyro.rawY(), hardware.gyro.rawZ());
+    }
+
+    public static float getLightThreshold() {
+        String location = "/FIRST/lightcalibration.txt";
+        try {
+            FileInputStream file = new FileInputStream(location);
+            return new DataInputStream(file).readFloat();
+
+        } catch (Exception e) {
+            return 0.2f; //a fallback value
+        }
+    }
+
+    public static void setLightThreshold(float threshold) {
+        String location = "/FIRST/lightcalibration.txt";
+        try {
+            FileOutputStream file = new FileOutputStream(location);
+            new PrintStream(file).print(threshold);
+        } catch (Exception e) {
+
+        }
     }
 
     private enum Condition {
