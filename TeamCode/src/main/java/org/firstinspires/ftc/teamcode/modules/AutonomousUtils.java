@@ -317,8 +317,8 @@ public class AutonomousUtils {
 
     public static ColorSensorData getColorSensorData(int id) {
         if (id == 0) {
-            //return new ColorSensorData(Hardware.colorSensor0.red(), Hardware.colorSensor0.green(), Hardware.colorSensor0.blue(), Hardware.colorSensor0.alpha());
-            return null;
+            int[] crgb = hardware.muxColor.getCRGB(0);
+            return new ColorSensorData(crgb[1], crgb[2], crgb[3], crgb[0]);
         }
         if (id == 1) {
             int[] crgb = hardware.muxColor.getCRGB(1);
@@ -326,6 +326,10 @@ public class AutonomousUtils {
         }
         if (id == 2) {
             int[] crgb = hardware.muxColor.getCRGB(2);
+            return new ColorSensorData(crgb[1], crgb[2], crgb[3], crgb[0]);
+        }
+        if (id == 3) {
+            int[] crgb = hardware.muxColor.getCRGB(3);
             return new ColorSensorData(crgb[1], crgb[2], crgb[3], crgb[0]);
         }
         return null;

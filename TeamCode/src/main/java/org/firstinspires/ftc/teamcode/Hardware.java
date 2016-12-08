@@ -27,6 +27,7 @@ public class Hardware {
     public Servo beaconservo;
     public Servo WEST;
     public DcMotor flywheel;
+    public DcMotor ballcapper;
 
     public LightSensor lightright;
     public LightSensor lightleft;
@@ -85,8 +86,10 @@ public class Hardware {
             gyro=null;
         }
 
+        ballcapper = this.hwMap.dcMotor.get("ballcap");
 
-        int[] ports = {1, 2};
+
+        int[] ports = {0, 1, 2, 3};
 
         muxColor = new MultiplexColorSensor(hwMap, "mux", "ada", ports, 48, MultiplexColorSensor.GAIN_16X);
 
