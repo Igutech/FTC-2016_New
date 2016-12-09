@@ -24,7 +24,7 @@ public class WESTTimerThread implements Runnable {
                 hardware.WEST.setPosition(Globals.westEnabled);
 
                 try {
-                    Thread.sleep(750);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

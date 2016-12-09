@@ -62,14 +62,13 @@ public class AutoRedPosition1 extends LinearOpMode {
 
                 //FIRE BALLS
                 hardware.flywheel.setPower(Globals.flywheelWheelSpeed);
-                hardware.waitForTick(10);
                 hardware.waitForTick(3000);
                 hardware.WEST.setPosition(Globals.westEnabled);
-                hardware.waitForTick(1000);
+                hardware.waitForTick(300);
                 hardware.WEST.setPosition(Globals.westDisabled);
                 hardware.waitForTick(3000);
                 hardware.WEST.setPosition(Globals.westEnabled);
-                hardware.waitForTick(1000);
+                hardware.waitForTick(300);
                 hardware.WEST.setPosition(Globals.westDisabled);
                 hardware.flywheel.setPower(0);
 
