@@ -103,7 +103,7 @@ public class Hardware {
 
         // Set all servos to start positions
         beaconservo.setPosition(0.98);
-        WEST.setPosition(.25);
+        WEST.setPosition(.60);
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
