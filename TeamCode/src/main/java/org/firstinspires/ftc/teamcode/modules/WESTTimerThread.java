@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.modules;
 
+import org.firstinspires.ftc.teamcode.Globals;
 import org.firstinspires.ftc.teamcode.Hardware;
 
 /**
@@ -20,14 +21,14 @@ public class WESTTimerThread implements Runnable {
     public void run() {
         while(true) {
             if (triggered) {
-                hardware.WEST.setPosition(.30);
+                hardware.WEST.setPosition(Globals.westEnabled);
 
                 try {
                     Thread.sleep(750);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                hardware.WEST.setPosition(.60);
+                hardware.WEST.setPosition(Globals.westDisabled);
                 triggered = false;
             }
         }
