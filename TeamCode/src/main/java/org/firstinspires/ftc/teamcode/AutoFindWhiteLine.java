@@ -38,7 +38,7 @@ public class AutoFindWhiteLine extends LinearOpMode {
         hardware.right.setPower(0);
         hardware.left.setPower(0);
 
-        ColorDetectionThread colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f);
+        ColorDetectionThread colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
         Thread t = new Thread(colorDetectionThread);
         t.start();
         try {

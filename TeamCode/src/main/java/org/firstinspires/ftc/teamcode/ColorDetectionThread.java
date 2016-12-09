@@ -15,7 +15,9 @@ public class ColorDetectionThread implements Runnable {
     private float blueThresh;
     private float greenThresh;
 
-    public ColorDetectionThread(float confidenceThreshold, float redThresh, float blueThresh, float greenThresh) {
+    private BeaconState side;
+
+    public ColorDetectionThread(float confidenceThreshold, float redThresh, float blueThresh, float greenThresh, BeaconState side) {
         this.setConfidenceThreshold(confidenceThreshold);
         this.redThresh = redThresh;
         this.blueThresh = blueThresh;
@@ -28,7 +30,6 @@ public class ColorDetectionThread implements Runnable {
 
         boolean done = false;
         while (!done) {
-            ColorSensorData data = AutonomousUtils.getColorSensorData(0);
 
             boolean white = true;
             /*
@@ -40,8 +41,18 @@ public class ColorDetectionThread implements Runnable {
             */
 
             if (white) {
-                ColorSensorData data1 = AutonomousUtils.getColorSensorData(1);
-                ColorSensorData data2 = AutonomousUtils.getColorSensorData(2);
+
+                ColorSensorData data1;
+                ColorSensorData data2;
+
+                if (side.equals(BeaconState.BLUE)) {
+
+                    data1 = AutonomousUtils.getColorSensorData(0);
+                    data2 = AutonomousUtils.getColorSensorData(1);
+                } else {
+                    data1 = AutonomousUtils.getColorSensorData(2);
+                    data2 = AutonomousUtils.getColorSensorData(3);
+                }
 
                 BeaconState state1 = AutonomousUtils.getBeaconState(data1);
                 BeaconState state2 = AutonomousUtils.getBeaconState(data2);
