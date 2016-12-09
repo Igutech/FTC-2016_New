@@ -24,7 +24,8 @@ public class Hardware {
     public DcMotor  right  = null;
     public DcMotor  brushes= null;
     public DeviceInterfaceModule dim1;
-    public Servo beaconservo;
+    public Servo beaconleft;
+    public Servo beaconright;
     public Servo WEST;
     public DcMotor flywheel;
     public DcMotor ballcapper;
@@ -66,9 +67,11 @@ public class Hardware {
         //Define and initialize Sensors and DIM modules
         dim1 = this.hwMap.deviceInterfaceModule.get("dim1");
 
-        beaconservo = this.hwMap.servo.get("beaconservo");
+        beaconleft = this.hwMap.servo.get("beaconleft");
+        beaconright = this.hwMap.servo.get("beaconright");
 
         WEST = this.hwMap.servo.get("WEST");
+
 
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");
@@ -102,7 +105,8 @@ public class Hardware {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set all servos to start positions
-        beaconservo.setPosition(0.98);
+        beaconleft.setPosition(Globals.beaconLeftDisabled);
+        beaconright.setPosition(Globals.beaconRightDisabled);
         WEST.setPosition(Globals.westDisabled);
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

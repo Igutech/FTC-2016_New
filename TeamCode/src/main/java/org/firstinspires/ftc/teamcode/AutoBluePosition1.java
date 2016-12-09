@@ -79,14 +79,31 @@ public class AutoBluePosition1 extends LinearOpMode {
                 e.printStackTrace();
             }
 
+            float distance = 0;
             if (state == BeaconState.BLUERED) {
                 //push first button
+                hardware.beaconright.setPosition(Globals.beaconRightEnabled);
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                hardware.beaconright.setPosition(Globals.beaconRightDisabled);
             } else if (state == BeaconState.REDBLUE) {
                 //push second button
+                distance = .2f;
+                AutonomousUtils.pidGyro(distance, 0.125f, -3);
+                hardware.beaconright.setPosition(Globals.beaconRightEnabled);
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                hardware.beaconright.setPosition(Globals.beaconRightDisabled);
             }
 
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.pidGyro(4f, 0.25f, 0);
+            AutonomousUtils.pidGyro(4f - distance, 0.25f, 0);
 
             hardware.left.setPower(-0.125);
             hardware.right.setPower(-0.125);
@@ -114,11 +131,29 @@ public class AutoBluePosition1 extends LinearOpMode {
                 e.printStackTrace();
             }
 
+            distance = 0;
             if (state == BeaconState.BLUERED) {
                 //push first button
+                hardware.beaconright.setPosition(Globals.beaconRightEnabled);
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                hardware.beaconright.setPosition(Globals.beaconRightDisabled);
             } else if (state == BeaconState.REDBLUE) {
                 //push second button
+                distance = .2f;
+                AutonomousUtils.pidGyro(distance, 0.125f, -3);
+                hardware.beaconright.setPosition(Globals.beaconRightEnabled);
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                hardware.beaconright.setPosition(Globals.beaconRightDisabled);
             }
+            AutonomousUtils.driveEncoderFeetBackwards(distance, .125f, false);
 
             AutonomousUtils.gyroTurn(Motor.RIGHT, TurnType.SWING, -0.25f, 135);
             AutonomousUtils.resetEncoders();

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.modules;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Globals;
 import org.firstinspires.ftc.teamcode.Teleop;
 
 /**
@@ -21,7 +22,7 @@ public class FlyWheel extends Module {
     WESTTimerThread westTimer;
 
     public void init() {
-        targetSpeed = .54f;
+        targetSpeed = Globals.flywheelWheelSpeed;
         toggled = false;
         triggered = false;
         period.reset();
@@ -73,7 +74,7 @@ public class FlyWheel extends Module {
         }
 
         if (teleop.getGamepad()[2].y) {
-            targetSpeed = .54f;
+            targetSpeed = Globals.flywheelWheelSpeed;
         }
 
         if (monitor.getStatus()) {

@@ -102,14 +102,31 @@ public class AutoRedPosition1 extends LinearOpMode {
                     e.printStackTrace();
                 }
 
+                float distance = 0;
                 if (state == BeaconState.REDBLUE) {
-                    //push second button
-                } else if (state == BeaconState.BLUERED) {
                     //push first button
+                    hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+                } else if (state == BeaconState.BLUERED) {
+                    //push second button
+                    distance = .2f;
+                    AutonomousUtils.pidGyro(distance, 0.125f, -3);
+                    hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
                 }
 
                 AutonomousUtils.resetEncoders();
-                AutonomousUtils.pidGyro(4f, 0.25f, 0);
+                AutonomousUtils.pidGyro(4f - distance, 0.25f, 0);
 
                 hardware.left.setPower(-0.125);
                 hardware.right.setPower(-0.125);
@@ -137,11 +154,31 @@ public class AutoRedPosition1 extends LinearOpMode {
                     e.printStackTrace();
                 }
 
+                distance = 0;
                 if (state == BeaconState.REDBLUE) {
-                    //push second button
-                } else if (state == BeaconState.BLUERED) {
                     //push first button
+                    hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+                } else if (state == BeaconState.BLUERED) {
+                    //push second button
+                    distance = .2f;
+                    AutonomousUtils.pidGyro(distance, 0.125f, -3);
+                    hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
                 }
+
+                AutonomousUtils.resetEncoders();
+                AutonomousUtils.driveEncoderFeetBackwards(distance, .125f, false);
 
                 AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, -0.25f, -135);
                 AutonomousUtils.resetEncoders();
