@@ -10,12 +10,28 @@ public class BallCap extends Module {
         super(t);
     }
 
+    boolean enabled;
+
+    public void init() {
+        enabled = false;
+    }
+
     public void loop() {
-        if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
-            float speed = teleop.getGamepad()[2].right_stick_y;
-            hardware.ballcapper.setPower(speed);
-        } else {
-            hardware.ballcapper.setPower(0);
+
+        if (teleop.getGamepad()[1].a) {
+            enabled = true;
+        }
+
+        if (enabled) {
+            if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
+                float speed = teleop.getGamepad()[2].right_stick_y;
+                if (speed < 0) {
+                    speed *= .65f;
+                }
+                hardware.ballcapper.setPower(speed);
+            } else {
+                hardware.ballcapper.setPower(0);
+            }
         }
     }
 }

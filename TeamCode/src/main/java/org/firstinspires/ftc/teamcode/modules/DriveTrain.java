@@ -43,8 +43,8 @@ public class DriveTrain extends Module {
             leftPow = -1.0f;
         }
 
-        if (slomo < .3f) {
-            slomo = .3f;
+        if (slomo < .5f) {
+            slomo = .5f;
         }
 
         hardware.right.setPower(rightPow*slomo);

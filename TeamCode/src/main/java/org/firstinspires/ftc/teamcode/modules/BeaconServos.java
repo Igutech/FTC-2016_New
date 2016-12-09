@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.modules;
 
+import org.firstinspires.ftc.teamcode.Globals;
 import org.firstinspires.ftc.teamcode.Teleop;
 
 /**
@@ -14,9 +15,15 @@ public class BeaconServos extends Module {
     public void loop() {
 
         if (teleop.getGamepad()[2].b) {
-            hardware.beaconservo.setPosition(.32);
+            hardware.beaconright.setPosition(Globals.beaconRightEnabled);
         } else {
-            hardware.beaconservo.setPosition(.98);
+            hardware.beaconright.setPosition(Globals.beaconRightDisabled);
+        }
+
+        if (teleop.getGamepad()[2].x) {
+            hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+        } else {
+            hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
         }
     }
 }
