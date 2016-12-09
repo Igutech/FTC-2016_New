@@ -38,6 +38,17 @@ public class AutoBluePosition1 extends LinearOpMode {
             AutonomousUtils.resetEncoders();
 
             //FIRE BALLS
+            hardware.flywheel.setPower(Globals.flywheelWheelSpeed);
+            hardware.waitForTick(10);
+            hardware.waitForTick(3000);
+            hardware.WEST.setPosition(Globals.westEnabled);
+            hardware.waitForTick(1000);
+            hardware.WEST.setPosition(Globals.westDisabled);
+            hardware.waitForTick(3000);
+            hardware.WEST.setPosition(Globals.westEnabled);
+            hardware.waitForTick(1000);
+            hardware.WEST.setPosition(Globals.westDisabled);
+            hardware.flywheel.setPower(0);
 
             AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
             AutonomousUtils.resetEncoders();
