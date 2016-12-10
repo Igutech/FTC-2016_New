@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
+import org.firstinspires.ftc.teamcode.modules.WESTTimerThread;
+
 import java.util.HashMap;
 
 /**
@@ -26,6 +28,7 @@ public class AutoRedPosition1 extends LinearOpMode {
         double disengaged = 0.05d;
         boolean confirmed = false;
         boolean Color = true;
+        WESTTimerThread westTimer;
 
         /*while (!confirmed && opModeIsActive()) {
             if (gamepad1.b) {
@@ -54,6 +57,11 @@ public class AutoRedPosition1 extends LinearOpMode {
             hardware.init();
             new AutonomousUtils(hardware);
 
+            westTimer = new WESTTimerThread(hardware);
+            Thread t2 = new Thread(westTimer);
+            t2.start();
+
+
             waitForStart();
 
             if(Color) { //red side program
@@ -63,25 +71,18 @@ public class AutoRedPosition1 extends LinearOpMode {
                 AutonomousUtils.resetEncoders();
 
                 //FIRE BALLS
-                hardware.WEST.setPosition(Globals.westEnabled + .1);
+                westTimer.trigger();
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                westTimer.trigger();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                hardware.WEST.setPosition(Globals.westDisabled);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                hardware.WEST.setPosition(Globals.westEnabled + .1);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                hardware.WEST.setPosition(Globals.westDisabled);
                 hardware.flywheel.setPower(0);
 
                 AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
