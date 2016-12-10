@@ -11,4 +11,5 @@ public class Globals {
     public static float beaconLeftDisabled = .2f;
     public static float beaconRightEnabled = .02f;
     public static float beaconRightDisabled = .78f;
+    public static float lightThreshold = .3f;
 }

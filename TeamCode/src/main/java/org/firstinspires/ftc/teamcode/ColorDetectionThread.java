@@ -22,6 +22,7 @@ public class ColorDetectionThread implements Runnable {
         this.redThresh = redThresh;
         this.blueThresh = blueThresh;
         this.greenThresh = greenThresh;
+        this.side = side;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class ColorDetectionThread implements Runnable {
                 ColorSensorData data1;
                 ColorSensorData data2;
 
-                if (side.equals(BeaconState.BLUE)) {
+                if (side.equals(BeaconState.RED)) {
 
                     data1 = AutonomousUtils.getColorSensorData(0);
                     data2 = AutonomousUtils.getColorSensorData(1);
