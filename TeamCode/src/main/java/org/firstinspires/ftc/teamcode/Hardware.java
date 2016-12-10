@@ -90,6 +90,8 @@ public class Hardware {
         }
 
         ballcapper = this.hwMap.dcMotor.get("ballcap");
+        ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ballcapper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         int[] ports = {0, 1, 2, 3};
