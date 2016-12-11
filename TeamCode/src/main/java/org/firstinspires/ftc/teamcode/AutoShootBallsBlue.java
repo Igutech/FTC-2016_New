@@ -19,49 +19,31 @@ public class AutoShootBallsBlue extends LinearOpMode {
         new AutonomousUtils(hardware);
 
         waitForStart();
+        hardware.flywheel.setPower(Globals.flywheelWheelSpeed);
+        hardware.right.setPower(0.25f);
+        hardware.left.setPower(0.25f);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        hardware.right.setPower(0);
+        hardware.left.setPower(0);
 
-        hardware.brushes.setPower(1f);
-        hardware.flywheel.setPower(flywheelSpeed);
-        hardware.waitForTick(10);
-        hardware.waitForTick(5000);
-        hardware.WEST.setPosition(engaged);
-        hardware.waitForTick(1500);
-        hardware.WEST.setPosition(disengaged);
-        hardware.waitForTick(5000);
-        hardware.WEST.setPosition(engaged);
-        hardware.waitForTick(1500);
-        hardware.WEST.setPosition(disengaged);
-        hardware.waitForTick(5000);
-        hardware.WEST.setPosition(engaged);
-        hardware.waitForTick(1500);
-        hardware.WEST.setPosition(disengaged);
-        hardware.flywheel.setPower(0);
-        hardware.brushes.setPower(0);
 
-        hardware.left.setPower(-.3);
-        hardware.right.setPower(-.3);
-        hardware.waitForTick(2000);
-        hardware.left.setPower(0);
-        hardware.right.setPower(0);
-        hardware.waitForTick(100);
-        hardware.left.setPower(.25);
-        hardware.right.setPower(.25);
-        hardware.waitForTick(300);
-        hardware.left.setPower(0);
-        hardware.right.setPower(0);
-        hardware.waitForTick(100);
-        hardware.left.setPower(-.5);
-        hardware.waitForTick(500);
-        hardware.left.setPower(0);
-        hardware.waitForTick(100);
-        hardware.left.setPower(.5);
-        hardware.waitForTick(500);
-        hardware.left.setPower(0);
-        hardware.waitForTick(100);
-        hardware.right.setPower(-.3);
-        hardware.left.setPower(-.3);
-        hardware.waitForTick(1000);
-        hardware.left.setPower(0);
-        hardware.right.setPower(0);
+        try {
+            Thread.sleep(2000);
+            hardware.WEST.setPosition(Globals.westEnabled);
+            Thread.sleep(500);
+            hardware.WEST.setPosition(Globals.westDisabled);
+            hardware.flywheel.setPower(0f);
+            Thread.sleep(2000);
+            hardware.WEST.setPosition(Globals.westEnabled);
+            Thread.sleep(500);
+            hardware.WEST.setPosition(Globals.westDisabled);
+            hardware.flywheel.setPower(0f);
+        } catch (Exception e) {
+
+        }
     }
 }

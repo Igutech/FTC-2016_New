@@ -26,7 +26,7 @@ public class BallCap extends Module {
             enabled = true;
         }
 
-        /*
+
 
         if (state == 1 && teleop.getGamepad()[2].a) {
             state = 2;
@@ -47,14 +47,14 @@ public class BallCap extends Module {
             toggled = false;
         }
 
-        */
+
 
         if (enabled) {
 
-            /*if (toggled) {
+            if (toggled) {
                 hardware.ballcapper.setPower(-0.3f);
 
-            } else */if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
+            } else if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
                 float speed = teleop.getGamepad()[2].right_stick_y;
                 if (speed < 0) {
                     speed *= .65f;

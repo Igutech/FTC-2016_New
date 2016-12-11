@@ -90,7 +90,7 @@ public class Hardware {
         }
 
         ballcapper = this.hwMap.dcMotor.get("ballcap");
-        ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ballcapper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ballcapper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 

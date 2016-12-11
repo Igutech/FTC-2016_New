@@ -304,7 +304,7 @@ public class AutonomousUtils {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (hardware.left.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER) || hardware.right.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER)) {
+        while (!hardware.left.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER) || !hardware.right.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER)) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -313,6 +313,11 @@ public class AutonomousUtils {
         }
         hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static ColorSensorData getColorSensorData(int id) {
