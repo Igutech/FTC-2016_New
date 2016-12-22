@@ -69,7 +69,7 @@ public class ConfigHandler {
         return false;
     }
 
-    public boolean setDefaults() {
+    private boolean setDefaults() {
         HashMap<String, Object> defaults = new HashMap<String, Object>();
         defaults.put("flywheelWheelSpeed", .54f);
         defaults.put("WestEnabled", 0.35f);
