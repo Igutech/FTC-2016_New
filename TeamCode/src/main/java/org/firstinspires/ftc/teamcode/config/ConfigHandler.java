@@ -52,7 +52,18 @@ public class ConfigHandler {
 
     public boolean set(String key, Object object) {
         if (Vars.vars != null) {
+            if (Vars.vars.containsKey(key)) {
+                Vars.vars.remove(key);
+            }
             Vars.vars.put(key, object);
+
+            try {
+                yaml.dump(Vars.vars, new FileWriter(configFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+
             return true;
         }
         return false;
