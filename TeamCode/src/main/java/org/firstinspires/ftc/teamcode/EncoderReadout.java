@@ -75,6 +75,7 @@ public class EncoderReadout extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Right", hardware.right.getCurrentPosition());
             telemetry.addData("Left", hardware.left.getCurrentPosition());
+            telemetry.addData("FlyWheel", hardware.flywheel.getCurrentPosition());
             telemetry.update();
         }
     }
