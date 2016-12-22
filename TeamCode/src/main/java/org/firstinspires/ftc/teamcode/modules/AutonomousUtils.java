@@ -382,6 +382,7 @@ public class AutonomousUtils {
         return new GyroSensorData(hardware.gyro.getIntegratedZValue(), hardware.gyro.rawX(), hardware.gyro.rawY(), hardware.gyro.rawZ());
     }
 
+    @Deprecated
     public static float getLightThreshold() {
         String location = "/FIRST/lightcalibration.txt";
         try {
@@ -393,6 +394,7 @@ public class AutonomousUtils {
         }
     }
 
+    @Deprecated
     public static void setLightThreshold(float threshold) {
         String location = "/FIRST/lightcalibration.txt";
         try {
