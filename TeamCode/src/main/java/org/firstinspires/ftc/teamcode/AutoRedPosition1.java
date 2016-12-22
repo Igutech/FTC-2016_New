@@ -171,6 +171,16 @@ public class AutoRedPosition1 extends LinearOpMode {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
+                t = new Thread(colorDetectionThread);
+                t.start();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 state = colorDetectionThread.getState();
                 telemetry.addData("State", state);
                 telemetry.update();
