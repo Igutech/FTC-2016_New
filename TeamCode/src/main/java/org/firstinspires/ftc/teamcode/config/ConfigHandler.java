@@ -71,8 +71,14 @@ public class ConfigHandler {
 
     public boolean setDefaults() {
         HashMap<String, Object> defaults = new HashMap<String, Object>();
+        defaults.put("flywheelWheelSpeed", .54f);
         defaults.put("WestEnabled", 0.35f);
         defaults.put("WestDisabled", 0.65f);
+        defaults.put("beaconLeftEnabled", 0.98f);
+        defaults.put("beaconLeftDisabled", .2f);
+        defaults.put("beaconRightEnabled", .02f);
+        defaults.put("beaconRightDisabled", .78f);
+        defaults.put("lightThreshold", .3f);
         try {
             yaml.dump(defaults, new FileWriter(configFile));
             return true;
