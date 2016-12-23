@@ -300,16 +300,9 @@ public class AutonomousUtils {
         hardware.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         try {
-            Thread.sleep(100);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        while (!hardware.left.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER) || !hardware.right.getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER)) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
