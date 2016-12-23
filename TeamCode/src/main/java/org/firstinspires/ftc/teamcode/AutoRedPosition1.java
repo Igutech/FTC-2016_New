@@ -20,13 +20,6 @@ import java.util.HashMap;
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoRedPosition1", group="Igutech")
 public class AutoRedPosition1 extends LinearOpMode {
     public void runOpMode() {
-        float firstDistance, secondDistance;
-        firstDistance = .5f;
-        secondDistance = 7.656f - firstDistance;
-        float flywheelSpeed = 1f;
-        double engaged = .6d;
-        double disengaged = 0.05d;
-        boolean confirmed = false;
         boolean Color = true;
         WESTTimerThread westTimer;
 
