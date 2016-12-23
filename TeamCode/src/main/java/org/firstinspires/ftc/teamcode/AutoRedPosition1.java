@@ -63,6 +63,11 @@ public class AutoRedPosition1 extends LinearOpMode {
                 hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
                 hardware.waitForTick(0);
                 AutonomousUtils.pidGyro(3.18f, .25f, 0);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 AutonomousUtils.resetEncoders();
 
                 //FIRE BALLS
