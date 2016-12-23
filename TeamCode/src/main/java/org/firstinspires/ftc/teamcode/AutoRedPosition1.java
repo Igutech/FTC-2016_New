@@ -65,16 +65,10 @@ public class AutoRedPosition1 extends LinearOpMode {
                 AutonomousUtils.pidGyro(3.18f, .25f, 0);
                 AutonomousUtils.resetEncoders();
 
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
                 //FIRE BALLS
                 westTimer.trigger();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
