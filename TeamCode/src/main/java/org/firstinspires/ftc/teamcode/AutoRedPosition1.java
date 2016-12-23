@@ -93,10 +93,10 @@ public class AutoRedPosition1 extends LinearOpMode {
 
                 AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
                 AutonomousUtils.resetEncoders();
-                AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, 70);
+                AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, 80);
                 AutonomousUtils.resetEncoders();
                 hardware.waitForTick(100);
-                AutonomousUtils.pidGyro(3.54f, 0.25f, 70);
+                AutonomousUtils.pidGyro(3.6f, 0.25f, 80);
                 hardware.waitForTick(100);
                 AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, -0.25f, -10);
                 AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, .125f, -3);
