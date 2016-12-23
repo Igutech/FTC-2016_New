@@ -23,6 +23,8 @@ public class AutoRedPosition1 extends LinearOpMode {
         boolean Color = true;
         WESTTimerThread westTimer;
 
+        boolean competition = false; //TODO: CHANGE  THIS AT COMPETITION!
+
         /*while (!confirmed && opModeIsActive()) {
             if (gamepad1.b) {
                 Color = true;
@@ -145,7 +147,13 @@ public class AutoRedPosition1 extends LinearOpMode {
                 }
 
                 AutonomousUtils.resetEncoders();
-                AutonomousUtils.pidGyro(4f + distance, 0.25f, -2);
+
+                if (competition) {
+                    AutonomousUtils.pidGyro(4f + distance, 0.25f, -2);
+                } else {
+                    AutonomousUtils.pidGyro(2f + distance, 0.25f, -2);
+                }
+
 
                 hardware.left.setPower(-0.125);
                 hardware.right.setPower(-0.125);
