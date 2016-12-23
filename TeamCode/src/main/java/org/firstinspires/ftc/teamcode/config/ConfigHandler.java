@@ -29,6 +29,18 @@ public class ConfigHandler {
     }
 
     private void init() {
+
+        Vars.defaults = new HashMap<String, Object>();
+        Vars.defaults.put("flywheelWheelSpeed", .54f);
+        Vars.defaults.put("WestEnabled", 0.35f);
+        Vars.defaults.put("WestDisabled", 0.65f);
+        Vars.defaults.put("beaconLeftEnabled", 0.98f);
+        Vars.defaults.put("beaconLeftDisabled", .2f);
+        Vars.defaults.put("beaconRightEnabled", .02f);
+        Vars.defaults.put("beaconRightDisabled", .78f);
+        Vars.defaults.put("lightThreshold", .3f);
+
+
         if (configDirectoryExists()) {
             if (configExists()) {
                 InputStream config;
@@ -91,17 +103,8 @@ public class ConfigHandler {
     }
 
     private boolean setDefaults() {
-        HashMap<String, Object> defaults = new HashMap<String, Object>();
-        defaults.put("flywheelWheelSpeed", .54f);
-        defaults.put("WestEnabled", 0.35f);
-        defaults.put("WestDisabled", 0.65f);
-        defaults.put("beaconLeftEnabled", 0.98f);
-        defaults.put("beaconLeftDisabled", .2f);
-        defaults.put("beaconRightEnabled", .02f);
-        defaults.put("beaconRightDisabled", .78f);
-        defaults.put("lightThreshold", .3f);
         try {
-            yaml.dump(defaults, new FileWriter(configFile));
+            yaml.dump(Vars.defaults, new FileWriter(configFile));
             return true;
         } catch (IOException e) {
             e.printStackTrace();

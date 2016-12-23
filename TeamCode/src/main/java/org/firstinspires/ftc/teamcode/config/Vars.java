@@ -11,6 +11,7 @@ public class Vars {
     public static String configPath = "/IgutechConfig";
 
     public static Map<String, Object> vars;
+    public static Map<String, Object> defaults;
 
     public static AssetManager globalAssets;
 }
