@@ -192,22 +192,22 @@ public class AutoRedPosition1 extends LinearOpMode {
                     distance = .25f;
                     AutonomousUtils.resetEncoders();
                     AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
-                    //hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+                    hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+                    hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
                 } else if (state == BeaconState.BLUERED) {
                     //push second button
-                    //hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+                    hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+                    hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
                 }
                 AutonomousUtils.resetEncoders();
                 AutonomousUtils.pidGyro(distance, .25f, 0);
