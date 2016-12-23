@@ -72,6 +72,7 @@ public class Teleop extends OpMode {
         hardware = new Hardware(hardwareMap);
         hardware.init(false);
 
+        modules.add(new ConfigChecker(this));
         modules.add(new DriveTrain(this));
         modules.add(new Brushes(this));
         modules.add(new BeaconServos(this));
