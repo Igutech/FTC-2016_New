@@ -43,11 +43,32 @@ public class ConfigHandler {
     }
 
 
-    public Object get(String key) {
+    public Object get(String key) throws KeyNotFoundException {
         if (Vars.vars != null) {
             return Vars.vars.get(key);
         }
-        return null;
+        throw new KeyNotFoundException();
+    }
+
+    public Double getDouble(String key) throws KeyNotFoundException {
+        if (Vars.vars != null) {
+            return (Double) Vars.vars.get(key);
+        }
+        throw new KeyNotFoundException();
+    }
+
+    public float getFloat(String key) throws KeyNotFoundException {
+        if (Vars.vars != null) {
+            return ((Double)Vars.vars.get(key)).floatValue();
+        }
+        throw new KeyNotFoundException();
+    }
+
+    public String getString(String key) throws KeyNotFoundException {
+        if (Vars.vars != null) {
+            return (String)Vars.vars.get(key);
+        }
+        throw new KeyNotFoundException();
     }
 
     public boolean set(String key, Object object) {

@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.config.KeyNotFoundException;
 import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
 
 /**
@@ -71,14 +72,15 @@ public class ConfigTesting extends LinearOpMode {
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
-
-        float flywheelSpeed = (Float) hardware.configuration.get("flywheelWheelSpeed");
-        hardware.configuration.set("flywheelWheelSpeed", flywheelSpeed + 1f);
-        float newFlywheelSpeed = (Float) hardware.configuration.get("flywheelWheelSpeed");
-        hardware.configuration.set("flywheelWheelSpeed", flywheelSpeed);
-
-        telemetry.addData("original", flywheelSpeed);
-        telemetry.addData("new", newFlywheelSpeed);
+        try {
+            hardware.configuration.set("stringtest", "THIS IS A TEST STRING");
+            Thread.sleep(1000);
+            hardware.configuration.getString("stringtest");
+        } catch (KeyNotFoundException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         while(opModeIsActive()) {
             try {
