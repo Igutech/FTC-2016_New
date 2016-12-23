@@ -125,7 +125,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 float distance = 0;
                 if (state == BeaconState.REDBLUE) {
                     //push first button
-                    distance = .075f;
+                    distance = .25f;
                     AutonomousUtils.resetEncoders();
                     AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
                     hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
@@ -189,7 +189,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 distance = 0;
                 if (state == BeaconState.REDBLUE) {
                     //push first button
-                    distance = .15f;
+                    distance = .25f;
                     AutonomousUtils.resetEncoders();
                     AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
                     //hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
