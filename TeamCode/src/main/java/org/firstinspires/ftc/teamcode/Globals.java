@@ -4,11 +4,11 @@ package org.firstinspires.ftc.teamcode;
  * Created by Kevin on 12/9/2016.
  */
 public class Globals {
-    public static float westEnabled = 0.30f;
-    public static float westDisabled = 0.65f;
+    public static float westEnabled = 0.7f; //had to flip these two
+    public static float westDisabled = 0.18f; //originally 0.3
     public static float flywheelWheelSpeed = .54f;
     public static float beaconLeftEnabled = .98f;
-    public static float beaconLeftDisabled = .2f;
+    public static float beaconLeftDisabled = .19f; //Change Here!
     public static float beaconRightEnabled = .02f;
     public static float beaconRightDisabled = .78f;
     public static float lightThreshold = .3f;
