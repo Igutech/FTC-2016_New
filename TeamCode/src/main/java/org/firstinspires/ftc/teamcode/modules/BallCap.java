@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.modules;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.Globals;
 import org.firstinspires.ftc.teamcode.Teleop;
 
@@ -13,6 +15,7 @@ public class BallCap extends Module {
 
     boolean enabled;
     boolean toggled;
+    float speed;
     int state;
 
     public void init() {
@@ -20,14 +23,15 @@ public class BallCap extends Module {
         toggled = false;
         hardware.lock.setPosition(Globals.lockEnabled);
         state = 1;
+        hardware.ballcapper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void loop() {
 
         if (teleop.getGamepad()[1].a) {
             enabled = true;
+            hardware.ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
-
 
 
         if (state == 1 && teleop.getGamepad()[2].a) {
@@ -49,9 +53,9 @@ public class BallCap extends Module {
         if (enabled) {
 
             if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
-                float speed = teleop.getGamepad()[2].right_stick_y;
+                speed = teleop.getGamepad()[2].right_stick_y;
                 if (speed < 0) {
-                    speed *= .65f;
+                    speed= 0; //induces coasting
                 }
                 hardware.ballcapper.setPower(speed);
                 hardware.lock.setPosition(Globals.lockDisabled);
@@ -60,8 +64,6 @@ public class BallCap extends Module {
                 hardware.ballcapper.setPower(0);
                 hardware.lock.setPosition(Globals.lockEnabled);
             }
-
-            teleop.telemetry.addData("Motor Power: ", teleop.getGamepad()[2].right_stick_y);
 
 
         }
