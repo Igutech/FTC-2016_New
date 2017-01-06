@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRGyro;
+import org.firstinspires.ftc.teamcode.config.ConfigHandler;
+import org.firstinspires.ftc.teamcode.config.Vars;
 import org.firstinspires.ftc.teamcode.modules.MultiplexColorSensor;
 
 /**
@@ -38,6 +40,8 @@ public class Hardware {
     public MultiplexColorSensor muxColor;
 
     public ModernRoboticsI2cGyro gyro;
+
+    public ConfigHandler configuration;
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -123,7 +127,14 @@ public class Hardware {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        setUpConfig();
 
+
+    }
+
+    public void setUpConfig() {
+        Vars.globalAssets = hwMap.appContext.getAssets();
+        configuration = new ConfigHandler();
     }
 
     public void waitForTick(long periodMs) {
