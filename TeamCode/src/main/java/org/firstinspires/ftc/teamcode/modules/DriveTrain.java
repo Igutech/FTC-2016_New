@@ -8,6 +8,9 @@ import org.firstinspires.ftc.teamcode.Teleop;
  */
 public class DriveTrain extends Module {
 
+    boolean switchone = false;
+    boolean reversed = false;
+
     public DriveTrain (Teleop t) {
         super(t);
     }
@@ -44,10 +47,34 @@ public class DriveTrain extends Module {
         }
 
         if (slomo < .5f) {
-            slomo = .5f;
+            slomo = .1f;
         }
 
-        hardware.right.setPower(rightPow*slomo);
-        hardware.left.setPower(leftPow*slomo);
+        if (!switchone) {
+            if (teleop.getGamepad()[1].back) {
+                switchone = true;//toggle to reverse driving
+                if(reversed){
+                    reversed = false;
+                } else {
+                    reversed = true;
+                }
+            }
+        }else {
+            if (!teleop.getGamepad()[1].back) {
+                switchone =false;
+            }
+        }
+
+
+        if(!reversed) {
+            hardware.right.setPower(rightPow*slomo);
+            hardware.left.setPower(leftPow*slomo);
+        } else {
+            hardware.left.setPower(-rightPow*slomo);
+            hardware.right.setPower(-leftPow*slomo);
+        }
+
+
+        teleop.telemetry.addData("slowmo factor", slomo);
     }
 }
