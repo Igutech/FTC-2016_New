@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.modules;
 
+import org.firstinspires.ftc.teamcode.Globals;
 import org.firstinspires.ftc.teamcode.Teleop;
 
 /**
@@ -17,6 +18,7 @@ public class BallCap extends Module {
     public void init() {
         enabled = false;
         toggled = false;
+        hardware.lock.setPosition(Globals.lockEnabled);
         state = 1;
     }
 
@@ -41,28 +43,27 @@ public class BallCap extends Module {
             state = 1;
         }
 
-        if (state == 2 || state == 3) {
-            toggled = true;
-        } else {
-            toggled = false;
-        }
 
 
 
         if (enabled) {
 
-            if (toggled) {
-                hardware.ballcapper.setPower(-0.3f);
-
-            } else if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
+            if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
                 float speed = teleop.getGamepad()[2].right_stick_y;
                 if (speed < 0) {
                     speed *= .65f;
                 }
                 hardware.ballcapper.setPower(speed);
+                hardware.lock.setPosition(Globals.lockDisabled);
             } else {
+
                 hardware.ballcapper.setPower(0);
+                hardware.lock.setPosition(Globals.lockEnabled);
             }
+
+            teleop.telemetry.addData("Motor Power: ", teleop.getGamepad()[2].right_stick_y);
+
+
         }
     }
 }
