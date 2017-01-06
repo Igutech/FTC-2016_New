@@ -27,6 +27,8 @@ public class Hardware {
     public Servo beaconleft;
     public Servo beaconright;
     public Servo WEST;
+    public Servo lock; //this servo locks the movement of the ball lift system
+
     public DcMotor flywheel;
     public DcMotor ballcapper;
 
@@ -61,6 +63,7 @@ public class Hardware {
 
         flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //This should allow the flywheel to coast to stop
 
         flywheel.setPower(0);
 
@@ -72,6 +75,7 @@ public class Hardware {
 
         WEST = this.hwMap.servo.get("WEST");
 
+        lock = this.hwMap.servo.get("lock");
 
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");
@@ -91,7 +95,7 @@ public class Hardware {
 
         ballcapper = this.hwMap.dcMotor.get("ballcap");
         ballcapper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ballcapper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ballcapper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);  //this thing gotta float for good reasons -Tilman
 
 
         int[] ports = {0, 1, 2, 3};

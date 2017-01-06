@@ -8,8 +8,10 @@ public class Globals {
     public static float westDisabled = 0.18f; //originally 0.3
     public static float flywheelWheelSpeed = .54f;
     public static float beaconLeftEnabled = .98f;
-    public static float beaconLeftDisabled = .19f; //Change Here!
+    public static float beaconLeftDisabled = .19f; //Change occured Here!
     public static float beaconRightEnabled = .02f;
     public static float beaconRightDisabled = .78f;
     public static float lightThreshold = .3f;
+    public static float lockEnabled = 0.1f; //these two lock the servo which locks the lift
+    public static float lockDisabled = 0.3f;
 }
