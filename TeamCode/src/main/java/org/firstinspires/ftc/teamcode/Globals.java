@@ -14,4 +14,6 @@ public class Globals {
     public static float lightThreshold = .3f;
     public static float lockEnabled = 0.1f; //these two lock the servo which locks the lift
     public static float lockDisabled = 0.3f;
+    public static float releaseEnabled = 0.1f; //TODO:Adjust this value (this is a guess)
+    public static float releaseDisabled = 0.8f; //TODO:Adjust this value (this is a guess)
 }

@@ -28,6 +28,7 @@ public class Hardware {
     public Servo beaconright;
     public Servo WEST;
     public Servo lock; //this servo locks the movement of the ball lift system
+    public Servo release; //this servo releases the holder for the ball.
 
     public DcMotor flywheel;
     public DcMotor ballcapper;
@@ -76,6 +77,9 @@ public class Hardware {
         WEST = this.hwMap.servo.get("WEST");
 
         lock = this.hwMap.servo.get("lock");
+
+        release = this.hwMap.servo.get("release");
+        release.setPosition(Globals.releaseDisabled);
 
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");

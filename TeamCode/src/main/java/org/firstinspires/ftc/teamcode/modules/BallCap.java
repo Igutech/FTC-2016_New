@@ -52,6 +52,12 @@ public class BallCap extends Module {
 
         if (enabled) {
 
+            if (teleop.getGamepad()[2].a) {
+                hardware.release.setPosition(Globals.releaseEnabled);
+            } else {
+                hardware.release.setPosition(Globals.releaseDisabled);
+            }
+
             if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
                 speed = teleop.getGamepad()[2].right_stick_y;
                 if (speed < 0) {
