@@ -87,7 +87,11 @@ public class Hardware {
 
             gyro.calibrate();
             while (gyro.isCalibrating()) {
-                this.waitForTick(10);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             gyro=null;
@@ -126,6 +130,7 @@ public class Hardware {
 
     }
 
+    @Deprecated
     public void waitForTick(long periodMs) {
 
         long  remaining = periodMs - (long)period.milliseconds();
