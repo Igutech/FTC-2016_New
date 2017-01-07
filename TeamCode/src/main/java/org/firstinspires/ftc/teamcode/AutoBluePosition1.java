@@ -37,7 +37,7 @@ public class AutoBluePosition1 extends LinearOpMode {
 
         if(Color) { //red side program
             hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
-            AutonomousUtils.pidGyro(3.18f, .25f, 0);
+            AutonomousUtils.pidGyro(2.18f, .25f, 0);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -61,6 +61,8 @@ public class AutoBluePosition1 extends LinearOpMode {
                 e.printStackTrace();
             }
             hardware.flywheel.setPower(0);
+            AutonomousUtils.pidGyro(1f, .25f, 0);
+            AutonomousUtils.resetEncoders();
 
             AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
             AutonomousUtils.resetEncoders();
