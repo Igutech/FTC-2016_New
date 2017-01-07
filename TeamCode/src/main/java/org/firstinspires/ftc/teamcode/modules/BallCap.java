@@ -50,7 +50,7 @@ public class BallCap extends Module {
 
 
 
-        if (enabled) {
+        if (enabled || true) {
 
             if (teleop.getGamepad()[2].a) {
                 hardware.release.setPosition(Globals.releaseEnabled);
