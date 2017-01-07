@@ -47,7 +47,7 @@ public class DriveTrain extends Module {
         }
 
         if (slomo < .5f) {
-            slomo = .1f;
+            slomo = .2f;
         }
 
         if (!switchone) {
