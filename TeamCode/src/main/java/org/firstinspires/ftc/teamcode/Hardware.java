@@ -40,6 +40,8 @@ public class Hardware {
 
     public ModernRoboticsI2cGyro gyro;
 
+    public DcMotor lights;
+
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
 
@@ -83,6 +85,8 @@ public class Hardware {
 
         lightright = this.hwMap.lightSensor.get("lightright");
         lightleft = this.hwMap.lightSensor.get("lightleft");
+
+        lights = this.hwMap.dcMotor.get("lights");
 
         lightright.enableLed(true);
         lightleft.enableLed(true);
