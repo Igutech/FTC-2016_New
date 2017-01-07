@@ -23,7 +23,7 @@ public class AutoRedPosition1 extends LinearOpMode {
         boolean Color = true;
         WESTTimerThread westTimer;
 
-        boolean competition = false; //TODO: CHANGE  THIS AT COMPETITION!
+        boolean competition = true; //TODO: CHANGE  THIS AT COMPETITION!
 
         /*while (!confirmed && opModeIsActive()) {
             if (gamepad1.b) {
