@@ -122,11 +122,11 @@ public class AutoRedPosition1 extends LinearOpMode {
                 telemetry.update();
 
                 float distance = 0;
-                if (state == BeaconState.REDBLUE) {
+                if (state == BeaconState.BLUERED) {
                     //push first button
                     distance = .25f;
                     AutonomousUtils.resetEncoders();
-                    AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
+                    AutonomousUtils.driveEncoderFeet(distance, .25f, false);
                     hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
                     try {
                         Thread.sleep(700);
@@ -134,7 +134,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                         e.printStackTrace();
                     }
                     hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
-                } else if (state == BeaconState.BLUERED) {
+                } else if (state == BeaconState.REDBLUE) {
                     //push second button
                     hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
                     try {
@@ -186,11 +186,11 @@ public class AutoRedPosition1 extends LinearOpMode {
                 telemetry.update();
 
                 distance = 0;
-                if (state == BeaconState.REDBLUE) {
+                if (state == BeaconState.BLUERED) {
                     //push first button
                     distance = .25f;
                     AutonomousUtils.resetEncoders();
-                    AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
+                    AutonomousUtils.driveEncoderFeet(distance, .25f, false);
                     hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
                     try {
                         Thread.sleep(500);
@@ -198,7 +198,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                         e.printStackTrace();
                     }
                     hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
-                } else if (state == BeaconState.BLUERED) {
+                } else if (state == BeaconState.REDBLUE) {
                     //push second button
                     hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
                     try {
