@@ -86,6 +86,14 @@ public class Hardware {
 
         lightright.enableLed(true);
         lightleft.enableLed(true);
+
+
+        // Set all servos to start positions
+        beaconleft.setPosition(Globals.beaconLeftDisabled);
+        beaconright.setPosition(Globals.beaconRightDisabled);
+        WEST.setPosition(Globals.westDisabled);
+
+
         if (gyroflag) {
             gyro = (ModernRoboticsI2cGyro) this.hwMap.gyroSensor.get("gyro");
 
@@ -118,10 +126,6 @@ public class Hardware {
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Set all servos to start positions
-        beaconleft.setPosition(Globals.beaconLeftDisabled);
-        beaconright.setPosition(Globals.beaconRightDisabled);
-        WEST.setPosition(Globals.westDisabled);
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
