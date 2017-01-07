@@ -152,6 +152,13 @@ public class AutoBluePosition1 extends LinearOpMode {
             }
 
             colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.BLUE);
+            t = new Thread(colorDetectionThread);
+            t.start();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             state = colorDetectionThread.getState();
             telemetry.addData("State", state);
             telemetry.update();
