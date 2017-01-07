@@ -20,23 +20,14 @@ public class AutoShootBallsBlue extends LinearOpMode {
 
         waitForStart();
         hardware.flywheel.setPower(Globals.flywheelWheelSpeed);
-        hardware.right.setPower(0.25f);
-        hardware.left.setPower(0.25f);
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        hardware.right.setPower(0);
-        hardware.left.setPower(0);
 
+        AutonomousUtils.pidGyro(3.18f, .25f, 0);
 
         try {
             Thread.sleep(2000);
             hardware.WEST.setPosition(Globals.westEnabled);
             Thread.sleep(500);
             hardware.WEST.setPosition(Globals.westDisabled);
-            hardware.flywheel.setPower(0f);
             Thread.sleep(2000);
             hardware.WEST.setPosition(Globals.westEnabled);
             Thread.sleep(500);
