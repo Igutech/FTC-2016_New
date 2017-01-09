@@ -10,6 +10,7 @@ public class DriveTrain extends Module {
 
     boolean switchone = false;
     boolean reversed = false;
+    float boostFactor = 0.8f; //this controlls the percentage of the joystick to throttle, due to run with encoders, 100percent corresponded to 80 percent actual power
 
     public DriveTrain (Teleop t) {
         super(t);
@@ -67,11 +68,11 @@ public class DriveTrain extends Module {
 
 
         if(!reversed) {
-            hardware.right.setPower(rightPow*slomo);
-            hardware.left.setPower(leftPow*slomo);
+            hardware.right.setPower(rightPow*slomo*boostFactor);
+            hardware.left.setPower(leftPow*slomo*boostFactor);
         } else {
-            hardware.left.setPower(-rightPow*slomo);
-            hardware.right.setPower(-leftPow*slomo);
+            hardware.left.setPower(-rightPow*slomo*boostFactor);
+            hardware.right.setPower(-leftPow*slomo*boostFactor);
         }
 
 
