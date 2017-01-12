@@ -23,7 +23,7 @@ public class AutoBluePosition1 extends LinearOpMode {
         boolean Color = true;
         WESTTimerThread westTimer;
 
-        boolean competition = true; //TODO: CHANGE  THIS AT COMPETITION!
+        boolean competition = false; //TODO: CHANGE  THIS AT COMPETITION!
 
         Hardware hardware = new Hardware(this);
         hardware.init();
