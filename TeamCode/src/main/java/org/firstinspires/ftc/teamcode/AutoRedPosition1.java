@@ -48,6 +48,20 @@ public class AutoRedPosition1 extends LinearOpMode {
             }
             telemetry.update();*/
 
+
+            /*
+             * NEW SYSTEM! Read below!
+             *
+             * When initializing an autonomous program, you need to do what you see in the following:
+             *  - Initialize hardware with a reference to a linear OpMode
+             *  - Call constructor with a reference to the hardware object
+             *   * This allows the AutonomousUtils class to use interrupts
+             *  - DO NOT initialize or attempt to use any methods inside AutonomousUtils unless from within a LienarOpMode.
+             *   * This causes a null pointer because it cannot find a LinearOpMode object
+             *
+             *   >> DO NOT USE ANYTHING RELATED TO AUTONOMOUSUTILS IN TELEOP OR ANY REGULAR OPMODE! <<
+             */
+
             Hardware hardware = new Hardware(this);
             hardware.init();
             new AutonomousUtils(hardware);
