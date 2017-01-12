@@ -49,7 +49,7 @@ public class AutonomousUtils {
         try {
             hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (hardware.left.getMode() != DcMotor.RunMode.RUN_TO_POSITION && hardware.right.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            while (hardware.opModeIsActive() && hardware.left.getMode() != DcMotor.RunMode.RUN_TO_POSITION && hardware.right.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
                 Thread.sleep(10);
             }
             hardware.right.setTargetPosition(ticks);
@@ -64,7 +64,7 @@ public class AutonomousUtils {
             }
 
             long startTime = System.currentTimeMillis()/1000;
-            while (hardware.left.getCurrentPosition() < hardware.left.getTargetPosition() || hardware.right.getCurrentPosition() < hardware.right.getTargetPosition()) {
+            while (hardware.opModeIsActive() && hardware.left.getCurrentPosition() < hardware.left.getTargetPosition() || hardware.right.getCurrentPosition() < hardware.right.getTargetPosition()) {
                 if (rampUp) {
                     long currentTime = System.currentTimeMillis() / 1000;
                     long elapsed = Math.abs(currentTime - startTime);
@@ -126,7 +126,7 @@ public class AutonomousUtils {
             hardware.right.setPower(-power);
             hardware.left.setPower(-power);
 
-            while (hardware.left.getCurrentPosition() > hardware.left.getTargetPosition() || hardware.right.getCurrentPosition() > hardware.right.getTargetPosition()) {
+            while (hardware.opModeIsActive() && hardware.left.getCurrentPosition() > hardware.left.getTargetPosition() || hardware.right.getCurrentPosition() > hardware.right.getTargetPosition()) {
                 Thread.sleep(10);
             }
             if (!rampUp) {
@@ -174,7 +174,7 @@ public class AutonomousUtils {
         target.setTargetPosition((int) -ticks);
         target.setPower(-speed);
 
-        while (target.isBusy()) {
+        while (hardware.opModeIsActive() && target.isBusy()) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -205,7 +205,7 @@ public class AutonomousUtils {
             } else {
                 condition = Condition.GT;
             }
-            while (!done) {
+            while (hardware.opModeIsActive() && !done) {
                 GyroSensorData data = AutonomousUtils.getGyroSensorData();
                 target.setPower(speed);
                 boolean result;
@@ -227,7 +227,7 @@ public class AutonomousUtils {
             } else {
                 condition = Condition.GT;
             }
-            while (!done) {
+            while (hardware.opModeIsActive() && !done) {
                 GyroSensorData data = AutonomousUtils.getGyroSensorData();
                 if (condition.equals(Condition.GT)) {
                     hardware.left.setPower(speed/2);
@@ -271,7 +271,7 @@ public class AutonomousUtils {
         final float GAIN = 0.0025f;
         boolean done = false;
 
-        while (!done) {
+        while (hardware.opModeIsActive() && !done) {
             float error = angle - AutonomousUtils.getGyroSensorData().getIntegratedZ();
             float output = error*GAIN;
             float leftOutput = speed + output;
