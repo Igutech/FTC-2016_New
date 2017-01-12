@@ -149,6 +149,13 @@ public class Hardware {
 
     }
 
+    /**
+     * Initializes components: Call this directly after the waitForStart function in autonomous.
+     */
+    public void preStartOperations() {
+        gyro.resetZAxisIntegrator();
+    }
+
     @Deprecated
     public void waitForTick(long periodMs) {
 

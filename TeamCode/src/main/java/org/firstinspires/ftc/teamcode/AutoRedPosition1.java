@@ -72,6 +72,7 @@ public class AutoRedPosition1 extends LinearOpMode {
 
 
             waitForStart();
+            hardware.preStartOperations();
 
             if(Color) { //red side program
                 hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);

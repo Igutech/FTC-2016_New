@@ -34,6 +34,7 @@ public class AutoBluePosition1 extends LinearOpMode {
         t2.start();
 
         waitForStart();
+        hardware.preStartOperations();
 
         if(Color) { //red side program
             hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
