@@ -58,16 +58,17 @@ import java.util.HashMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="ColorTesting", group="Igutech")  // @Autonomous(...) is the other common choice
-@Disabled
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Trapezoid Drive", group="Igutech")  // @Autonomous(...) is the other common choice
 public class Autonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
+    int step = 0;
+    double tickstart = 0;
+    double ticks = 0;
+    double speed;
 
-    private HashMap<String, Boolean> decisions;
-    // DcMotor leftMotor = null;
-    // DcMotor rightMotor = null;
+
 
     @Override
     public void runOpMode() {
@@ -76,81 +77,61 @@ public class Autonomous extends LinearOpMode {
 
         Hardware hardware = new Hardware(hardwareMap);
         hardware.init();
-        AutonomousUtils utils = new AutonomousUtils(hardware);
-        // Wait for the game to start (driver presses PLAY)
 
-        //decisions = new HashMap<String, Boolean>();
-
-        /*
-        boolean confirmed = false;
-        decisions.put("Color", true);
-        while (!confirmed && opModeIsActive()) {
-            if (gamepad1.b) {
-                decisions.put("Color", true); //true if red
-            }
-            if (gamepad1.x) {
-                decisions.put("Color", false); //false if blue
-            }
-
-            if (gamepad1.start) {
-                confirmed = true;
-            }
-
-            if (decisions.get("Color")) {
-                telemetry.addData("Color", "RED");
-            } else {
-                telemetry.addData("Color", "BLUE");
-            }
-
-            if (confirmed) {
-                telemetry.addData("LOCKED IN", "TO BEGIN, PRESS START ON PHONE");
-            }
-            telemetry.update();
-        }
-        */
+        //hardware.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //hardware.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         waitForStart();
         runtime.reset();
 
-        // run until the end of the match (driver presses STOP)
-
-        boolean done = false;
-        hardware.muxColor.startPolling();
-
         while (opModeIsActive()) {
-            if (!done) {
-
-
-                while (opModeIsActive()) {
-                    //ColorSensorData data0 = AutonomousUtils.getColorSensorData(0);
-                    ColorSensorData data1 = null;
-                    ColorSensorData data2 = null;
-                    try {
-                        data1 = AutonomousUtils.getColorSensorData(1);
-                        data2 = AutonomousUtils.getColorSensorData(2);
-                    } catch (NullPointerException e) {
-                        telemetry.addData("NullPointer", e.getStackTrace().toString());
+            switch (step){
+                case 0:
+                    tickstart=runtime.milliseconds();
+                    step++;
+                    break;
+                case 1:
+                    ticks = runtime.milliseconds() - tickstart;
+                    speed = ticks*0.0002;
+                    hardware.left.setPower(speed);
+                    hardware.right.setPower(speed);
+                    if(ticks >=2000){
+                        step++;
                     }
-
-                    //telemetry.addData("red0", data0.getRed());
-                    //telemetry.addData("blue0", data0.getBlue());
-                    //telemetry.addData("green0", data0.getGreen());
-                    telemetry.addData("red1", data1.getRed());
-                    telemetry.addData("blue1", data1.getBlue());
-                    telemetry.addData("green1", data1.getGreen());
-                    telemetry.addData("red2", data2.getBlue());
-                    telemetry.addData("blue2", data2.getBlue());
-                    telemetry.addData("green2", data2.getGreen());
-                    telemetry.update();
-                }
-
-
-                // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-                // leftMotor.setPower(-gamepad1.left_stick_y);
-                // rightMotor.setPower(-gamepad1.right_stick_y);
-                //AutonomousUtils.driveEncoderFeet(4, .5f);
+                    telemetry.addData("Status: ", " Increasing Speed");
+                    telemetry.addData("Speed: ", speed);
+                    break;
+                case 2:
+                    tickstart =runtime.milliseconds();
+                    step++;
+                    break;
+                case 3:
+                    ticks =runtime.milliseconds() -tickstart;
+                    speed = ticks*0.0002;
+                    hardware.left.setPower(0.5-speed);
+                    hardware.right.setPower(0.5-speed);
+                    if(ticks >=2500){
+                        step++;
+                    }
+                    telemetry.addData("Status: ", " Decreasing Speed");
+                    telemetry.addData("Speed: ", 0.5-speed);
+                    break;
+                case 4:
+                    hardware.left.setPower(0);
+                    hardware.right.setPower(0);
+                    telemetry.addData("Status: ", " Stopped");
+                    telemetry.addData("Speed: ", 0);
+                    break;
             }
+
+            telemetry.addData("Step: ", step);
+            telemetry.addData("ticks: ", ticks);
+            telemetry.update();
+
+
         }
+        hardware.left.setPower(0);
+        hardware.right.setPower(0);
     }
 }
