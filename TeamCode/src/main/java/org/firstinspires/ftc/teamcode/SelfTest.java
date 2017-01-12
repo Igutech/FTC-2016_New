@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class SelfTest extends LinearOpMode {
     public void runOpMode() {
 
-        Hardware hardware = new Hardware(hardwareMap);
+        Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
         telemetry.addData("Hardware init properly", "");

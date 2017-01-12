@@ -13,7 +13,7 @@ public class EncoderTesting extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Hardware hardware = new Hardware(hardwareMap);
+        Hardware hardware = new Hardware(this);
         hardware.init();
 
         new AutonomousUtils(hardware);

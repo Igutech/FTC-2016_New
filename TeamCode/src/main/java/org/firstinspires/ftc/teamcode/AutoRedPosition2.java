@@ -50,7 +50,7 @@ public class AutoRedPosition2 extends LinearOpMode {
             }
             telemetry.update();*/
 
-        Hardware hardware = new Hardware(hardwareMap);
+        Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -42,11 +43,17 @@ public class Hardware {
 
     public DcMotor lights;
 
+    LinearOpMode opMode = null;
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
 
     public Hardware(HardwareMap map) {
         this.hwMap = map;
+    }
+
+    public Hardware(LinearOpMode opMode) {
+        this.hwMap = opMode.hardwareMap;
+        this.opMode = opMode;
     }
 
     public void init() {
@@ -158,5 +165,9 @@ public class Hardware {
 
         // Reset the cycle clock for the next pass.
         period.reset();
+    }
+
+    public boolean opModeIsActive() {
+        return opMode.opModeIsActive();
     }
 }

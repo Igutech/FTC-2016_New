@@ -75,8 +75,9 @@ public class Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Hardware hardware = new Hardware(hardwareMap);
+        Hardware hardware = new Hardware(this);
         hardware.init();
+        new AutonomousUtils(hardware);
 
         //hardware.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //hardware.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

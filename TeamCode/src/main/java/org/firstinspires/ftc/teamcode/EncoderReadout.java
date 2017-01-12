@@ -63,7 +63,7 @@ public class EncoderReadout extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        Hardware hardware = new Hardware(hardwareMap);
+        Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
         // Wait for the game to start (driver presses PLAY)

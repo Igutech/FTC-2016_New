@@ -15,7 +15,7 @@ public class AutoShootBallsRed extends LinearOpMode {
         double engaged = .63d;
         double disengaged = 0.05d;
 
-        Hardware hardware = new Hardware(hardwareMap);
+        Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
 
