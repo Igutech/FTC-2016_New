@@ -7,11 +7,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRGyro;
+import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
 import org.firstinspires.ftc.teamcode.modules.MultiplexColorSensor;
 
 /**
@@ -40,6 +42,7 @@ public class Hardware {
     public MultiplexColorSensor muxColor;
 
     public ModernRoboticsI2cGyro gyro;
+    public ModernRoboticsI2cGyro gyro2;
 
     public DcMotor lights;
 
@@ -107,9 +110,15 @@ public class Hardware {
 
         if (gyroflag) {
             gyro = (ModernRoboticsI2cGyro) this.hwMap.gyroSensor.get("gyro");
+            gyro.setI2cAddress(I2cAddr.create7bit(0x11));
+
+            gyro2 = (ModernRoboticsI2cGyro) this.hwMap.gyroSensor.get("gyro2");
+            gyro2.setI2cAddress(I2cAddr.create7bit(0x12));
 
             gyro.calibrate();
-            while (gyro.isCalibrating()) {
+            gyro2.calibrate();
+
+            while (gyro.isCalibrating() || gyro2.isCalibrating()) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -153,7 +162,17 @@ public class Hardware {
      * Initializes components: Call this directly after the waitForStart function in autonomous.
      */
     public void preStartOperations() {
+        GyroSensorData data1 = AutonomousUtils.getGyroSensorData(1);
+        GyroSensorData data2 = AutonomousUtils.getGyroSensorData(2);
+
+        int offset1 = Math.abs(data1.getIntegratedZ());
+        int offset2 = Math.abs(data2.getIntegratedZ());
+
+        AutonomousUtils.GyroTarget target = offset2<offset1 ? AutonomousUtils.GyroTarget.SENSOR2: AutonomousUtils.GyroTarget.SENSOR1;
+        AutonomousUtils.setGyroTarget(target);
+
         gyro.resetZAxisIntegrator();
+        gyro2.resetZAxisIntegrator();
     }
 
     @Deprecated

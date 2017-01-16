@@ -66,15 +66,25 @@ public class GyroTesting extends LinearOpMode {
         Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
+
+        while(!isStarted()) {
+            telemetry.addData("gyro1", AutonomousUtils.getGyroSensorData(1).getIntegratedZ());
+            telemetry.addData("gyro2", AutonomousUtils.getGyroSensorData(2).getIntegratedZ());
+            telemetry.update();
+        }
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        hardware.preStartOperations();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
 
-        AutonomousUtils.pidGyro(8f, .25f, 0);
-        AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, 180);
-        AutonomousUtils.resetEncoders();
-        AutonomousUtils.pidGyro(8f, .25f, 180);
+        while(opModeIsActive()) {
+            telemetry.addData("gyro1", AutonomousUtils.getGyroSensorData(1).getIntegratedZ());
+            telemetry.addData("gyro2", AutonomousUtils.getGyroSensorData(2).getIntegratedZ());
+            telemetry.addData("Preferred", AutonomousUtils.getGyroSensorData().getIntegratedZ());
+            telemetry.addData("Sensor", AutonomousUtils.getGyroTarget());
+            telemetry.update();
+        }
     }
 }

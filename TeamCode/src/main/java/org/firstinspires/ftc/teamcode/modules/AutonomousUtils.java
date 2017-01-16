@@ -27,6 +27,7 @@ import java.util.Timer;
  */
 public class AutonomousUtils {
 
+    private static GyroTarget gyroTarget;
     private static Hardware hardware;
 
     public AutonomousUtils(Hardware hardware) {
@@ -372,7 +373,40 @@ public class AutonomousUtils {
     }
 
     public static GyroSensorData getGyroSensorData() {
-        return new GyroSensorData(hardware.gyro.getIntegratedZValue(), hardware.gyro.rawX(), hardware.gyro.rawY(), hardware.gyro.rawZ());
+        if (gyroTarget.equals(GyroTarget.SENSOR1)) {
+            return new GyroSensorData(hardware.gyro.getIntegratedZValue(), hardware.gyro.rawX(), hardware.gyro.rawY(), hardware.gyro.rawZ());
+        } else if (gyroTarget.equals(GyroTarget.SENSOR2)) {
+            return new GyroSensorData(hardware.gyro2.getIntegratedZValue(), hardware.gyro2.rawX(), hardware.gyro2.rawY(), hardware.gyro2.rawZ());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets specific gyro sensor data
+     * @param id Which gyro to retrieve (1 or 2)
+     * @return GyroSensorData object containing information about the gyro
+     */
+    public static GyroSensorData getGyroSensorData(int id) {
+        if (id == 1) {
+            return new GyroSensorData(hardware.gyro.getIntegratedZValue(), hardware.gyro.rawX(), hardware.gyro.rawY(), hardware.gyro.rawZ());
+        } else if (id == 2) {
+            return new GyroSensorData(hardware.gyro2.getIntegratedZValue(), hardware.gyro2.rawX(), hardware.gyro2.rawY(), hardware.gyro2.rawZ());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set which gyro to use by default
+     * @param target the gyro to use by default
+     */
+    public static void setGyroTarget(GyroTarget target) {
+        gyroTarget = target;
+    }
+
+    public static GyroTarget getGyroTarget() {
+        return gyroTarget;
     }
 
     public static float getLightThreshold() {
@@ -399,5 +433,10 @@ public class AutonomousUtils {
     private enum Condition {
         GT,
         LT
+    }
+
+    public enum GyroTarget {
+        SENSOR1,
+        SENSOR2
     }
 }
