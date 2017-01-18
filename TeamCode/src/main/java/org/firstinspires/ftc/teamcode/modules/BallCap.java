@@ -18,6 +18,8 @@ public class BallCap extends Module {
     float speed;
     int state;
 
+    boolean holdEnabled = false;
+
     public void init() {
         enabled = false;
         toggled = false;
@@ -52,8 +54,33 @@ public class BallCap extends Module {
 
         if (enabled || true) {
 
+            if (enabled) {
+                if (holdEnabled) {
+
+                    if (hardware.ballcaphold.getCurrentPosition() > Globals.ballcapholdEnabled) {
+                        hardware.ballcaphold.setPower(0.25f);
+                    } else if (hardware.ballcaphold.getCurrentPosition() < Globals.ballcapholdEnabled) {
+                        hardware.ballcaphold.setPower(-0.25f);
+                    } else {
+                        hardware.ballcaphold.setPower(0f);
+                    }
+
+                } else {
+
+                    if (hardware.ballcaphold.getCurrentPosition() < Globals.ballcapholdDisabled) {
+                        hardware.ballcaphold.setPower(0.25f);
+                    } else if (hardware.ballcaphold.getCurrentPosition() > Globals.ballcapholdDisabled) {
+                        hardware.ballcaphold.setPower(-0.25f);
+                    } else {
+                        hardware.ballcaphold.setPower(0f);
+                    }
+
+                }
+            }
+
             if (teleop.getGamepad()[2].a) {
                 hardware.release.setPosition(Globals.releaseEnabled);
+                enabled = true;
             } else {
                 hardware.release.setPosition(Globals.releaseDisabled);
             }

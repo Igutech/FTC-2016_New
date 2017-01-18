@@ -35,6 +35,7 @@ public class Hardware {
 
     public DcMotor flywheel;
     public DcMotor ballcapper;
+    public DcMotor ballcaphold;
 
     public LightSensor lightright;
     public LightSensor lightleft;
@@ -132,6 +133,9 @@ public class Hardware {
         ballcapper = this.hwMap.dcMotor.get("ballcap");
         ballcapper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ballcapper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);  //this thing gotta float for good reasons -Tilman
+
+        ballcaphold = this.hwMap.dcMotor.get("ballcaphold");
+        ballcaphold.setPower(0);
 
 
         int[] ports = {0, 1, 2, 3};
