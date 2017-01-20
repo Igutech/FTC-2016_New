@@ -21,32 +21,36 @@ import java.util.HashMap;
 public class AutoRedPosition1 extends LinearOpMode {
     public void runOpMode() {
         boolean Color = true;
+        boolean delay = false;
         WESTTimerThread westTimer;
+        boolean confirmed = false;
 
         boolean competition = false; //TODO: CHANGE  THIS AT COMPETITION!
 
-        /*while (!confirmed && opModeIsActive()) {
-            if (gamepad1.b) {
-                Color = true;
+        while (!confirmed && opModeIsActive()) {
+            if (gamepad1.b && !confirmed) {
+                delay = true;
             }
-            if (gamepad1.x) {
-                Color = false;
+            if (gamepad1.x && !confirmed) {
+                delay = false;
             }
 
             if (gamepad1.start) {
                 confirmed = true;
             }
 
-            if (Color) {
-                telemetry.addData("Color", "RED");
+            if (delay) {
+                telemetry.addData("Delay", "0s");
             } else {
-                telemetry.addData("Color", "BLUE");
+                telemetry.addData("Delay", "10s");
             }
 
             if (confirmed) {
                 telemetry.addData("LOCKED IN", "TO BEGIN, PRESS START ON PHONE");
+                telemetry.addData("Calibrating. Please wait...", "");
             }
-            telemetry.update();*/
+            telemetry.update();
+        }
 
 
             /*
@@ -70,11 +74,23 @@ public class AutoRedPosition1 extends LinearOpMode {
             Thread t2 = new Thread(westTimer);
             t2.start();
 
+            telemetry.addData("Calibration complete", "");
+            telemetry.update();
+
 
             waitForStart();
             hardware.preStartOperations();
 
             if(Color) { //red side program
+
+                if (delay) {
+                    try {
+                        Thread.sleep(10000); //10 seconds
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
                 hardware.waitForTick(0);
                 AutonomousUtils.pidGyro(2.18f, .25f, 0);
