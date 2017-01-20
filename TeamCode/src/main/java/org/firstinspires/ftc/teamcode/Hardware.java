@@ -135,6 +135,14 @@ public class Hardware {
         ballcapper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);  //this thing gotta float for good reasons -Tilman
 
         ballcaphold = this.hwMap.dcMotor.get("ballcaphold");
+        ballcaphold.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ballcaphold.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ballcaphold.setTargetPosition(Globals.ballcapholdDisabled);
         ballcaphold.setPower(0);
 
 

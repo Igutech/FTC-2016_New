@@ -35,6 +35,11 @@ public class BallCap extends Module {
             hardware.ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
+        if (teleop.getGamepad()[2].left_trigger > .70) {
+            holdEnabled = true;
+        } else {
+            holdEnabled = false;
+        }
 
         if (state == 1 && teleop.getGamepad()[2].a) {
             state = 2;
@@ -56,26 +61,14 @@ public class BallCap extends Module {
 
             if (enabled) {
                 if (holdEnabled) {
-
-                    if (hardware.ballcaphold.getCurrentPosition() > Globals.ballcapholdEnabled) {
-                        hardware.ballcaphold.setPower(0.25f);
-                    } else if (hardware.ballcaphold.getCurrentPosition() < Globals.ballcapholdEnabled) {
-                        hardware.ballcaphold.setPower(-0.25f);
-                    } else {
-                        hardware.ballcaphold.setPower(0f);
-                    }
-
+                    hardware.ballcaphold.setTargetPosition(Globals.ballcapholdEnabled);
                 } else {
-
-                    if (hardware.ballcaphold.getCurrentPosition() < Globals.ballcapholdDisabled) {
-                        hardware.ballcaphold.setPower(0.25f);
-                    } else if (hardware.ballcaphold.getCurrentPosition() > Globals.ballcapholdDisabled) {
-                        hardware.ballcaphold.setPower(-0.25f);
-                    } else {
-                        hardware.ballcaphold.setPower(0f);
-                    }
-
+                    hardware.ballcaphold.setTargetPosition(Globals.ballcapholdDisabled);
                 }
+
+                hardware.ballcaphold.setPower(Globals.ballcapholdSpeed);
+            } else {
+                hardware.ballcaphold.setPower(0);
             }
 
             if (teleop.getGamepad()[2].a) {
