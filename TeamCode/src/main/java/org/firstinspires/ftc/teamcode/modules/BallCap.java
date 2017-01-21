@@ -26,13 +26,18 @@ public class BallCap extends Module {
         hardware.lock.setPosition(Globals.lockEnabled);
         state = 1;
         hardware.ballcapper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        hardware.ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void loop() {
 
         if (teleop.getGamepad()[1].a) {
             enabled = true;
-            hardware.ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         if (teleop.getGamepad()[2].left_trigger > .70) {
