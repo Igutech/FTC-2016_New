@@ -31,7 +31,7 @@ public class AutonomousUtils {
     private static Hardware hardware;
 
     public AutonomousUtils(Hardware hardware) {
-        this.hardware = hardware;
+        AutonomousUtils.hardware = hardware;
     }
 
     public static void driveEncoderFeetBackwards(float feet, float power) {
