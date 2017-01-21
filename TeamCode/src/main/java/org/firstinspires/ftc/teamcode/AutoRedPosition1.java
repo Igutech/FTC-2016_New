@@ -93,7 +93,7 @@ public class AutoRedPosition1 extends LinearOpMode {
 
             hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
             hardware.waitForTick(0);
-            AutonomousUtils.pidGyro(2.18f, .25f, 0);
+            AutonomousUtils.pidGyro(1f, .25f, 0);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -115,7 +115,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 e.printStackTrace();
             }
             hardware.flywheel.setPower(0);
-            AutonomousUtils.pidGyro(1f, .25f, 0);
+            AutonomousUtils.pidGyro(2.18f, .25f, 0);
             AutonomousUtils.resetEncoders();
 
             AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
