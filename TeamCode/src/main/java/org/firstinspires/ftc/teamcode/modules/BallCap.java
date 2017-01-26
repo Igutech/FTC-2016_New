@@ -96,6 +96,7 @@ public class BallCap extends Module {
                 hardware.lock.setPosition(Globals.lockEnabled);
             }
 
+
         }
     }
 }
