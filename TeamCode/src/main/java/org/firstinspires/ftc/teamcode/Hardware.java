@@ -123,7 +123,7 @@ public class Hardware {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         } else {
@@ -139,7 +139,7 @@ public class Hardware {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         ballcaphold.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         ballcaphold.setTargetPosition(Globals.ballcapholdDisabled);
@@ -207,5 +207,9 @@ public class Hardware {
 
     public boolean opModeIsActive() {
         return opMode.opModeIsActive();
+    }
+
+    public void updateAutonomous(LinearOpMode opmode) {
+        this.opMode = opmode;
     }
 }

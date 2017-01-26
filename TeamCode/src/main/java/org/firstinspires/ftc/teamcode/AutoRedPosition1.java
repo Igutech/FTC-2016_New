@@ -19,6 +19,11 @@ import java.util.HashMap;
  */
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoRedPosition1", group="Igutech")
 public class AutoRedPosition1 extends LinearOpMode {
+
+    public LinearOpMode getOp() {
+        return (LinearOpMode)this;
+    }
+
     public void runOpMode() {
         boolean Color = true;
         boolean delay = false;
@@ -66,13 +71,32 @@ public class AutoRedPosition1 extends LinearOpMode {
          *   >> DO NOT USE ANYTHING RELATED TO AUTONOMOUSUTILS IN TELEOP OR ANY REGULAR OPMODE! <<
          */
 
-        Hardware hardware = new Hardware(this);
+        final Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
 
         westTimer = new WESTTimerThread(hardware);
         Thread t2 = new Thread(westTimer);
         t2.start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean done = false;
+                while (!done) {
+                    hardware.updateAutonomous(getOp());
+                    AutonomousUtils.hardware = hardware;
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                    if (!getOp().opModeIsActive()) {
+                        done = true;
+                    }
+                }
+            }
+        }).start();
 
         telemetry.addData("Calibration complete", "");
         telemetry.update();
@@ -87,7 +111,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(10000); //10 seconds
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
 
@@ -97,7 +121,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             AutonomousUtils.resetEncoders();
 
@@ -106,13 +130,13 @@ public class AutoRedPosition1 extends LinearOpMode {
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             westTimer.trigger();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             hardware.flywheel.setPower(0);
             AutonomousUtils.pidGyro(2.18f, .25f, 0);
@@ -136,7 +160,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
             hardware.left.setPower(0);
@@ -148,7 +172,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
             BeaconState state = colorDetectionThread.getState();
             telemetry.addData("State", state);
@@ -164,7 +188,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(700);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
             } else if (state == BeaconState.REDBLUE) {
@@ -173,7 +197,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(700);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
             }
@@ -193,7 +217,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
             hardware.left.setPower(0);
@@ -202,7 +226,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
 
             colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
@@ -211,7 +235,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
 
             state = colorDetectionThread.getState();
@@ -228,7 +252,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
             } else if (state == BeaconState.REDBLUE) {
@@ -237,7 +261,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
             }

@@ -28,7 +28,7 @@ import java.util.Timer;
 public class AutonomousUtils {
 
     private static GyroTarget gyroTarget;
-    private static Hardware hardware;
+    public static Hardware hardware;
 
     public AutonomousUtils(Hardware hardware) {
         AutonomousUtils.hardware = hardware;
@@ -86,7 +86,7 @@ public class AutonomousUtils {
             hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         } catch (Exception e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -146,7 +146,7 @@ public class AutonomousUtils {
                 hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -179,7 +179,7 @@ public class AutonomousUtils {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
 
@@ -303,14 +303,14 @@ public class AutonomousUtils {
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         hardware.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         hardware.right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 
