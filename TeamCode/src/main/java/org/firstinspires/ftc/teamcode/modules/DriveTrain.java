@@ -9,7 +9,10 @@ import org.firstinspires.ftc.teamcode.Teleop;
 public class DriveTrain extends Module {
 
     boolean switchone = false;
+    boolean switchtwo = false;
     boolean reversed = false;
+    boolean slomo = false;
+    float slowmo;
     float boostFactor = 0.8f; //this controlls the percentage of the joystick to throttle, due to run with encoders, 100percent corresponded to 80 percent actual power
 
     public DriveTrain (Teleop t) {
@@ -19,7 +22,6 @@ public class DriveTrain extends Module {
     public void loop() {
         float joyThr = teleop.getGamepad()[1].left_stick_y;
         float joyYaw = teleop.getGamepad()[1].right_stick_x;
-        float slomo = 1-teleop.getGamepad()[1].right_trigger;
 
         if (joyThr > .90f) {
             joyThr = .90f;
@@ -47,12 +49,9 @@ public class DriveTrain extends Module {
             leftPow = -1.0f;
         }
 
-        if (slomo < .5f) {
-            slomo = .2f;
-        }
 
         if (!switchone) {
-            if (teleop.getGamepad()[1].back) {
+            if (teleop.getGamepad()[1].left_bumper) {
                 switchone = true;//toggle to reverse driving
                 if(reversed){
                     reversed = false;
@@ -61,21 +60,41 @@ public class DriveTrain extends Module {
                 }
             }
         }else {
-            if (!teleop.getGamepad()[1].back) {
+            if (!teleop.getGamepad()[1].left_bumper) {
                 switchone =false;
             }
         }
 
+        if (!switchtwo) {
+            if (teleop.getGamepad()[1].right_bumper) {
+                switchtwo = true;
+                if(slomo){
+                    slomo = false;
+                } else {
+                    slomo = true;
+                }
+            }
+        }else {
+            if (!teleop.getGamepad()[1].left_bumper) {
+                switchtwo = false;
+            }
+        }
 
-        if(!reversed) {
-            hardware.right.setPower(rightPow*slomo*boostFactor);
-            hardware.left.setPower(leftPow*slomo*boostFactor);
+        if(slomo) {
+            slowmo = .2f;
         } else {
-            hardware.left.setPower(-rightPow*slomo*boostFactor);
-            hardware.right.setPower(-leftPow*slomo*boostFactor);
+            slowmo = 1;
+
+        }
+        if(!reversed) {
+            hardware.right.setPower(rightPow*slowmo*boostFactor);
+            hardware.left.setPower(leftPow*slowmo*boostFactor);
+        } else {
+            hardware.left.setPower(-rightPow*slowmo*boostFactor);
+            hardware.right.setPower(-leftPow*slowmo*boostFactor);
         }
 
 
-        teleop.telemetry.addData("slowmo factor", slomo);
+        teleop.telemetry.addData("slowmo?", switchtwo);
     }
 }
