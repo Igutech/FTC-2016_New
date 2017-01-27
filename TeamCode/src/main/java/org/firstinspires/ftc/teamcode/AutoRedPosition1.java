@@ -124,7 +124,7 @@ public class AutoRedPosition1 extends LinearOpMode {
                 Thread.currentThread().interrupt();
             }
             AutonomousUtils.resetEncoders();
-
+            AutonomousUtils.gyroTurn(null, TurnType.POINT, .125f, 10);
             //FIRE BALLS
             westTimer.trigger();
             try {
@@ -139,6 +139,8 @@ public class AutoRedPosition1 extends LinearOpMode {
                 Thread.currentThread().interrupt();
             }
             hardware.flywheel.setPower(0);
+            AutonomousUtils.gyroTurn(null, TurnType.POINT, .125f, 0);
+            AutonomousUtils.resetEncoders();
             AutonomousUtils.pidGyro(2.18f, .25f, 0);
             AutonomousUtils.resetEncoders();
 
