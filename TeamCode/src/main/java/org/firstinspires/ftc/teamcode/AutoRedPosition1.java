@@ -207,7 +207,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             AutonomousUtils.resetEncoders();
 
             if (competition) {
-                AutonomousUtils.pidGyro(4f + distance, 0.25f, -2);
+                AutonomousUtils.pidGyro(3.5f + distance, 0.25f, -2);
             } else {
                 AutonomousUtils.pidGyro(2f + distance, 0.25f, -2);
             }
@@ -220,6 +220,12 @@ public class AutoRedPosition1 extends LinearOpMode {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
+                }
+                int encoderTicks = (hardware.right.getCurrentPosition() + hardware.left.getCurrentPosition())/2;
+                float timeoutTarget = 1.5f*460f;
+
+                if (encoderTicks > timeoutTarget) {
+                    requestOpModeStop();
                 }
             }
             hardware.left.setPower(0);
