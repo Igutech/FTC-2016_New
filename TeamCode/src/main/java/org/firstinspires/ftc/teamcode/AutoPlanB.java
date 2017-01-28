@@ -18,7 +18,7 @@ public class AutoPlanB extends LinearOpMode {
         WESTTimerThread westTimer;
         boolean confirmed = false;
 
-        while (!confirmed && opModeIsActive()) {
+        while (!confirmed) {
             if (gamepad1.b && !confirmed) {
                 delay = true;
             }
@@ -31,9 +31,9 @@ public class AutoPlanB extends LinearOpMode {
             }
 
             if (delay) {
-                telemetry.addData("Delay", "0s");
-            } else {
                 telemetry.addData("Delay", "10s");
+            } else {
+                telemetry.addData("Delay", "0s");
             }
 
             if (confirmed) {
