@@ -105,6 +105,8 @@ public class AutoRedPosition1 extends LinearOpMode {
         waitForStart();
         hardware.preStartOperations();
 
+        hardware.release.setPosition(Globals.releaseDisabled);
+
         if(Color) { //red side program
 
             if (delay) {
@@ -141,11 +143,9 @@ public class AutoRedPosition1 extends LinearOpMode {
             hardware.flywheel.setPower(0);
             AutonomousUtils.gyroTurn(null, TurnType.POINT, .125f, 0);
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.pidGyro(2.18f, .25f, 0);
+            AutonomousUtils.pidGyro(1.3f, .25f, 0);
             AutonomousUtils.resetEncoders();
 
-            AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
-            AutonomousUtils.resetEncoders();
             AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, 80);
             AutonomousUtils.resetEncoders();
             hardware.waitForTick(100);
