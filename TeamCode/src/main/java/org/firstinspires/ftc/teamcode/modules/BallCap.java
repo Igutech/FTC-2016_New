@@ -26,12 +26,15 @@ public class BallCap extends Module {
         hardware.lock.setPosition(Globals.lockEnabled);
         state = 1;
         hardware.ballcapper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.ballcaphold.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.ballcaphold.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         hardware.ballcapper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.ballcaphold.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void loop() {
@@ -66,12 +69,22 @@ public class BallCap extends Module {
 
             if (enabled) {
                 if (holdEnabled) {
-                    hardware.ballcaphold.setTargetPosition(Globals.ballcapholdEnabled);
-                } else {
-                    hardware.ballcaphold.setTargetPosition(Globals.ballcapholdDisabled);
-                }
+                    hardware.ballcaphold.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    hardware.ballcaphold.setTargetPosition(Globals.ballcapholdEnabled);  //set it to go to clamp
+                    if(hardware.ballcaphold.getCurrentPosition() > Globals.ballcapholdSlowZone){ //if it's far enough, apply more powah!
+                        hardware.ballcaphold.setPower(Globals.ballcapclampSpeed);
+                    }else{
+                        hardware.ballcaphold.setPower(Globals.ballcapholdSpeed);
+                    }
 
-                hardware.ballcaphold.setPower(Globals.ballcapholdSpeed);
+                } else {
+                    hardware.ballcaphold.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    if(hardware.ballcaphold.getCurrentPosition()>100){
+                        hardware.ballcaphold.setPower(-.15f);
+                    } else {
+                        hardware.ballcaphold.setPower(0);
+                    }
+                }
             } else {
                 hardware.ballcaphold.setPower(0);
             }
