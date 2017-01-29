@@ -85,8 +85,10 @@ public class BallCap extends Module {
 
             if (Math.abs(teleop.getGamepad()[2].right_stick_y) >= .1) {
                 speed = teleop.getGamepad()[2].right_stick_y;
-                if (speed < 0) {
-                    speed= 0; //induces coasting
+                if (speed < -.5) { //the user needs to push the stick further than halfway in order ot unravel
+                    speed= -.10f; //when using steel cable, this needs to run slowly to uravel the  cable
+                }else if (speed < 0){ //if the stick is not all the way pressed, this executes, coasting
+                    speed = 0; //this just induces coasting as standard
                 }
                 hardware.ballcapper.setPower(speed);
                 hardware.lock.setPosition(Globals.lockDisabled);
