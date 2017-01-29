@@ -75,7 +75,7 @@ public class DriveTrain extends Module {
                 }
             }
         }else {
-            if (!teleop.getGamepad()[1].left_bumper) {
+            if (!teleop.getGamepad()[1].right_bumper) {
                 switchtwo = false;
             }
         }
