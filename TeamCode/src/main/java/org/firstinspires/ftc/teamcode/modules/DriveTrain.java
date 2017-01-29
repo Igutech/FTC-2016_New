@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.modules;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.Teleop;
 
+
 /**
  * Created by Kevin on 10/5/2016.
  */
@@ -89,9 +90,20 @@ public class DriveTrain extends Module {
         if(!reversed) {
             hardware.right.setPower(rightPow*slowmoval*boostFactor);
             hardware.left.setPower(leftPow*slowmoval*boostFactor);
+            hardware.lightleft.enableLed(true);
+            hardware.lightright.enableLed(true);
         } else {
             hardware.left.setPower(-rightPow*slowmoval*boostFactor);
             hardware.right.setPower(-leftPow*slowmoval*boostFactor);
+            int runtimer  = (int)Math.round(teleop.getRuntime());
+            if ((runtimer & 1) == 0){ //this checks the last bit of the number to see if it's even!
+                hardware.lightleft.enableLed(false); //it would be hella dank to have sound that plays too
+                hardware.lightright.enableLed(false); //tilman will implement this in his leisure
+            }else{
+                hardware.lightleft.enableLed(true);
+                hardware.lightright.enableLed(true);
+            }
+
         }
 
 
