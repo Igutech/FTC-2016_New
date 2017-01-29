@@ -12,8 +12,8 @@ public class DriveTrain extends Module {
     boolean switchtwo = false;
     boolean reversed = false;
     boolean slomo = false;
-    float slowmo;
-    float boostFactor = 0.8f; //this controlls the percentage of the joystick to throttle, due to run with encoders, 100percent corresponded to 80 percent actual power
+    float slowmoval;
+    float boostFactor = 0.78f; //this controlls the percentage of the joystick to throttle, due to run with encoders, 100percent corresponded to 80 percent actual power
 
     public DriveTrain (Teleop t) {
         super(t);
@@ -81,20 +81,20 @@ public class DriveTrain extends Module {
         }
 
         if(slomo) {
-            slowmo = .2f;
+            slowmoval = .2f;
         } else {
-            slowmo = 1;
+            slowmoval = 1;
 
         }
         if(!reversed) {
-            hardware.right.setPower(rightPow*slowmo*boostFactor);
-            hardware.left.setPower(leftPow*slowmo*boostFactor);
+            hardware.right.setPower(rightPow*slowmoval*boostFactor);
+            hardware.left.setPower(leftPow*slowmoval*boostFactor);
         } else {
-            hardware.left.setPower(-rightPow*slowmo*boostFactor);
-            hardware.right.setPower(-leftPow*slowmo*boostFactor);
+            hardware.left.setPower(-rightPow*slowmoval*boostFactor);
+            hardware.right.setPower(-leftPow*slowmoval*boostFactor);
         }
 
 
-        teleop.telemetry.addData("slowmo?", switchtwo);
+        teleop.telemetry.addData("slowmo?", slowmoval);
     }
 }
