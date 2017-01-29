@@ -100,7 +100,7 @@ public class AutoRedPosition1 extends LinearOpMode {
 
         telemetry.addData("Calibration complete", "");
         telemetry.update();
-
+        hardware.dim1.setLED(0,true); //turns on led when done with init
 
         waitForStart();
         hardware.preStartOperations();

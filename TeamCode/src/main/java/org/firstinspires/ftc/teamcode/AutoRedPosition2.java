@@ -54,6 +54,7 @@ public class AutoRedPosition2 extends LinearOpMode {
         Hardware hardware = new Hardware(this);
         hardware.init();
         new AutonomousUtils(hardware);
+        hardware.dim1.setLED(0,true); //turns on led when done with init
 
         waitForStart();
 
