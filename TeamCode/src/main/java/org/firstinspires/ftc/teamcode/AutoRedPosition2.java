@@ -15,6 +15,7 @@ import java.util.HashMap;
 /**
  * Created by Logan on 11/2/2016.
  */
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoRedPosition2", group="Igutech")
 public class AutoRedPosition2 extends LinearOpMode {
     public void runOpMode() {

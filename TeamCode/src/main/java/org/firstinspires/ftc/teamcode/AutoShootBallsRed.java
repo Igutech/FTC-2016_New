@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
@@ -7,7 +8,7 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
 /**
  * Created by Logan on 11/18/2016.
  */
-
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AutoShootBallsRed", group="Igutech")
 public class AutoShootBallsRed extends LinearOpMode {
     public void runOpMode() {
