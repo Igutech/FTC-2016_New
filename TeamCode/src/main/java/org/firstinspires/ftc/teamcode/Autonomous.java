@@ -79,14 +79,19 @@ public class Autonomous extends LinearOpMode {
         hardware.init();
         new AutonomousUtils(hardware);
 
-        //hardware.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //hardware.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
 
         waitForStart();
         runtime.reset();
 
-        while (opModeIsActive()) {
+        AutonomousUtils.smartDrive(1000);
+        telemetry.addData("Current encoder pos", hardware.left.getCurrentPosition());
+        telemetry.update();
+        AutonomousUtils.smartDrive(-1000);
+        telemetry.addData("Current encoder pos", hardware.left.getCurrentPosition());
+        telemetry.update();
+
+
+        /*while (opModeIsActive()) {
             switch (step){
                 case 0:
                     tickstart=runtime.milliseconds();
@@ -133,6 +138,6 @@ public class Autonomous extends LinearOpMode {
 
         }
         hardware.left.setPower(0);
-        hardware.right.setPower(0);
+        hardware.right.setPower(0);*/
     }
 }

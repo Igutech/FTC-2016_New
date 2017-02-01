@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.modules;
 
 import android.graphics.Color;
 
+import com.qualcomm.hardware.adafruit.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.GyroSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.LightSensorData;
 import org.firstinspires.ftc.teamcode.Motor;
+import org.firstinspires.ftc.teamcode.Teleop;
 import org.firstinspires.ftc.teamcode.TurnType;
 
 import java.io.DataInputStream;
@@ -29,6 +31,8 @@ public class AutonomousUtils {
 
     private static GyroTarget gyroTarget;
     public static Hardware hardware;
+    private static long timer;
+    private static long elapsedtime;
 
     public AutonomousUtils(Hardware hardware) {
         AutonomousUtils.hardware = hardware;
@@ -428,6 +432,73 @@ public class AutonomousUtils {
         } catch (Exception e) {
 
         }
+    }
+
+    private static float motorPower;
+    private static float lastPower;
+    private static float konstant = 0.005f;
+    private static float konstant2 = 0.0005f;
+    private static int step = 0;
+    private static int decpos;
+    private static int drivingerror;
+    private static int reverseddriving = 1;
+
+    public static void smartDrive(int goalEncoderTicks){
+        int step = 0;
+        hardware.left.setTargetPosition(goalEncoderTicks);
+        hardware.right.setTargetPosition(goalEncoderTicks);
+        if(goalEncoderTicks < 0){
+            reverseddriving = -1;
+        }else{
+            reverseddriving =1;
+        }
+        goalEncoderTicks = Math.abs(goalEncoderTicks);
+        while(step !=8){
+            switch(step){
+                case 0:
+                    resetEncoders();
+                    timer = System.currentTimeMillis();
+                    step = 1;
+                    break;
+                case 1:
+                    elapsedtime = System.currentTimeMillis() - timer;
+                    motorPower= elapsedtime * konstant;
+                    if(Math.abs(hardware.left.getCurrentPosition()) >= (goalEncoderTicks/2)){lastPower=motorPower; step = 2;}
+                    if(motorPower >= 1){step = 5;}
+                    break;
+                case 2:
+                    timer = System.currentTimeMillis();
+                    step = 3;
+                    break;
+                case 3:
+                    elapsedtime = System.currentTimeMillis() - timer;
+                    motorPower = lastPower - (elapsedtime * konstant2);
+                    if(motorPower <= 0){step = 4;}
+                    break;
+                case 4:
+                    motorPower = 0;
+                    step = 7;
+                    break;
+                case 5:
+                    decpos = (goalEncoderTicks/2) + Math.abs(hardware.left.getCurrentPosition());
+                    step = 6;
+                    break;
+                case 6:
+                    motorPower = 1f;
+                    if(Math.abs(hardware.left.getCurrentPosition()) >= decpos){lastPower=1; step = 2;}
+                    break;
+                case 7:
+                    drivingerror = goalEncoderTicks-hardware.left.getCurrentPosition();
+                    step = 8;
+                    break;
+                default:
+                    //SOMETHING MAJORLY WENT WRONG TO GET TO THIS DEFAULT CASE!
+            }
+            hardware.left.setPower(motorPower*0.40*reverseddriving);
+            hardware.right.setPower(motorPower*0.40*reverseddriving);
+
+        }
+        //return drivingerror;
     }
 
     private enum Condition {
