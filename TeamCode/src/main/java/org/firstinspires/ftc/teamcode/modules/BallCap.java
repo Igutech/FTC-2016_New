@@ -16,7 +16,6 @@ public class BallCap extends Module {
     boolean enabled;
     boolean toggled;
     float speed;
-    int state;
 
     boolean holdEnabled = false;
 
@@ -24,7 +23,6 @@ public class BallCap extends Module {
         enabled = false;
         toggled = false;
         hardware.lock.setPosition(Globals.lockEnabled);
-        state = 1;
         hardware.ballcapper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.ballcaphold.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.ballcaphold.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -48,21 +46,6 @@ public class BallCap extends Module {
         } else {
             holdEnabled = false;
         }
-
-        if (state == 1 && teleop.getGamepad()[2].a) {
-            state = 2;
-        }
-        if (state == 2 && !teleop.getGamepad()[2].a) {
-            state = 3;
-        }
-        if (state == 3 && teleop.getGamepad()[2].a) {
-            state = 4;
-        }
-        if (state == 4 && !teleop.getGamepad()[2].a) {
-            state = 1;
-        }
-
-
 
 
         if (enabled || true) {
