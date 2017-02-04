@@ -55,22 +55,19 @@ public class AutoBluePosition1 extends LinearOpMode {
             }
         }).start();
 
+        telemetry.addData("Calibration complete", "");
+        telemetry.update();
+        hardware.dim1.setLED(0, true); //turns on led when done with init
+
         waitForStart();
         hardware.preStartOperations();
 
-        if(Color) { //red side program
+        hardware.release.setPosition(Globals.releaseDisabled);
+
+        if(Color) { //blue side program
             hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
-            AutonomousUtils.pidGyro(2.18f, .25f, 0);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            AutonomousUtils.resetEncoders();
-
-
-
-            //FIRE BALLS
+            hardware.waitForTick(0);
+            AutonomousUtils.pidGyro(1f, .25f, 0);
             westTimer.trigger();
             try {
                 Thread.sleep(1500);
@@ -84,21 +81,16 @@ public class AutoBluePosition1 extends LinearOpMode {
                 Thread.currentThread().interrupt();
             }
             hardware.flywheel.setPower(0);
+            AutonomousUtils.resetEncoders();
             AutonomousUtils.pidGyro(1f, .25f, 0);
-            AutonomousUtils.resetEncoders();
 
-            AutonomousUtils.driveEncoderFeetBackwards(.3f, .25f, false);
-            AutonomousUtils.resetEncoders();
             AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, -80);
             AutonomousUtils.resetEncoders();
-            hardware.waitForTick(100);
             AutonomousUtils.pidGyro(3.6f, 0.25f, -80);
-            hardware.waitForTick(100);
             AutonomousUtils.gyroTurn(Motor.RIGHT, TurnType.SWING, -0.25f, 10);
             AutonomousUtils.gyroTurn(Motor.RIGHT, TurnType.SWING, .125f, 3);
             AutonomousUtils.resetEncoders();
             AutonomousUtils.driveEncoderFeetBackwards(.15f, .25f, false);
-            AutonomousUtils.resetEncoders();
 
             hardware.left.setPower(-0.125);
             hardware.right.setPower(-0.125);
@@ -127,7 +119,7 @@ public class AutoBluePosition1 extends LinearOpMode {
             float distance = 0;
             if (state == BeaconState.REDBLUE) {
                 //push first button
-                distance = .25f;
+                distance = .35f;
                 AutonomousUtils.driveEncoderFeet(distance, .25f, false);
                 hardware.beaconright.setPosition(Globals.beaconRightEnabled);
                 try {
@@ -148,12 +140,11 @@ public class AutoBluePosition1 extends LinearOpMode {
             }
 
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.pidGyro(4f - distance, 0.25f, 0);
 
             if (competition) {
-                AutonomousUtils.pidGyro(4f + distance, 0.25f, 2);
+                AutonomousUtils.pidGyro(3f - distance, 0.25f, 2);
             } else {
-                AutonomousUtils.pidGyro(2f + distance, 0.25f, 2);
+                AutonomousUtils.pidGyro(2f - distance, 0.25f, 2);
             }
 
             hardware.left.setPower(-0.125);
@@ -164,12 +155,18 @@ public class AutoBluePosition1 extends LinearOpMode {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
+                int encoderTicks = (hardware.right.getCurrentPosition() + hardware.left.getCurrentPosition())/2;
+                float timeoutTarget = 1.5f*460f;
+
+                if (encoderTicks > timeoutTarget) {
+                    requestOpModeStop();
+                }
             }
             hardware.left.setPower(0);
             hardware.right.setPower(0);
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -178,7 +175,7 @@ public class AutoBluePosition1 extends LinearOpMode {
             t = new Thread(colorDetectionThread);
             t.start();
             try {
-                Thread.sleep(500);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -189,12 +186,12 @@ public class AutoBluePosition1 extends LinearOpMode {
             distance = 0;
             if (state == BeaconState.REDBLUE) {
                 //push first button
-                distance = .25f;
+                distance = .35f;
                 AutonomousUtils.resetEncoders();
                 AutonomousUtils.driveEncoderFeet(distance, .25f, false);
                 hardware.beaconright.setPosition(Globals.beaconRightEnabled);
                 try {
-                    Thread.sleep(700);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -203,7 +200,7 @@ public class AutoBluePosition1 extends LinearOpMode {
                 //push second button
                 hardware.beaconright.setPosition(Globals.beaconRightEnabled);
                 try {
-                    Thread.sleep(700);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -212,9 +209,9 @@ public class AutoBluePosition1 extends LinearOpMode {
             AutonomousUtils.resetEncoders();
             AutonomousUtils.pidGyro(distance, .25f, 0);
 
-            AutonomousUtils.gyroTurn(Motor.RIGHT, TurnType.SWING, -0.25f, 125);
+            AutonomousUtils.gyroTurn(Motor.RIGHT, TurnType.SWING, -0.25f, 135);
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.pidGyro(4.5f, .5f, 125);
+            AutonomousUtils.pidGyro(4.5f, .5f, 135);
         }
 
     }

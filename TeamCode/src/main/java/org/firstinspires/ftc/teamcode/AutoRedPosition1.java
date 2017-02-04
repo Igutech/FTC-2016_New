@@ -137,7 +137,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             hardware.flywheel.setPower(0);
             AutonomousUtils.gyroTurn(null, TurnType.POINT, .125f, 0);
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.pidGyro(1.3f, .25f, 0);
+            AutonomousUtils.pidGyro(1f, .25f, 0);
 
             AutonomousUtils.gyroTurn(null, TurnType.POINT, 0.25f, 80);
             AutonomousUtils.resetEncoders();
