@@ -266,9 +266,9 @@ public class AutoRedPosition1 extends LinearOpMode {
                 AutonomousUtils.pidGyro(distance, .25f, 0);
             }
 
-            AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, -0.25f, -125);
+            AutonomousUtils.gyroTurn(Motor.LEFT, TurnType.SWING, -0.25f, -135);
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.pidGyro(4.5f, .5f, -125);
+            AutonomousUtils.pidGyro(4.5f, .5f, -135);
         }
 
     }
