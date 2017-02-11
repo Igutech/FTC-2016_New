@@ -5,8 +5,10 @@ import android.graphics.Color;
 import com.qualcomm.hardware.adafruit.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Autonomous;
+import org.firstinspires.ftc.teamcode.BeaconChangeInfo;
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
 import org.firstinspires.ftc.teamcode.GyroSensorData;
@@ -499,6 +501,48 @@ public class AutonomousUtils {
 
         }
         //return drivingerror;
+    }
+
+    public BeaconChangeInfo detectBeaconChange(BeaconState team, BeaconState originalState, BeaconState targetState, int pollTime) {
+
+        float differenceThresh = 100;
+
+        int targetSensor = team.equals(BeaconState.RED) ? 0:2;
+        BeaconChangeInfo information;
+        if (originalState.equals(BeaconState.RED)) {
+            information = new BeaconChangeInfo(getColorSensorData(targetSensor).getRed(), targetState);
+        } else {
+            information = new BeaconChangeInfo(getColorSensorData(targetSensor).getBlue(), targetState);
+        }
+
+        ElapsedTime elapsedTime = new ElapsedTime();
+        elapsedTime.reset();
+        while (hardware.opModeIsActive() && elapsedTime.milliseconds() < pollTime) {
+            if (originalState.equals(BeaconState.RED)) {
+                information.addNewValue(getColorSensorData(targetSensor).getRed());
+            } else {
+                information.addNewValue(getColorSensorData(targetSensor).getBlue());
+            }
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        float sum = 0;
+        for (float value : information.getValues()) {
+            sum += value;
+        }
+        float avg = sum/information.getTotalValues();
+        if ((avg+differenceThresh) < information.initialvalue) {
+            information.setSuccessful(true);
+        } else {
+            information.setSuccessful(false);
+        }
+
+        return information;
     }
 
     private enum Condition {
