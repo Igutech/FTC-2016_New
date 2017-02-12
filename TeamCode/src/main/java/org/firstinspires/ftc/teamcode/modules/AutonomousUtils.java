@@ -274,7 +274,7 @@ public class AutonomousUtils {
     public static void pidGyro(float feet, float speed, int angle) {
         speed = -speed;
         int ticks = (int) -(feet * 460f);
-
+        resetEncoders();
         final float GAIN = 0.0025f;
         boolean done = false;
 
@@ -553,5 +553,62 @@ public class AutonomousUtils {
     public enum GyroTarget {
         SENSOR1,
         SENSOR2
+    }
+
+
+    public static void powerGyroTurn(int angle, int slowdownThreshold, float speed, Motor leftorright){
+        float turnSpeed;
+        float halfMultipler = 1f;
+        int goalGyroPos;
+        int slowDegrees;
+        int isNegative;
+        Motor motor;
+        int startGyroPos;
+        Boolean complete = true;
+        goalGyroPos = angle;
+        slowDegrees = slowdownThreshold;
+        halfMultipler = 1f;
+        turnSpeed = speed;
+        motor = leftorright;
+        if(goalGyroPos <0){isNegative =-1;}else{isNegative=1;}
+        startGyroPos = getGyroSensorData().getIntegratedZ();
+        slowDegrees = startGyroPos + slowDegrees;
+        goalGyroPos = startGyroPos + goalGyroPos;
+
+        while(complete){
+            if(motor == Motor.LEFT){
+                hardware.left.setPower(turnSpeed*isNegative*halfMultipler);
+            }
+            if(motor == Motor.RIGHT){
+                hardware.right.setPower(-turnSpeed*isNegative*halfMultipler);
+            }
+            if(isNegative >0){
+                if(slowDegrees <= getGyroSensorData().getIntegratedZ()){
+                    halfMultipler = 0.2f;
+                }
+                if(goalGyroPos <= getGyroSensorData().getIntegratedZ()){
+                    complete = false;
+                }
+            }else{
+                if(slowDegrees >= getGyroSensorData().getIntegratedZ()){
+                    halfMultipler = 0.2f;
+                }
+                if(goalGyroPos >= getGyroSensorData().getIntegratedZ()){
+                    complete = false;
+                }
+            }
+        }
+        hardware.left.setPower(0);
+        hardware.right.setPower(0);
+    }
+
+    public static void stopDriving(){
+        hardware.left.setPower(0);
+        hardware.right.setPower(0);
+    }
+
+    public static void tankDriving(float val){
+        hardware.left.setPower(-val);
+        hardware.right.setPower(-val);
     }
 }
