@@ -98,8 +98,29 @@ public class AlternativePath extends LinearOpMode {
             }
         }
         AutonomousUtils.stopDriving();
-        //TODO: PUT BEACON BUTTON PUSH CODE HERE
-        AutonomousUtils.pidGyro(2.5f,0.15f, 0);
+        ColorDetectionThread colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
+        Thread t = new Thread(colorDetectionThread);
+        t.start();
+        delayTime(500);
+        BeaconState state = colorDetectionThread.getState();
+        telemetry.addData("State", state);
+        telemetry.update();
+        float distance = 0f;
+        if (state == BeaconState.BLUERED) {
+            distance = .35f;
+            //push first button
+            AutonomousUtils.resetEncoders();
+            AutonomousUtils.driveEncoderFeet(distance, .25f, false);
+            hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+            delayTime(700);
+            hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+        } else if (state == BeaconState.REDBLUE) {
+            //push second button
+            hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+            delayTime(700);
+            hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+        }
+        AutonomousUtils.pidGyro(2.5f-distance,0.15f, 0);
         AutonomousUtils.stopDriving();
         delayTime(340);
         AutonomousUtils.resetEncoders();
@@ -118,6 +139,28 @@ public class AlternativePath extends LinearOpMode {
         AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),0,0.10f,Motor.LEFT);
         telemetry.addData("Gyro", AutonomousUtils.getGyroSensorData().getIntegratedZ());
         telemetry.update();
+        colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
+        t = new Thread(colorDetectionThread);
+        t.start();
+        delayTime(500);
+        state = colorDetectionThread.getState();
+        telemetry.addData("State", state);
+        telemetry.update();
+        distance = 0f;
+        if (state == BeaconState.BLUERED) {
+            distance = .35f;
+            //push first button
+            AutonomousUtils.resetEncoders();
+            AutonomousUtils.driveEncoderFeet(distance, .25f, false);
+            hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+            delayTime(700);
+            hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+        } else if (state == BeaconState.REDBLUE) {
+            //push second button
+            hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
+            delayTime(700);
+            hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
+        }
         delayTime(1000);
 
 
