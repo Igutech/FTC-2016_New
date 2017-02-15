@@ -163,7 +163,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             Thread t = new Thread(colorDetectionThread);
             t.start();
             try {
-                Thread.sleep(500); //TODO: Reduce Time
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -223,7 +223,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             hardware.right.setPower(0);
 
             try {
-                Thread.sleep(250); //TODO: Reduce Time
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -232,7 +232,7 @@ public class AutoRedPosition1 extends LinearOpMode {
             t = new Thread(colorDetectionThread);
             t.start();
             try {
-                Thread.sleep(250); //TODO: Reduce Time
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

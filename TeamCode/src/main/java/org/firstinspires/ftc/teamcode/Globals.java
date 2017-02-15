@@ -16,10 +16,10 @@ public class Globals {
     public static float lockDisabled = 0.3f;
     public static float releaseEnabled = 0.1f;
     public static float releaseDisabled = 0.8f;
-    public static int ballcapholdEnabled = 550; //TODO:Adjust this value
-    public static int ballcapholdSlowZone = 200; //TODO:Adjust this value
+    public static int ballcapholdEnabled = 550;
+    public static int ballcapholdSlowZone = 200;
     public static int ballcapholdDisabled = 0;
-    public static float ballcapholdSpeed = .125f; //TODO:Adjust this value
-    public static float ballcapclampSpeed = .5f; //TODO:Adjust this value
+    public static float ballcapholdSpeed = .125f;
+    public static float ballcapclampSpeed = .5f;
 }
 
