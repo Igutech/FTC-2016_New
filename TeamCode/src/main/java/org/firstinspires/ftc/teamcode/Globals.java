@@ -11,11 +11,11 @@ public class Globals {
     public static float beaconLeftDisabled = .19f; //Change occured Here!
     public static float beaconRightEnabled = .02f;
     public static float beaconRightDisabled = .78f;
-    public static float lightThreshold = .3f;
+    public static float lightThreshold = .25f;
     public static float lockEnabled = 0.1f; //these two lock the servo which locks the lift
     public static float lockDisabled = 0.3f;
-    public static float releaseEnabled = 0.1f;
-    public static float releaseDisabled = 0.8f;
+    public static float releaseEnabled = 0.8f;
+    public static float releaseDisabled = 0.1f;
     public static int ballcapholdEnabled = 550;
     public static int ballcapholdSlowZone = 200;
     public static int ballcapholdDisabled = 0;
