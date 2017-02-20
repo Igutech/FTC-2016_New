@@ -5,12 +5,14 @@ import android.graphics.Color;
 import com.qualcomm.hardware.adafruit.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Autonomous;
 import org.firstinspires.ftc.teamcode.BeaconChangeInfo;
 import org.firstinspires.ftc.teamcode.BeaconState;
 import org.firstinspires.ftc.teamcode.ColorSensorData;
+import org.firstinspires.ftc.teamcode.Globals;
 import org.firstinspires.ftc.teamcode.GyroSensorData;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.LightSensorData;
@@ -375,7 +377,54 @@ public class AutonomousUtils {
             data = new LightSensorData(hardware.lightright.getLightDetected());
         }
 
+        if (id == 2) {
+            data = new LightSensorData(hardware.ballColor.getLightDetected());
+        }
+
         return data;
+    }
+
+    public static class NoBallDetector implements Runnable {
+        float totalDistance = 0f;
+        int totalReadings = 0;
+        @Override
+        public void run() {
+            totalDistance+=hardware.ballUltrasonic.getUltrasonicLevel();
+            totalReadings++;
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        public boolean getNoBall() {
+            if (totalDistance/totalReadings > Globals.ballUltrasonicThreshLow && totalDistance/totalReadings < Globals.ballUltrasonicThreshHigh) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public static BallColor getBallColor(LightSensorData data) {
+        NoBallDetector detector = new NoBallDetector();
+        Thread t = new Thread(detector);
+        t.start();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if (detector.getNoBall()) {
+            return BallColor.NOBALL;
+        }
+        return BallColor.RED; //TODO: Do stuff here if there is a ball.
+    }
+
+    public enum BallColor {
+        RED,
+        BLUE,
+        NOBALL;
     }
 
     public static GyroSensorData getGyroSensorData() {

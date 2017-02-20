@@ -77,7 +77,19 @@ public class EncoderReadout extends LinearOpMode {
             telemetry.addData("Left", hardware.left.getCurrentPosition());
             telemetry.addData("FlyWheel", hardware.flywheel.getCurrentPosition());
             telemetry.addData("Light", AutonomousUtils.getLightSensorData(1).getData());
+            telemetry.addData("BallColor", AutonomousUtils.getLightSensorData(2).getData());
+            telemetry.addData("Ultrasonic", hardware.ballUltrasonic.getUltrasonicLevel());
             telemetry.update();
+            if (gamepad1.a) {
+                hardware.ballColor.enableLed(true);
+            } else {
+                hardware.ballColor.enableLed(false);
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 }

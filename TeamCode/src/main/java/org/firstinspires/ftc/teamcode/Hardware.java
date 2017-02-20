@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRGyro;
@@ -40,10 +41,14 @@ public class Hardware {
     public LightSensor lightright;
     public LightSensor lightleft;
 
+    public LightSensor ballColor;
+
     public MultiplexColorSensor muxColor;
 
     public ModernRoboticsI2cGyro gyro;
     public ModernRoboticsI2cGyro gyro2;
+
+    public UltrasonicSensor ballUltrasonic;
 
     public DcMotor lights;
 
@@ -101,6 +106,11 @@ public class Hardware {
 
         lightright.enableLed(true);
         lightleft.enableLed(true);
+
+        ballColor = this.hwMap.lightSensor.get("ballcolor");
+        ballColor.enableLed(true);
+
+        ballUltrasonic = this.hwMap.ultrasonicSensor.get("ballultra");
 
 
         // Set all servos to start positions

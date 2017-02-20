@@ -21,5 +21,7 @@ public class Globals {
     public static int ballcapholdDisabled = 0;
     public static float ballcapholdSpeed = .125f;
     public static float ballcapclampSpeed = .5f;
+    public static float ballUltrasonicThreshLow = 35f;
+    public static float ballUltrasonicThreshHigh = 40f;
 }
 
