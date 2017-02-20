@@ -9,8 +9,10 @@ import org.firstinspires.ftc.teamcode.modules.WESTTimerThread;
  * Created by Tilman G on 2/12/2017.
  */
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AlternativePath", group="Igutech")
-public class AlternativePath extends LinearOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AlternativePathRed", group="Igutech")
+public class AlternativePathRed extends LinearOpMode {
+
+    public boolean competition = false; //TODO: CHANGE THIS AT COMPETITIONS!
 
     public LinearOpMode getOp() {
         return (LinearOpMode)this;
@@ -58,6 +60,7 @@ public class AlternativePath extends LinearOpMode {
 
         //turn on flywheel
         hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
+        hardware.brushes.setPower(1);
         //drive to be in range of vortex
         //TODO: Depending on battery the shots fly to far
         AutonomousUtils.pidGyro(1f, .25f, 0);
@@ -91,7 +94,7 @@ public class AlternativePath extends LinearOpMode {
                 checkvar = false;
             }
             if(hardware.left.getCurrentPosition() > 250){
-                AutonomousUtils.tankDriving(0.15f);
+                AutonomousUtils.tankDriving(0.07f);
             }
             if(hardware.left.getCurrentPosition() <-150){
                 checkvar = false;
@@ -110,7 +113,7 @@ public class AlternativePath extends LinearOpMode {
             distance = .35f;
             //push first button
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.driveEncoderFeet(distance, .25f, false);
+            AutonomousUtils.driveEncoderFeet(distance, .15f, false);
             hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
             delayTime(700);
             hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
@@ -120,14 +123,18 @@ public class AlternativePath extends LinearOpMode {
             delayTime(700);
             hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
         }
-        AutonomousUtils.pidGyro(2.5f-distance,0.15f, 0);
+        if (competition) {
+            AutonomousUtils.pidGyro(3f - distance, 0.15f, 0);
+        } else {
+            AutonomousUtils.pidGyro(2.5f - distance, 0.15f, 0);
+        }
         AutonomousUtils.stopDriving();
         delayTime(340);
         AutonomousUtils.resetEncoders();
         checkvar = true;
         while(opModeIsActive() && checkvar)
         {
-            AutonomousUtils.tankDriving(0.15f);
+            AutonomousUtils.tankDriving(0.07f);
             if(AutonomousUtils.getLightSensorData(0).getData() > Globals.lightThreshold){
                 checkvar = false;
             }
@@ -136,13 +143,13 @@ public class AlternativePath extends LinearOpMode {
             }
         }
         AutonomousUtils.stopDriving();
-        AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),0,0.10f,Motor.LEFT);
+        AutonomousUtils.powerGyroTurn(0 - AutonomousUtils.getGyroSensorData().getIntegratedZ(), 0, 0.10f, Motor.LEFT);
         telemetry.addData("Gyro", AutonomousUtils.getGyroSensorData().getIntegratedZ());
         telemetry.update();
         colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
         t = new Thread(colorDetectionThread);
         t.start();
-        delayTime(500);
+        delayTime(250);
         state = colorDetectionThread.getState();
         telemetry.addData("State", state);
         telemetry.update();
@@ -151,7 +158,7 @@ public class AlternativePath extends LinearOpMode {
             distance = .35f;
             //push first button
             AutonomousUtils.resetEncoders();
-            AutonomousUtils.driveEncoderFeet(distance, .25f, false);
+            AutonomousUtils.driveEncoderFeet(distance, .15f, false);
             hardware.beaconleft.setPosition(Globals.beaconLeftEnabled);
             delayTime(700);
             hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
@@ -161,7 +168,15 @@ public class AlternativePath extends LinearOpMode {
             delayTime(700);
             hardware.beaconleft.setPosition(Globals.beaconLeftDisabled);
         }
-        delayTime(1000);
+        AutonomousUtils.resetEncoders();
+        if (competition) {
+            AutonomousUtils.driveEncoderFeetBackwards(2f+distance, .25f, false);
+        } else {
+            AutonomousUtils.driveEncoderFeetBackwards(1f+distance, .25f, false);
+        }
+        AutonomousUtils.powerGyroTurn(-115, -80, 0.55f, Motor.LEFT);
+        AutonomousUtils.resetEncoders();
+        AutonomousUtils.pidGyro(4f, 0.25f, -115);
 
 
     }
