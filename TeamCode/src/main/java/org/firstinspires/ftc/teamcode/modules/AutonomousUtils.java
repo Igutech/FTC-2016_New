@@ -455,7 +455,7 @@ public class AutonomousUtils {
             reverseddriving =1;
         }
         goalEncoderTicks = Math.abs(goalEncoderTicks);
-        while(step !=8){
+        while(hardware.opModeIsActive() && step !=8){
             switch(step){
                 case 0:
                     resetEncoders();
@@ -575,7 +575,7 @@ public class AutonomousUtils {
         slowDegrees = startGyroPos + slowDegrees;
         goalGyroPos = startGyroPos + goalGyroPos;
 
-        while(complete){
+        while(hardware.opModeIsActive() && complete){
             if(motor == Motor.LEFT){
                 hardware.left.setPower(turnSpeed*isNegative*halfMultipler);
             }
