@@ -76,7 +76,7 @@ public class AlternativePathBlue extends LinearOpMode {
         //turn towards beacon
         AutonomousUtils.powerGyroTurn(-50,-25,0.3f,Motor.LEFT);
         //drive to beacon
-        AutonomousUtils.pidGyro(4.25f,0.35f,-55);
+        AutonomousUtils.pidGyro(4.65f,0.35f,-62);
         //turn parallel to wall
         AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),35,0.18f,Motor.RIGHT);
         //Delay a short amount of time so the robot comes to rest
@@ -88,12 +88,12 @@ public class AlternativePathBlue extends LinearOpMode {
         AutonomousUtils.tankDriving(-.05f);
         boolean checkvar = true;
         //check to see if we cross the line
-        while(opModeIsActive() && hardware.left.getCurrentPosition() < 300 && checkvar)
+        while(opModeIsActive() && hardware.left.getCurrentPosition() < 400 && checkvar)
         {
             if(AutonomousUtils.getLightSensorData(1).getData() > Globals.lightThreshold){
                 checkvar = false;
             }
-            if(hardware.left.getCurrentPosition() > 250){
+            if(hardware.left.getCurrentPosition() > 300){
                 AutonomousUtils.tankDriving(0.07f);
             }
             if(hardware.left.getCurrentPosition() <-150){
@@ -154,6 +154,7 @@ public class AlternativePathBlue extends LinearOpMode {
         telemetry.addData("State", state);
         telemetry.update();
         distance = 0f;
+        hardware.flywheel.setPower(-1);
         if (state == BeaconState.REDBLUE) {
             distance = .35f;
             //push first button
@@ -178,6 +179,7 @@ public class AlternativePathBlue extends LinearOpMode {
             AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
         }
         AutonomousUtils.powerGyroTurn(125, 80, 0.55f, Motor.RIGHT);
+        westTimer.trigger();
         AutonomousUtils.pidGyro(4f, 0.25f, 125);
 
 
