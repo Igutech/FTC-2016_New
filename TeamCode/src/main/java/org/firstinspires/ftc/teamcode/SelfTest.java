@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
@@ -13,6 +14,7 @@ import java.util.HashMap;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Diagnose Issues", group="Igutech")
+@Disabled
 public class SelfTest extends LinearOpMode {
     public void runOpMode() {
 

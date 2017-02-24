@@ -52,6 +52,7 @@ import org.firstinspires.ftc.teamcode.modules.AutonomousUtils;
  */
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Light Calibration", group="Igutech")  // @Autonomous(...) is the other common choice
+@Disabled
 public class LightCalibration extends LinearOpMode {
 
     /* Declare OpMode members. */
