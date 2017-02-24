@@ -124,6 +124,7 @@ public class AutonomousUtils {
     public static void driveEncoderTicks(int ticks, float power, boolean rampUp, boolean firstTime) { //460 ticks per foot
         try {
             if (firstTime) {
+                resetEncoders();
                 if (!hardware.left.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
                     hardware.left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     hardware.right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -410,6 +411,7 @@ public class AutonomousUtils {
         NoBallDetector detector = new NoBallDetector();
         Thread t = new Thread(detector);
         t.start();
+        hardware.ballColor.enableLed(false);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -418,7 +420,20 @@ public class AutonomousUtils {
         if (detector.getNoBall()) {
             return BallColor.NOBALL;
         }
-        return BallColor.RED; //TODO: Do stuff here if there is a ball.
+        double colordiff;
+        colordiff = -hardware.ballColor.getRawLightDetected();
+        hardware.ballColor.enableLed(true);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        colordiff = colordiff + hardware.ballColor.getLightDetected();
+        if(colordiff > 0.10)
+        {
+            return BallColor.RED;
+        }
+        return BallColor.BLUE; //TODO: Do stuff here if there is a ball.
     }
 
     public enum BallColor {
