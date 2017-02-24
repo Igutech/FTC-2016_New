@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.modules.WESTTimerThread;
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="AlternativePathRed", group="Igutech")
 public class AlternativePathRed extends LinearOpMode {
 
-    public boolean competition = false; //TODO: CHANGE THIS AT COMPETITIONS!
+    public boolean competition = true; //TODO: CHANGE THIS AT COMPETITIONS!
 
     public LinearOpMode getOp() {
         return (LinearOpMode)this;
