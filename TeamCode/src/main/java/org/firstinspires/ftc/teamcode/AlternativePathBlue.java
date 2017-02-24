@@ -154,7 +154,6 @@ public class AlternativePathBlue extends LinearOpMode {
         telemetry.addData("State", state);
         telemetry.update();
         distance = 0f;
-        hardware.flywheel.setPower(-1);
         if (state == BeaconState.REDBLUE) {
             distance = .35f;
             //push first button
@@ -169,8 +168,7 @@ public class AlternativePathBlue extends LinearOpMode {
             delayTime(700);
             hardware.beaconright.setPosition(Globals.beaconRightDisabled);
         }
-        telemetry.addData("Ball Color", AutonomousUtils.getBallColor(null));
-        telemetry.update();
+
         AutonomousUtils.resetEncoders();
         AutonomousUtils.resetEncoders();
         if (competition) {
@@ -179,7 +177,6 @@ public class AlternativePathBlue extends LinearOpMode {
             AutonomousUtils.driveEncoderFeetBackwards(distance, .25f, false);
         }
         AutonomousUtils.powerGyroTurn(125, 80, 0.55f, Motor.RIGHT);
-        westTimer.trigger();
         AutonomousUtils.pidGyro(4f, 0.25f, 125);
 
 
