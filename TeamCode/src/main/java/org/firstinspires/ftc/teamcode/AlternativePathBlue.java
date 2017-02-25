@@ -60,7 +60,6 @@ public class AlternativePathBlue extends LinearOpMode {
 
         //turn on flywheel
         hardware.flywheel.setPower(-Globals.flywheelWheelSpeed+0.05f);
-        hardware.brushes.setPower(1);
         //drive to be in range of vortex
         //TODO: Depending on battery the shots fly to far
         AutonomousUtils.pidGyro(1f, .25f, 0);
