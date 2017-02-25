@@ -59,7 +59,7 @@ public class AlternativePathRed extends LinearOpMode {
         waitForStart();
 
         //turn on flywheel
-        hardware.flywheel.setPower(-Globals.flywheelWheelSpeed);
+        hardware.flywheel.setPower(-Globals.flywheelWheelSpeed+0.04f);
         //drive to be in range of vortex
         //TODO: Depending on battery the shots fly to far
         AutonomousUtils.pidGyro(1f, .25f, 0);
@@ -75,7 +75,7 @@ public class AlternativePathRed extends LinearOpMode {
         //turn towards beacon
         AutonomousUtils.powerGyroTurn(50,30,0.3f,Motor.RIGHT);
         //drive to beacon
-        AutonomousUtils.pidGyro(3,0.25f,50);
+        AutonomousUtils.pidGyro(3.3f,0.25f,50);
         //turn parallel to wall
         AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),-25,0.15f,Motor.LEFT);
         //Delay a short amount of time so the robot comes to rest
@@ -142,13 +142,14 @@ public class AlternativePathRed extends LinearOpMode {
             }
         }
         AutonomousUtils.stopDriving();
+        AutonomousUtils.driveEncoderFeet(0.2f, 0.07f, false);
         AutonomousUtils.powerGyroTurn(0 - AutonomousUtils.getGyroSensorData().getIntegratedZ(), 0, 0.10f, Motor.LEFT);
         telemetry.addData("Gyro", AutonomousUtils.getGyroSensorData().getIntegratedZ());
         telemetry.update();
         colorDetectionThread = new ColorDetectionThread(1.5f, 0f, 0f, 0f, BeaconState.RED);
         t = new Thread(colorDetectionThread);
         t.start();
-        delayTime(250);
+        delayTime(500);
         state = colorDetectionThread.getState();
         telemetry.addData("State", state);
         telemetry.update();
