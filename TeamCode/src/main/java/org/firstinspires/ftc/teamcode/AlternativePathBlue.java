@@ -74,9 +74,9 @@ public class AlternativePathBlue extends LinearOpMode {
         delayTime(350);
         hardware.flywheel.setPower(0);
         //turn towards beacon
-        AutonomousUtils.powerGyroTurn(-50,-25,0.3f,Motor.LEFT);
+        AutonomousUtils.powerGyroTurn(-48,-25,0.3f,Motor.LEFT);
         //drive to beacon
-        AutonomousUtils.pidGyro(4.65f,0.35f,-62);
+        AutonomousUtils.pidGyro(4.4f,0.35f,-60);
         //turn parallel to wall
         AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),35,0.18f,Motor.RIGHT);
         //Delay a short amount of time so the robot comes to rest
@@ -124,9 +124,9 @@ public class AlternativePathBlue extends LinearOpMode {
             hardware.beaconright.setPosition(Globals.beaconRightDisabled);
         }
         if (competition) {
-            AutonomousUtils.pidGyro(3f - distance, 0.25f, 2);
+            AutonomousUtils.pidGyro(3f - distance, 0.25f, 3);
         } else {
-            AutonomousUtils.pidGyro(2.5f - distance, 0.25f, 2);
+            AutonomousUtils.pidGyro(2.5f - distance, 0.25f, 3);
         }
         AutonomousUtils.resetEncoders();
         checkvar = true;
@@ -143,6 +143,7 @@ public class AlternativePathBlue extends LinearOpMode {
             }
         }
         AutonomousUtils.stopDriving();
+
         AutonomousUtils.powerGyroTurn(0 - AutonomousUtils.getGyroSensorData().getIntegratedZ(), 0, 0.10f, Motor.LEFT);
         telemetry.addData("Gyro", AutonomousUtils.getGyroSensorData().getIntegratedZ());
         telemetry.update();
