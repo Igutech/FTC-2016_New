@@ -129,19 +129,25 @@ public class AlternativePathBlue extends LinearOpMode {
             AutonomousUtils.pidGyro(2.5f - distance, 0.25f, 3);
         }
         AutonomousUtils.resetEncoders();
-        checkvar = true;
-        while(opModeIsActive() && checkvar)
-        {
-            AutonomousUtils.tankDriving(0.07f);
-            telemetry.addData("Light", AutonomousUtils.getLightSensorData(1).getData());
-            telemetry.update();
-            if(AutonomousUtils.getLightSensorData(1).getData() > Globals.lightThreshold){
-                checkvar = false;
+        Thread lineThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean checkvar = true;
+                while (hardware.opModeIsActive() && checkvar) {
+                    telemetry.addData("Light", AutonomousUtils.getLightSensorData(1).getData());
+                    telemetry.update();
+                    if(AutonomousUtils.getLightSensorData(1).getData() > Globals.lightThreshold){
+                        checkvar = false;
+                    }
+                    if(hardware.left.getCurrentPosition() < -1250){
+                        checkvar = false;
+                    }
+                }
+                AutonomousUtils.interruptGyro();
             }
-            if(hardware.left.getCurrentPosition() < -1250){
-                checkvar = false;
-            }
-        }
+        });
+        lineThread.start();
+        AutonomousUtils.pidGyro(0.07f, 3);
         AutonomousUtils.stopDriving();
 
         AutonomousUtils.powerGyroTurn(0 - AutonomousUtils.getGyroSensorData().getIntegratedZ(), 0, 0.10f, Motor.LEFT);

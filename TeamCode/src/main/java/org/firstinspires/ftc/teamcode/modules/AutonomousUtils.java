@@ -37,6 +37,7 @@ public class AutonomousUtils {
     public static Hardware hardware;
     private static long timer;
     private static long elapsedtime;
+    private static boolean gyroInterrupt = false;
 
     public AutonomousUtils(Hardware hardware) {
         AutonomousUtils.hardware = hardware;
@@ -304,6 +305,36 @@ public class AutonomousUtils {
         }
         hardware.left.setPower(0f);
         hardware.right.setPower(0f);
+    }
+
+    public static void pidGyro(float speed, int angle) {
+        speed = -speed;
+        resetEncoders();
+        final float GAIN = 0.0025f;
+        gyroInterrupt = false;
+
+        while (hardware.opModeIsActive() && !gyroInterrupt) {
+            float error = angle - AutonomousUtils.getGyroSensorData().getIntegratedZ();
+            float output = error*GAIN;
+            float leftOutput = speed + output;
+            float rightOutput = speed - output;
+
+            //limit values to +1/-1
+
+            leftOutput = leftOutput > 1f ? 1f : leftOutput; //if leftoutput > 1, set to 1, if not, keep normally.
+            leftOutput = leftOutput < -1f ? -1f : leftOutput; //almost same as previous.
+
+            rightOutput = rightOutput > 1f ? 1f : rightOutput;   //these are called ternaries.
+            rightOutput = rightOutput < -1f ? -1f : rightOutput;
+
+
+            hardware.left.setPower(leftOutput);
+            hardware.right.setPower(rightOutput);
+        }
+    }
+
+    public static void interruptGyro() {
+        gyroInterrupt = true;
     }
 
     public static void resetEncoders() {
