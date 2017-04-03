@@ -76,7 +76,7 @@ public class AlternativePathBlue extends LinearOpMode {
         //turn towards beacon
         AutonomousUtils.powerGyroTurn(-48,-25,0.3f,Motor.LEFT);
         //drive to beacon
-        AutonomousUtils.pidGyro(4.4f,0.35f,-60);
+        AutonomousUtils.pidGyro(4.255f,0.35f,-60);
         //turn parallel to wall
         AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),35,0.18f,Motor.RIGHT);
         //Delay a short amount of time so the robot comes to rest
