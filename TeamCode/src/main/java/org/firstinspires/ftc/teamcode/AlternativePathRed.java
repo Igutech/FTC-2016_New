@@ -127,21 +127,28 @@ public class AlternativePathRed extends LinearOpMode {
         } else {
             AutonomousUtils.pidGyro(2.5f - distance, 0.15f, 0);
         }
-        AutonomousUtils.stopDriving();
-        delayTime(340);
         AutonomousUtils.resetEncoders();
-        checkvar = true;
-        while(opModeIsActive() && checkvar)
-        {
-            AutonomousUtils.tankDriving(0.07f);
-            if(AutonomousUtils.getLightSensorData(0).getData() > Globals.lightThreshold){
-                checkvar = false;
+        Thread lineThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean checkvar = true;
+                while (hardware.opModeIsActive() && checkvar) {
+                    telemetry.addData("Light", AutonomousUtils.getLightSensorData(0).getData());
+                    telemetry.update();
+                    if(AutonomousUtils.getLightSensorData(0).getData() > Globals.lightThreshold){
+                        checkvar = false;
+                    }
+                    if(hardware.left.getCurrentPosition() < -1250){
+                        checkvar = false;
+                    }
+                }
+                AutonomousUtils.interruptGyro();
             }
-            if(hardware.left.getCurrentPosition() < -1250){
-                checkvar = false;
-            }
-        }
+        });
+        lineThread.start();
+        AutonomousUtils.pidGyro(0.07f, 3);
         AutonomousUtils.stopDriving();
+
         AutonomousUtils.driveEncoderFeet(0.2f, 0.07f, false);
         AutonomousUtils.powerGyroTurn(0 - AutonomousUtils.getGyroSensorData().getIntegratedZ(), 0, 0.10f, Motor.LEFT);
         telemetry.addData("Gyro", AutonomousUtils.getGyroSensorData().getIntegratedZ());
