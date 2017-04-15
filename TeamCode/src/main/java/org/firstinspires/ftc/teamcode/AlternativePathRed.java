@@ -162,7 +162,7 @@ public class AlternativePathRed extends LinearOpMode {
         telemetry.update();
         distance = 0f;
         if (state == BeaconState.BLUERED) {
-            distance = .35f;
+            distance = .25f;
             //push first button
             AutonomousUtils.resetEncoders();
             AutonomousUtils.driveEncoderFeet(distance, .15f, false);
