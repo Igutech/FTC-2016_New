@@ -75,7 +75,7 @@ public class AlternativePathRed extends LinearOpMode {
         //turn towards beacon
         AutonomousUtils.powerGyroTurn(47,30,0.3f,Motor.RIGHT);
         //drive to beacon
-        AutonomousUtils.pidGyro(3.2f,0.25f,47);
+        AutonomousUtils.pidGyro(3.3f,0.25f,47);
         //turn parallel to wall
         AutonomousUtils.powerGyroTurn(0-AutonomousUtils.getGyroSensorData().getIntegratedZ(),-25,0.15f,Motor.LEFT);
         //Delay a short amount of time so the robot comes to rest
